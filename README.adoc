@@ -25,7 +25,7 @@ Ce projet est cloné automatiquement au début de votre projet de PTUT S2, il co
 - `WSPCE_PTUT_S2_2020_2021_ETU.zip` : les sources de la version V0
 - `Script_SQL_V0.sql` : le script SQL   
 
-== Équipe de développement (à mettre à jour)
+== Équipe de développement 
 
 - Hugo Flinois
 - Clément PAGES
