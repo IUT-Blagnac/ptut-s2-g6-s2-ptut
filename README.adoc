@@ -29,8 +29,8 @@ Ce projet est cloné automatiquement au début de votre projet de PTUT S2, il co
 
 - Hugo Flinois
 - Clément PAGES
-- Vincent Peyrot
--Nathan Chaugier
+- Vincent Peyrot 
+- Nathan Chaugier
 
 
 :version: v0
