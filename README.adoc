@@ -1,0 +1,95 @@
+= PTUT S2 2021
+:icons: font
+:toc: auto
+
+// Specific to GitHub
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+:graduation-icon: :mortar_board:
+:cogs-icon: :writing_hand:
+endif::[]
+
+IMPORTANT: Votre projet personnel de PTUT doit se nommer `PTUTS2-2021-XYZ`.
+
+== À propos
+
+Ce projet est cloné automatiquement au début de votre projet de PTUT S2, il contient tous les éléments dont vous aurez besoin pour démarrer : 
+
+- `README.adoc` : ce fichier (À modifier)
+- `Evaluation` : un répertoire contenant la Grille d'évaluation et les éléments qui serviront à guider nos évaluations
+- `RHESN_V0.jar` : un exécutable de démo 
+- `WSPCE_PTUT_S2_2020_2021_ETU.zip` : les sources de la version V0
+- `Script_SQL_V0.sql` : le script SQL   
+
+== Équipe de développement (à mettre à jour)
+
+- Membre 1
+- Membre 2
+- ...
+
+:version: v0
+== Version initiale fournie : {version}
+
+Une application fonctionnelle v0 vous est fournie sous la forme :
+
+- d'un exécutable `RHESN_V0.jar` à la racine de votre projet
+- des sources dans le répertoire `src`.
+
+Les premiers modèles sont également disponibles dans le répertoire `doc/media/{version}` :
+
+.Diagramme des Cas d'utilisation de la {version}
+image::doc/media/{version}/uc.png[UC,width=80%]
+
+.Diagramme des Classes Métiers de la {version}
+image::doc/media/{version}/dc.png[DC,width=80%]
+
+.SNI de la {version}
+image::doc/media/{version}/sni.png[SNI,width=80%]
+
+== Livrables
+
+[cols="1,2,2,5",options=header]
+|===
+| Date    | Nom         |  Lien                             | Retour
+| _24/05_ | _Exemple_   |  link:doc/media/v0/dc.png[PNG]    |
+| 25/05   | Gantt V1    |       |
+| 26/05   | CdC V1      |            |          
+|         | Gantt V1-2  |                 |      
+| 27/05   | CdC V1 final |                     | 
+|         | Gantt V1-3  |    |
+| 28/05   | CdC V2 final |    |
+|         | Gantt V2    |          |             
+|         | Doc. Util. V1 |             |          
+|         | Doc. Tec. V1 |                   |    
+|         | Code V1     |                       |
+|         | Recette V1  |                       |
+|         | Gantt V2    |                       |
+|         | `jar` projet |    |
+| 31/05   | Gantt V2-1    |       |
+| 01/06   | Doc. Util. V2 |            |           
+|         | Doc. Tec. V2 |                  |     
+|         | Code V2     |                       |
+|         | Recette V2  |                       |
+|         | Gantt V2-3    |                       |
+|         | `jar` projet |    |
+| 02/06   | Gantt V3-1    |       |
+| 03/06   | Doc. Util. V3 |            |           
+|         | Doc. Tec. V3 |                  |     
+|         | Code V3     |                       |
+|         | Recette V3  |                       |
+|         | Gantt V3-2    |                       |
+|         | `jar` projet |    |
+|===
+
+== Liens utiles
+
+- Le cours Moodle : https://webetud.iut-blagnac.fr/course/view.php?id=349
+- La liste des groupes : https://webetud.iut-blagnac.fr/mod/resource/view.php?id=14839
+- Un des meilleurs clients graphiques pour `git` : https://www.gitkraken.com/
+- Tortoise, le client le mieux intégrable à Windows : https://tortoisegit.org/
+- Le cours sur `git` : https://jmbruel.github.io/teachingMaterials/git.adoc
+

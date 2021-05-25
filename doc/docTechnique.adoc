@@ -1,0 +1,109 @@
+= *PTut S2 2020* - Documentation technique
+:toc: macro
+:toc-title: Sommaire
+:numbered: 
+:icons: font
+
+// --------- Variables ----------
+:company: RHESN
+:imagesdir: media
+
+image:https://www.iut-blagnac.fr/images/structure/iut-blagnac-logo.png[IUT,width=20%]
+
+image::https://www.iut-blagnac.fr/images/structure/logo-iut-blagnac.png[UT2J,width=20%]
+
+
+*Membres* : _Alice, Bob_
+
+
+toc::[]
+
+== Présentation de l'Application
+
+La société « DevExpert » est une Entreprise de Services Numériques (ESN ou encore SSII) qui fournit des prestations de développement d’applications informatiques pour ses clients. L’activité de l’entreprise repose sur des chefs de projet qui gèrent les projets des clients et d’un certain nombre d’employés salariés (analystes, concepteurs, développeurs, testeurs, designers, ergonomes, pentesters, webmaster, etc.) affectés sur les projets à réaliser. 
+
+On souhaite développer une application Java-Swing-Oracle de gestion des ressources humaines permettant aux chefs de projet qui gèrent l’ensemble des projets et clients de disposer d’un suivi des projets (prévisionnels, en cours et finalisés) et d’un état de la mobilisation des ressources humaines de l’entreprise (cartographie des affectations des salariés par projet). Vous travaillerez à partir d’une application existante «RHESN» qu’il faudra adapter aux besoins des chefs de projet.
+
+== Organisation de l’application
+
+Cette application a été développée à l’IUT de Blagnac, Université Toulouse 2 – Jean Jaurès durant le module du projet tutoré du 2ème semestre...
+
+=== Architecture logicielle
+
+On pourra par exemple ajouter ici le diagramme de classe en le commentant.
+
+Voici le diagramme qui présente l'architecture initiale de l'application :
+
+image::ptut20202021Packages.png[Architecture,width=60%]
+
+NOTE: Vous pouvez pour cela reprendre la façon de faire du projet BCOO.
+
+=== Fonctionnalités 
+
+Voici la liste des fonctionalités développées :
+
+- bla
+- bla
+
+NOTE: Doit être cohérent avec votre diagramme des UC.
+
+== Diagrammes initiaux
+
+Dans les pages suivantes sont présentés 3 diagrammes de conception (UC,
+Classes, SNI) de cette application. 
+Un découpage des différents éléments de modélisation selon les versions du logiciel à livrer (Version 0, Version 1, Version 2, Version 3, Bonus) est présenté avec des cercles de couleur. 
+Les UC `Bonus` ne devront pas être (éventuellement) développés avant d’avoir terminer la version 3.
+
+===  Diagramme des Cas d’Utilisation
+
+image:v0/uc.png[UV,width=60%]
+
+Dans ce diagramme, les UC déjà existantes en version 0 apparaissent sans
+cercle autour (ex : Modifier infos client, consulter un compte, rendre
+inactif un client…). 
+Les UC à développer en version 1 sont entourés en bleu, ceux de la version 2 entourés en vert et ceux de la version 3 sont entourés en rouge. 
+Les UC « bonus » sont entourés en jaune et ne pourront être (éventuellement) développés qu’après la réalisation des UC de la version 3.
+
+=== Diagramme des Classes Métier
+
+image:v0/dc.png[DC,width=90%]
+
+Dans ce diagramme de classes, les classes (et tables de base de données)
+existantes ne sont pas entourées. En fonction des versions à développer,
+certaines classes ou attributs (et donc tables ou colonnes de base de
+données) sont entourées avec des cercles du même code couleur que le
+diagramme des UC. La base de données devra donc évoluer en fonction des
+versions développées.
+
+=== Schéma Navigationnel d’Interface
+
+image:v0/sni.png[SNI,width=90%]
+
+Dans ce SNI, le même code couleur que précédemment est utilisé. 
+Les éléments non entourés correspondent à des éléments d’IHM déjà existants dans la version 0. 
+La fenêtre permettant de saisir un débit existe déjà dans la version 0 mais elle devra être complétée dans la version 1 afin de permettre également de saisir un crédit. 
+Le CRUD des prélèvements automatiques est découpé sur les versions 2 (Liste des prelev. + ajout d’un prelev.) et version 3 (détail d’un prélev. + modifier un prélév. + supprimer un prélév.).
+
+== Nouvelles fonctionnalités
+
+=== Fonctionnalité xxx
+- Use Case
+- Diagramme de classes
+- SNI
+- Extraits de code significatifs commentés si nécessaires avec spéc.
+ddés
+- Éléments complément. nécessaires à mise en œuvre du dvpt
+
+=== Fonctionnalité xxx
+- Use Case
+- Diagramme de classes
+- SNI
+- Extraits de code significatifs commentés si nécessaires avec spéc.
+ddés
+- Éléments complément. nécessaires à mise en œuvre du dvpt
+
+== Ressources complémentaires
+
+- La javadoc générée à partir de notre code Java est ici : ??
+
+WARNING: Document proposé uniquement à titre d'exemple...

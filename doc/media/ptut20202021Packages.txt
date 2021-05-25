@@ -1,0 +1,82 @@
+@startuml
+
+
+left to right direction
+
+package "model" as model {
+
+package "model.data" as mdata {
+
+class Employe {
+}
+note top of Employe: Autre classes métier.
+}
+
+package "model.orm" as morm {
+
+class LogToDatabase {
+	// A modifier pour accès Oracle
+}
+class AccessEmploye {
+}
+note top of AccessEmploye : Autre classes accès métier.
+
+
+package "model.orm.exception" as mexception {
+class ApplicationException	{
+}
+class DataAccessException {
+}
+note top of DataAccessException: Autre classes d'exceptions orm.
+}
+
+}
+
+}
+
+morm --> mdata : << uses >>
+
+package "view" as view {
+
+class Main {
+}
+note bottom of Main: main(.) applicatif.
+
+
+package "view.encryption" as vencryption {
+class HachageSHA {
+}
+}
+
+package "view.app" as vapp {
+class LoginDialog {
+}
+
+class RHESNMainFrame {
+}
+
+class EmployeEditor {
+}
+class GestionEmploye {
+}
+note top of GestionEmploye: Autre classes.
+}
+
+vapp --> vencryption : << uses >>
+
+}
+
+vapp --> morm : << uses >>
+vapp --> mdata : << uses >>
+
+
+package "Oracle" as oracle <<database>> {
+
+package "Votre BD" as bd <<node>> {
+}
+
+}
+
+morm ..> oracle : << uses >>
+
+@enduml
