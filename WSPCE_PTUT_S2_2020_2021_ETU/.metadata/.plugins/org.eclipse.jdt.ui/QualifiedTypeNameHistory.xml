@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.itextpdf.text.pdf.PdfWriter"/>
+<fullyQualifiedTypeName name="com.itextpdf.text.pdf.PdfDocument"/>
+<fullyQualifiedTypeName name="org.w3c.dom.Document"/>
+<fullyQualifiedTypeName name="view.app.Activite"/>
+<fullyQualifiedTypeName name="view.app.Accueil"/>
+<fullyQualifiedTypeName name="view.app.FrameGestionEmploye"/>
+<fullyQualifiedTypeName name="model.data.Role"/>
+<fullyQualifiedTypeName name="model.orm.LogToDatabase"/>
+<fullyQualifiedTypeName name="model.orm.exception.DatabaseConnexionException"/>
+<fullyQualifiedTypeName name="java.awt.event.WindowAdapter"/>
+<fullyQualifiedTypeName name="java.awt.event.WindowEvent"/>
+<fullyQualifiedTypeName name="view.app.LoginDialog"/>
+<fullyQualifiedTypeName name="view.app.ProfilEmploye"/>
+<fullyQualifiedTypeName name="java.sql.SQLException"/>
+<fullyQualifiedTypeName name="javax.swing.JOptionPane"/>
+<fullyQualifiedTypeName name="javax.swing.JCheckBox"/>
+<fullyQualifiedTypeName name="javax.swing.JDialog"/>
+<fullyQualifiedTypeName name="view.app.EmployeEditor"/>
+<fullyQualifiedTypeName name="view.app.EmployeEditor.ModeEdition"/>
+<fullyQualifiedTypeName name="view.tools.PasswordEditor"/>
+<fullyQualifiedTypeName name="org.bouncycastle.crypto.PasswordConverter"/>
+<fullyQualifiedTypeName name="view.tools.PasswordEditor.ModeEdition"/>
+<fullyQualifiedTypeName name="view.tools.HachageSHA"/>
+<fullyQualifiedTypeName name="view.encryption.HachageSHA"/>
+<fullyQualifiedTypeName name="sha256.HachageSHA"/>
+<fullyQualifiedTypeName name="model.data.Employe"/>
+</qualifiedTypeNameHistroy>
