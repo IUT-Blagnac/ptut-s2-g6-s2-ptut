@@ -58,7 +58,7 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |===
 | Date    | Nom         |  Lien                             | Retour
 | _24/05_ | _Exemple_   |  link:doc/media/v0/dc.png[PNG]    |
-| 25/05   | Gantt V1    |  link:gantt_v1/ptut_v1.pdf[PDF]   |
+| 25/05   | Gantt V1    |  link:gantt_v1/ptut_v1.pdf[PDF]   | Tout semble OK (mais je ne suis pas un spécialiste de Gantt)...
 | 26/05   | CdC V1      |            |          
 |         | Gantt V1-2  |                 |      
 | 27/05   | CdC V1 final |                     | 
