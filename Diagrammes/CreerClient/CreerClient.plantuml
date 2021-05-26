@@ -1,0 +1,26 @@
+@startuml
+
+hide circle
+hide empty members
+hide empty methods
+
+
+participant Utilisateur
+participant Serveur
+
+Utilisateur -> Serveur : Connexion
+Utilisateur <- Serveur : Demande création de compte
+Utilisateur -> Serveur : Envoi nom
+Utilisateur -> Serveur : Envoi prénom
+Utilisateur -> Serveur : Envoi mot de passe
+Utilisateur -> Serveur : Envoi numéro de téléphone
+Utilisateur -> Serveur : Envoi email
+Utilisateur -> Serveur : Envoi entreprise
+Utilisateur <-- Serveur : Vérification si prénom déjà existant
+Utilisateur <-- Serveur : Si oui, vérification si nom déjà existant
+Utilisateur <-- Serveur : Vérification si mot de passe sécurisé
+Utilisateur <-- Serveur : Création du compte
+Utilisateur <- Serveur : Demande ajout de projets
+Utilisateur -> Serveur : Envoi nom de projets
+
+@enduml
