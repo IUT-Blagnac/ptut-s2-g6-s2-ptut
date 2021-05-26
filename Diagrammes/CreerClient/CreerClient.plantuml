@@ -6,7 +6,11 @@ hide empty methods
 
 
 participant Utilisateur
-participant Serveur
+participant application as Serveur
+participant serveur as s
+
+activate Utilisateur
+activate Serveur
 
 Utilisateur -> Serveur : Connexion
 Utilisateur <- Serveur : Demande création de compte
@@ -22,5 +26,14 @@ Utilisateur <-- Serveur : Vérification si mot de passe sécurisé
 Utilisateur <-- Serveur : Création du compte
 Utilisateur <- Serveur : Demande ajout de projets
 Utilisateur -> Serveur : Envoi nom de projets
+activate s
+
+Serveur -> s : Envoi données utilisateur
+s -> s : stockage données
+s -> Serveur : Conirmation données utilisateur
+Serveur -> Utilisateur : Confirmation données utilisateur
+deactivate Utilisateur
+deactivate Serveur
+deactivate s
 
 @enduml
