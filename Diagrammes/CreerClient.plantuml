@@ -5,35 +5,41 @@ hide empty members
 hide empty methods
 
 
-participant Utilisateur
-participant application as Serveur
-participant serveur as s
+participant ChefDeProjet as c
+participant Application as App
+participant Serveur as s
 
-activate Utilisateur
-activate Serveur
+activate c
+activate App
 
-Utilisateur -> Serveur : Connexion
-Utilisateur <- Serveur : Demande création de compte
-Utilisateur -> Serveur : Envoi nom
-Utilisateur -> Serveur : Envoi prénom
-Utilisateur -> Serveur : Envoi mot de passe
-Utilisateur -> Serveur : Envoi numéro de téléphone
-Utilisateur -> Serveur : Envoi email
-Utilisateur -> Serveur : Envoi entreprise
-Utilisateur <-- Serveur : Vérification si prénom déjà existant
-Utilisateur <-- Serveur : Si oui, vérification si nom déjà existant
-Utilisateur <-- Serveur : Vérification si mot de passe sécurisé
-Utilisateur <-- Serveur : Création du compte
-Utilisateur <- Serveur : Demande ajout de projets
-Utilisateur -> Serveur : Envoi nom de projets
+c -> App : Connexion
+
 activate s
+App -> s : Demande vérification de l'association mdp/login
+App <-- s : Renvoie une réponse
+deactivate s
 
-Serveur -> s : Envoi données utilisateur
-s -> s : stockage données
-s -> Serveur : Conirmation données utilisateur
-Serveur -> Utilisateur : Confirmation données utilisateur
-deactivate Utilisateur
-deactivate Serveur
+c -> App : Demande création de compte
+c <-- App : Demande la saisie des données
+c -> App : Envoi nom
+c -> App : Envoi prénom
+c -> App : Envoi numéro de téléphone
+c -> App : Envoi email
+c -> App : Envoi entreprise
+
+activate s
+App -> s : Envoi les données saisies
+s -> s : Stock les données
+s --> App : Confirmation de la création du client
+App -> c : Confirmation de la création du client
+c <-- App : Demande si le client a des projets
+c -> App : Si oui envoi nom de projets
+s <- App : Envoi les données saisies
+s -> s : Stock les données
+s --> App : Confirmation du stockage
+App -> c : Confirmation du stockage
+deactivate c
+deactivate App
 deactivate s
 
 @enduml
