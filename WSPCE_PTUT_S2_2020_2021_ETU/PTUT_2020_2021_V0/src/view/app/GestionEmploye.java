@@ -20,7 +20,8 @@ import java.util.ArrayList;
  */
 
 @SuppressWarnings("serial")
-public class GestionEmploye extends JDialog  {
+public class GestionEmploye extends JDialog
+{
 	
 	// L'employé qui utilise l'application
 	private Employe employeUtilisateur;
@@ -58,7 +59,7 @@ public class GestionEmploye extends JDialog  {
         JPanel contentButtons = new JPanel(new FlowLayout());
         JPanel contentList = new JPanel();
 
-        changerMPButton = new JButton("Modifier MP");
+        changerMPButton = new JButton("Modifier MDP");
         changerMPButton.addActionListener(e -> actionChangerMP());
         changerMPButton.setBackground(new Color(104, 177, 255)) ;
         

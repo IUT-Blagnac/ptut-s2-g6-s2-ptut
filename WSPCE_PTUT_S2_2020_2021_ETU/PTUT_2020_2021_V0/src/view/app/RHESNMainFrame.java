@@ -63,7 +63,7 @@ public class RHESNMainFrame extends JFrame {
         projectButton = new JButton("Projet");
         projectButton.setPreferredSize(new Dimension(200,50));
         projectButton.setBackground(new Color(104, 177, 255)) ;
-        projectButton.setEnabled(false);
+        projectButton.addActionListener(e -> actionProjet());
 
         employeButton = new JButton("Employé");
         employeButton.setPreferredSize(new Dimension(200,50));
@@ -73,7 +73,7 @@ public class RHESNMainFrame extends JFrame {
         clientButton = new JButton("Client");
         clientButton.setPreferredSize(new Dimension(200,50));
         clientButton.setBackground(new Color(104, 177, 255)) ;
-        clientButton.setEnabled(false);
+        clientButton.addActionListener(e -> actionClient());
 
         String libRole = (employeUtilisateur.getIdRole() == Role.ID_ROLE_CHEF_PROJET ? Role.LIB_ROLE_CHEF_PROJET : Role.LIB_ROLE_EMPLOYE);
         employeLabel = new JLabel("<html><u>Employé connecté(e) :</u><br><br>Nom: <i>"+employeUtilisateur.getNom()+ "</i><br>Prénom: <i>"+ employeUtilisateur.getPrenom()+"</i><br>Role: <i>"+ libRole+"</i></html>\n");
@@ -118,6 +118,18 @@ public class RHESNMainFrame extends JFrame {
     	GestionEmploye gestionEmploye= new GestionEmploye(this, employeUtilisateur);
     	gestionEmploye.setVisible(true);
     	gestionEmploye.dispose();
+    }
+
+    private void actionClient() {
+        GestionClient gestionClient = new GestionClient(this, employeUtilisateur);
+        gestionClient.setVisible(true);
+        gestionClient.dispose();
+    }
+
+    private void actionProjet() {
+        GestionProjet gestionProjet = new GestionProjet(this, employeUtilisateur);
+        gestionProjet.setVisible(true);
+        gestionProjet.dispose();
     }
     
     private void actionDeconnexion() {

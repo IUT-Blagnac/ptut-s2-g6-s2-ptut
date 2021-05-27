@@ -16,9 +16,9 @@ import java.sql.SQLTimeoutException;
  */
 public class LogToDatabase {
 
-    // Gloabl : accès à la base de donnée : à ajuster selon le compte Oracle disponible
-    private static final String user = "A RENSEIGNER"; // A modifier
-    private static final String passwd = "A RENSEIGNER"; // A modifier
+    // Global : accès à la base de donnée : à ajuster selon le compte Oracle disponible
+    private static final String user = "pjts06"; // A modifier
+    private static final String passwd = "ptut_g6_blagnac"; // A modifier
 
     private static final String hoteOracle = "oracle.iut-blagnac.fr";
     private static final String portOracle = "1521";
