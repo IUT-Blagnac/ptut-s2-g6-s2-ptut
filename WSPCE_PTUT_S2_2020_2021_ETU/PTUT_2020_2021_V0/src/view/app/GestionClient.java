@@ -16,6 +16,9 @@ import java.util.ArrayList;
 public class GestionClient extends JDialog
 {
 
+
+
+
     // L'employé qui utilise l'application
     private Employe employeUtilisateur;
 
@@ -25,7 +28,7 @@ public class GestionClient extends JDialog
     //        clientButton.setEnabled(false);
 
 
-    private DefaultListModel<Client> model = new DefaultListModel<Client>();
+    private DefaultListModel<Employe> model = new DefaultListModel<Employe>();
 
 
     private JButton createButton;
@@ -57,15 +60,15 @@ public class GestionClient extends JDialog
 
 
         createButton = new JButton("Créer");
-        //createButton.addActionListener(e -> actionCreer());
+        createButton.addActionListener(e -> actionCreer());
         createButton.setBackground(new Color(104, 177, 255)) ;
 
         voirButton = new JButton("Voir");
-        //voirButton.addActionListener(e -> actionVoir());
+        voirButton.addActionListener(e -> actionVoir());
         voirButton.setBackground(new Color(104, 177, 255)) ;
 
         modifierButton = new JButton("Modifier");
-        //modifierButton.addActionListener(e -> actionModifier());
+        modifierButton.addActionListener(e -> actionModifier());
         modifierButton.setBackground(new Color(104, 177, 255)) ;
 
         retourButton = new JButton("Retour");
@@ -93,15 +96,15 @@ public class GestionClient extends JDialog
         model = new DefaultListModel<>();
 
 
-        /*
-        selectionEmploye = new JList<>(model);
-        selectionEmploye.addListSelectionListener(new ListSelectionListener() {
+
+        selectionClient = new JList<>(model);
+        selectionClient.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent arg0) {
                 verifierEtatComposants();
             }
         });
 
-         */
+
         scroll = new JScrollPane(selectionClient);
         scroll.setPreferredSize(new Dimension(270, 270));
         scroll.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
@@ -138,9 +141,112 @@ public class GestionClient extends JDialog
 
         this.setLocationRelativeTo(this.getParent());
 
-        //actionRechercheEmployes();
-        //verifierEtatComposants();
+        actionRechercheEmployes();
+        verifierEtatComposants();
     }
 
-    private void actionRetour() { this.setVisible(false); }
+    /**
+     * Permet de vrifier si l'utilisateur a saisi un employe avant de cliquer sur les boutons
+     */
+
+    private void verifierEtatComposants(){
+        if (selectionClient.getSelectedIndex()<0) {
+            voirButton.setEnabled(false);
+            modifierButton.setEnabled(false);
+        } else {
+            voirButton.setEnabled(true);
+            modifierButton.setEnabled(true);
+        }
+    }
+
+    private void actionRechercheEmployes() {
+
+        String debutNomOuPrenom = this.researchBar.getText();
+
+        ArrayList<Employe> listeEmp = new ArrayList<>();
+
+        try {
+            listeEmp = ae.getEmployes(debutNomOuPrenom);
+        } catch (DatabaseConnexionException e) {
+            new ExceptionDialog(this, e);
+            dispose();
+        } catch (DataAccessException e) {
+            new ExceptionDialog(this, e);
+        } catch (RowNotFoundOrTooManyRowsException e) {
+            new ExceptionDialog(this, e);
+        }
+
+        model.clear() ;
+        for (Employe employe : listeEmp) {
+            model.addElement(employe);
+        }
+
+        if (model.size() > 0) {
+            selectionClient.ensureIndexIsVisible(0);
+        }
+        selectionClient.setSelectedIndex(-1);
+        verifierEtatComposants();
+    }
+
+    private void actionResearchBar() {
+        this.actionRechercheEmployes();
+    }
+
+    private void actionRetour() {
+        this.setVisible(false);
+    }
+
+    private void actionVoir() {
+        Employe employeEdite = model.get(selectionClient.getSelectedIndex());
+        EmployeEditor.showEmployeEditor(this,
+                employeUtilisateur, employeEdite,
+                EmployeEditor.ModeEdition.VISUALISATION);
+    }
+
+
+
+    private void actionModifier() {
+        Employe employeEdite = model.get(selectionClient.getSelectedIndex());
+        Employe result ;
+        result = EmployeEditor.showEmployeEditor(this,
+                employeUtilisateur, employeEdite,
+                EmployeEditor.ModeEdition.MODIFICATION);
+
+        if (result != null) { // modif validée
+            try {
+                ae.updateEmploye(result);
+            } catch (RowNotFoundOrTooManyRowsException e) {
+                new ExceptionDialog(this, e);
+            } catch (DataAccessException e) {
+                new ExceptionDialog(this, e);
+            } catch (DatabaseConnexionException e) {
+                new ExceptionDialog(this, e);
+                this.dispose();;
+            }
+
+            actionRechercheEmployes ();
+        }
+    }
+
+    private void actionCreer() {
+        Employe result ;
+        result = EmployeEditor.showEmployeEditor(this,
+                employeUtilisateur, null,
+                EmployeEditor.ModeEdition.CREATION);
+
+        if (result != null) { // saisie validée
+            try {
+                ae.insertEmploye(result);
+            } catch (RowNotFoundOrTooManyRowsException e) {
+                new ExceptionDialog(this, e);
+            } catch (DataAccessException e) {
+                new ExceptionDialog(this, e);
+            } catch (DatabaseConnexionException e) {
+                new ExceptionDialog(this, e);
+                this.dispose();;
+            }
+
+            actionRechercheEmployes ();
+        }
+    }
 }
