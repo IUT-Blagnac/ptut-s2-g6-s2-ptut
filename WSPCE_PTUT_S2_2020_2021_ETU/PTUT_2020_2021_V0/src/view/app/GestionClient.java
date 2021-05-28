@@ -1,7 +1,9 @@
 package view.app;
 
-import com.sun.security.ntlm.Client;
+
+import model.data.Client;
 import model.data.Employe;
+
 import model.orm.AccessEmploye;
 import model.orm.exception.DataAccessException;
 import model.orm.exception.DatabaseConnexionException;
@@ -10,45 +12,45 @@ import model.orm.exception.RowNotFoundOrTooManyRowsException;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Fenetre avec tous les employes et les actions possibles sur eux
+ */
+
+@SuppressWarnings("serial")
 public class GestionClient extends JDialog
 {
-
-
-
 
     // L'employé qui utilise l'application
     private Employe employeUtilisateur;
 
     private AccessEmploye ae = new AccessEmploye() ;
 
-
-    //        clientButton.setEnabled(false);
-
-
     private DefaultListModel<Employe> model = new DefaultListModel<Employe>();
-
 
     private JButton createButton;
     private JButton voirButton;
+    private JButton changerMPButton;
     private JButton modifierButton;
     private JButton rechercherButton;
     private JButton retourButton;
-    private JList<Employe> selectionClient;
+    private JList<Employe> selectionEmploye;
     private JScrollPane scroll;
     private JTextField researchBar;
 
-
-    public GestionClient(Window owner, Employe employeU )
-    {
+    /**
+     * Constructeur
+     */
+    public GestionClient(Window owner, Employe employeU ){
         super(owner);
         this.employeUtilisateur = employeU;
 
         setModal(true);
 
-        setTitle("Gestion des clients");
+        setTitle("Gestion des employés");
         setResizable(true);
         setSize(600,450);
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -58,6 +60,9 @@ public class GestionClient extends JDialog
         JPanel contentButtons = new JPanel(new FlowLayout());
         JPanel contentList = new JPanel();
 
+        changerMPButton = new JButton("Modifier MDP");
+        changerMPButton.addActionListener(e -> actionChangerMP());
+        changerMPButton.setBackground(new Color(104, 177, 255)) ;
 
         createButton = new JButton("Créer");
         createButton.addActionListener(e -> actionCreer());
@@ -79,6 +84,7 @@ public class GestionClient extends JDialog
         voirButton.setPreferredSize(new Dimension(200,40));
         modifierButton.setPreferredSize(new Dimension(200,40));
         retourButton.setPreferredSize(new Dimension(200,40));
+        changerMPButton.setPreferredSize(new Dimension(200,20));
 
         contentButtons.add(createButton);
         contentButtons.add(voirButton);
@@ -90,43 +96,40 @@ public class GestionClient extends JDialog
         espace = new JLabel();
         espace.setPreferredSize(new Dimension(200,20));
         contentButtons.add(espace);
+        contentButtons.add(changerMPButton);
         contentButtons.setPreferredSize(new Dimension(250,300));
         contentButtons.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
 
         model = new DefaultListModel<>();
 
-
-
-        selectionClient = new JList<>(model);
-        selectionClient.addListSelectionListener(new ListSelectionListener() {
+        selectionEmploye = new JList<>(model);
+        selectionEmploye.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent arg0) {
                 verifierEtatComposants();
             }
         });
-
-
-        scroll = new JScrollPane(selectionClient);
+        scroll = new JScrollPane(selectionEmploye);
         scroll.setPreferredSize(new Dimension(270, 270));
         scroll.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
         contentList.add(scroll);
-        scroll.setBorder(BorderFactory.createTitledBorder("Liste des clients"));
+        scroll.setBorder(BorderFactory.createTitledBorder("Liste des employés"));
         contentList.setBorder(BorderFactory.createEmptyBorder(25,30,0,0));
 
-        JLabel titre = new JLabel("Gestion des clients");
+        JLabel titre = new JLabel("Gestion des employés");
         titre.setFont(new Font("Arial",Font.BOLD,22));
         titre.setHorizontalAlignment(SwingConstants.CENTER);
         titre.setBorder(BorderFactory.createEmptyBorder(20,0,20,0));
 
         rechercherButton = new JButton("Rechercher");
 
-        //rechercherButton.addActionListener(e -> actionRechercheEmployes());
+        rechercherButton.addActionListener(e -> actionRechercheEmployes());
 
 
         researchBar = new JTextField("");
         researchBar.getFont().deriveFont(Font.ITALIC);
         researchBar.setForeground(Color.gray);
         researchBar.setPreferredSize(new Dimension(400,24));
-        //researchBar.addActionListener(e -> actionResearchBar());
+        researchBar.addActionListener(e -> actionResearchBar());
 
         contentHead.add(titre, BorderLayout.NORTH);
         contentHead.add(rechercherButton, BorderLayout.WEST);
@@ -145,16 +148,21 @@ public class GestionClient extends JDialog
         verifierEtatComposants();
     }
 
+
     /**
      * Permet de vrifier si l'utilisateur a saisi un employe avant de cliquer sur les boutons
      */
 
     private void verifierEtatComposants(){
-        if (selectionClient.getSelectedIndex()<0) {
+        if (selectionEmploye.getSelectedIndex()<0) {
             voirButton.setEnabled(false);
+            changerMPButton.setEnabled(false);
+            changerMPButton.setBackground(new Color(104, 177, 255)) ;
             modifierButton.setEnabled(false);
         } else {
             voirButton.setEnabled(true);
+            changerMPButton.setEnabled(true);
+            changerMPButton.setBackground(new Color(252, 109, 109)) ;
             modifierButton.setEnabled(true);
         }
     }
@@ -182,9 +190,9 @@ public class GestionClient extends JDialog
         }
 
         if (model.size() > 0) {
-            selectionClient.ensureIndexIsVisible(0);
+            selectionEmploye.ensureIndexIsVisible(0);
         }
-        selectionClient.setSelectedIndex(-1);
+        selectionEmploye.setSelectedIndex(-1);
         verifierEtatComposants();
     }
 
@@ -197,16 +205,35 @@ public class GestionClient extends JDialog
     }
 
     private void actionVoir() {
-        Employe employeEdite = model.get(selectionClient.getSelectedIndex());
+        Employe employeEdite = model.get(selectionEmploye.getSelectedIndex());
         EmployeEditor.showEmployeEditor(this,
                 employeUtilisateur, employeEdite,
                 EmployeEditor.ModeEdition.VISUALISATION);
     }
 
+    private void actionChangerMP() {
+        Employe employeEdite = model.get(selectionEmploye.getSelectedIndex());
+        String newMP = PasswordEditor.showPassWordEditor(this, employeEdite.getLogin(), PasswordEditor.ModeEdition.MODIFICATION);
 
+        if (newMP != null) {
+            Employe result = new Employe(employeEdite.getId(), employeEdite.getNom(), employeEdite.getPrenom(), employeEdite.getLogin(), newMP, employeEdite.getEstActif(), employeEdite.getIdRole(), employeEdite.getIdCompetence(), employeEdite.getIdNiveau());
+            try {
+                ae.updateEmploye(result);
+            } catch (RowNotFoundOrTooManyRowsException e) {
+                new ExceptionDialog(this, e);
+            } catch (DataAccessException e) {
+                new ExceptionDialog(this, e);
+            } catch (DatabaseConnexionException e) {
+                new ExceptionDialog(this, e);
+                this.dispose();
+            }
+
+            actionRechercheEmployes ();
+        }
+    }
 
     private void actionModifier() {
-        Employe employeEdite = model.get(selectionClient.getSelectedIndex());
+        Employe employeEdite = model.get(selectionEmploye.getSelectedIndex());
         Employe result ;
         result = EmployeEditor.showEmployeEditor(this,
                 employeUtilisateur, employeEdite,
@@ -229,10 +256,23 @@ public class GestionClient extends JDialog
     }
 
     private void actionCreer() {
-        Employe result ;
-        result = EmployeEditor.showEmployeEditor(this,
+        Client result ;
+        result = ClientEditor.showClientEditor(this,
                 employeUtilisateur, null,
-                EmployeEditor.ModeEdition.CREATION);
+                ClientEditor.ModeEdition.CREATION);
+
+
+
+/*
+        private void actionCreer() {
+            Employe result ;
+            result = EmployeEditor.showEmployeEditor(this,
+                    employeUtilisateur, null,
+                    EmployeEditor.ModeEdition.CREATION);
+
+
+
+
 
         if (result != null) { // saisie validée
             try {
@@ -248,5 +288,8 @@ public class GestionClient extends JDialog
 
             actionRechercheEmployes ();
         }
+
+ */
     }
+
 }

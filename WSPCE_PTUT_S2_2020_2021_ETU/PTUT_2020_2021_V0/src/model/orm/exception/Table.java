@@ -7,6 +7,8 @@ package model.orm.exception;
 public enum Table {
 	Role,
 	Employe,
+	Projet,
+	Client,
 	Competence,
 	NiveauCompetence,
 	Niveau,
