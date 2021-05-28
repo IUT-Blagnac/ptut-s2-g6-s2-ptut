@@ -65,7 +65,7 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |         | Gantt V1-3  | link:gantt/V1/ptut_v1-3.pdf[PDF]   |
 | 28/05   | CdC V2 final |    |
 |         | Gantt V2    | link:gantt/V2/ptut_v2.pdf[PDF]         |             
-|         | Doc. Util. V1 |link:documentations/doc_utilisateur/doc_utilisateur_V1.pdf[PDF]              |          
+|         | Doc. Util. V1 |link:Documentations/doc_utilisateur/doc_utilisateur_V1.pdf[PDF]              |          
 |         | Doc. Tec. V1 |                   |    
 |         | Code V1     |                       |
 |         | Recette V1  |                       |
