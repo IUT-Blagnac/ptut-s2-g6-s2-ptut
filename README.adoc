@@ -58,13 +58,13 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |===
 | Date    | Nom         |  Lien                             | Retour
 | _24/05_ | _Exemple_   |  link:doc/media/v0/dc.png[PNG]    |
-| 25/05   | Gantt V1    |  link:gantt/ptut_v1.pdf[PDF]      | Tout semble OK (mais je ne suis pas un spécialiste de Gantt)...
+| 25/05   | Gantt V1    |  link:gantt/v1/ptut_v1.pdf[PDF]      | Tout semble OK (mais je ne suis pas un spécialiste de Gantt)...
 | 26/05   | CdC V1      |  link:Diagrammes/CDC_V1.pdf[PDF]|          
-|         | Gantt V1-2  |  link:gantt/ptut_v1-2.pdf[PDF]    |      
+|         | Gantt V1-2  |  link:gantt/v1/ptut_v1-2.pdf[PDF]    |      
 | 27/05   | CdC V1 final | link:Diagrammes/CDC_V1_final.pdf[PDF]                    | 
-|         | Gantt V1-3  | link:gantt/ptut_v1-3.pdf[PDF]   |
+|         | Gantt V1-3  | link:gantt/v1/ptut_v1-3.pdf[PDF]   |
 | 28/05   | CdC V2 final |    |
-|         | Gantt V2    |          |             
+|         | Gantt V2    | link:gantt/v2/ptut_v2.pdf[PDF]         |             
 |         | Doc. Util. V1 |             |          
 |         | Doc. Tec. V1 |                   |    
 |         | Code V1     |                       |
