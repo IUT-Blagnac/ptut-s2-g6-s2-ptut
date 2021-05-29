@@ -20,7 +20,7 @@ import java.util.ArrayList;
 //copié collé et modifié de EmployeEditor, pas encore fini
 
 @SuppressWarnings("serial")
-public class ClientEditor extends JDialog {
+public class ProjetEditor extends JDialog {
 
     public enum ModeEdition {
         CREATION, MODIFICATION, VISUALISATION
@@ -95,42 +95,41 @@ public class ClientEditor extends JDialog {
     // Employe qui utilise l'application
     private Employe employueUtilisateur;
 
-    // Employé modifié ou visualisé
-    private Client employeEdite;
+    // Projet modifié ou visualisé
+    private Projet projetEdite;
 
-    // Client résultat (saisi ou modifié), null si annulation
-    private Client clientResult;
-    private String employeResultMDP;
+    // Projet résultat (saisi ou modifié), null si annulation
+    private Client projetResult;
 
     /**
      * Ouverture de la boite de dialogue d'édition d'un employé
      *
      * @param owner   fenêtre  mère de la boite de dialogue
      * @param employeUtilisateur Employ" connecté à l'application
-     * @param clientEdite  Objet de type Employé à éditer (éventuellement null en création).
+     * @param projetEdite  Objet de type Employé à éditer (éventuellement null en création).
      * @param mode    Mode d'ouverture (CREATION, MODIFICATION, VISUALISATION)
      *
      * @return un objet Client si l'action est validée / null sinon
      */
-    public static Client showClientEditor(Window owner, Employe employeUtilisateur, Client clientEdite, ClientEditor.ModeEdition mode)
+    public static Projet showProjetEditor(Window owner, Employe employeUtilisateur, Projet projetEdite, ProjetEditor.ModeEdition mode)
     {
 
-        if (mode == ClientEditor.ModeEdition.CREATION)
+        if (mode == ProjetEditor.ModeEdition.CREATION)
         {
-            clientEdite = new Client();
+            projetEdite = new Projet();
         }
         else
         {
-            clientEdite = new Client(clientEdite);
+            projetEdite = new Projet(projetEdite);
         }
 
-        ClientEditor dial = new ClientEditor(clientEdite, employeUtilisateur, owner, mode);
-        dial.clientResult = null;
+        ProjetEditor dial = new ProjetEditor(projetEdite, employeUtilisateur, owner, mode);
+        dial.projetResult = null;
         dial.setModal(true);
         dial.setVisible(true);
         // le programme appelant est bloqué jusqu'au masquage de la JDialog.
         dial.dispose();
-        return dial.clientResult;
+        return dial.projetResult;
     }
 
     // =======================================================================
@@ -138,12 +137,12 @@ public class ClientEditor extends JDialog {
     // Pour créer un éditeur, Il faut utiliser la méthode statique
     // == > showEmployeEditor()
     // =======================================================================
-    ClientEditor(Client pfEmployeEdite, Employe pfEmployeUtilisateur, Window owner, ClientEditor.ModeEdition pfMode) {
+    ProjetEditor(Projet pfProjetEdite, Employe pfEmployeUtilisateur, Window owner, ProjetEditor.ModeEdition pfMode) {
 
         super(owner);
         this.employueUtilisateur = pfEmployeUtilisateur ;
-        this.employeEdite = pfEmployeEdite;
-        this.clientResult = null;
+        this.projetEdite = pfProjetEdite;
+        this.projetResult = null;
         this.modeActuel = pfMode;
 
         try {
@@ -358,12 +357,12 @@ public class ClientEditor extends JDialog {
                 break;
         }
 
-        if (modeActuel != ClientEditor.ModeEdition.CREATION) {
+        if (modeActuel != ProjetEditor.ModeEdition.CREATION) {
             // on remplit les champs
-            idText.setText(Integer.toString(employeEdite.getId()));
-            nomText.setText(employeEdite.getNom());
-            prenomText.setText(employeEdite.getPrenom());
-            estActifTB.setSelected ( (employeEdite.getEstActif() == Employe.EST_ACTIF) );
+            idText.setText(Integer.toString(projetEdite.getId()));
+            nomText.setText(projetEdite.getNom());
+            prenomText.setText(projetEdite.getPrenom());
+            estActifTB.setSelected ( (projetEdite.getEstActif() == Employe.EST_ACTIF) );
 
         }
     }
@@ -407,30 +406,27 @@ public class ClientEditor extends JDialog {
         estActifE = (estActifTB.isSelected() ? Employe.EST_ACTIF : Employe.EST_INACTIF);
         // On récupere tous les elements pour créer l'employé
         Client emp ;
-        if (modeActuel == ClientEditor.ModeEdition.CREATION){
+        if (modeActuel == ProjetEditor.ModeEdition.CREATION){
             emp = new Client( -1 , nomText.getText().trim() , prenomText.getText().trim() , entrepriseText.getText().trim() , emailText.getText().trim(), numeroText.getText().trim(), 1 ) ;
         }else {
             emp = new Client( Integer.parseInt(idText.getText()) , nomText.getText() , prenomText.getText() , entrepriseText.getText() ,emailText.getText().trim(), numeroText.getText().trim(), 1 ) ;
         }
 
-       // public Client(int idC, String nomC, String prenomC, String entrepriseC, String emailC, String numeroC, int estActifC)
-       //public Employe(int idE, String nomE, String prenomE, String loginE, String mdpE, int estActifE, int idRoleE, int idCompetenceE, int idNiveauE){
+        // public Client(int idC, String nomC, String prenomC, String entrepriseC, String emailC, String numeroC, int estActifC)
+        //public Employe(int idE, String nomE, String prenomE, String loginE, String mdpE, int estActifE, int idRoleE, int idCompetenceE, int idNiveauE){
 
         return emp ;
     }
 
     private void actionOK() {
-        if (verifChamps()){
-            if (modeActuel == ClientEditor.ModeEdition.CREATION) {
-                employeResultMDP = PasswordEditor.showPassWordEditor(this, entrepriseText.getText().trim(), PasswordEditor.ModeEdition.CREATION);
-                if (employeResultMDP == null) {
-                    JOptionPane.showMessageDialog(this, "Veuillez saisir un mot de pase pour créer un employé", "Erreur", JOptionPane.ERROR_MESSAGE);
-                    return ;
-                }
-            }
-            this.clientResult = generateEmploye() ;
+        if (verifChamps())
+        {
+
+            this.projetResult = generateEmploye() ;
             this.setVisible(false);
-        }else{
+        }
+        else
+        {
             JOptionPane.showMessageDialog(this, "Veuillez saisir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
@@ -449,7 +445,7 @@ public class ClientEditor extends JDialog {
     }
 
     private void actionAnnuler() {
-        this.clientResult = null;
+        this.projetResult = null;
         this.setVisible(false);
 
     }
