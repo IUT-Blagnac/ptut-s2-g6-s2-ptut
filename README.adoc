@@ -69,7 +69,6 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |         | Doc. Tec. V1 |                   |    
 |         | Code V1     |                       |
 |         | Recette V1  |                       |
-|         | Gantt V2    |                       |
 |         | `jar` projet |    |
 | 31/05   | Gantt V2-1    |       |
 | 01/06   | Doc. Util. V2 |            |           
