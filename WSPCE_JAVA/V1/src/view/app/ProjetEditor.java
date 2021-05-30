@@ -1,14 +1,15 @@
 package view.app;
 
 import model.data.*;
-import model.orm.exception.DataAccessException;
-import model.orm.exception.DatabaseConnexionException;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import java.awt.*;
+import java.text.ParseException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -185,7 +186,13 @@ public class ProjetEditor extends JDialog {
         enregistrerBouton = new JButton("Enregister");
         enregistrerBouton.setBackground(new Color(104, 177, 255)) ;
         enregistrerBouton.setPreferredSize(dimensionBouton);
-        enregistrerBouton.addActionListener(e -> actionOK());
+        enregistrerBouton.addActionListener(e -> {
+            try {
+                actionOK();
+            } catch (ParseException parseException) {
+                parseException.printStackTrace();
+            }
+        });
 
         boutonsPanel.add(enregistrerBouton);
 
@@ -370,7 +377,7 @@ public class ProjetEditor extends JDialog {
      * Genere l'employe avec la valeurs des champs remplis
      * @return un employe
      */
-    private Projet generateProjet(){
+    private Projet generateProjet() throws ParseException {
         // On génére le role de l'employe
         int roleId ;
         if (chefBouton.isSelected()){
@@ -384,18 +391,16 @@ public class ProjetEditor extends JDialog {
         // On récupere tous les elements pour créer le projet
         Projet projet ;
         if (modeActuel == ProjetEditor.ModeEdition.CREATION){
-            projet = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() , null, null, null, 1 ) ;
+            projet = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), 1 ) ;
         }else {
-            projet = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , null, null, null, 1 ) ;
+            projet = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), 1 ) ;
         }
 
-        // public Client(int idC, String nomC, String prenomC, String entrepriseC, String emailC, String numeroC, int estActifC)
-        //public Employe(int idE, String nomE, String prenomE, String loginE, String mdpE, int estActifE, int idRoleE, int idCompetenceE, int idNiveauE){
 
         return projet ;
     }
 
-    private void actionOK() {
+    private void actionOK() throws ParseException {
         if (verifChamps())
         {
 
@@ -463,6 +468,13 @@ public class ProjetEditor extends JDialog {
             return false;
         }
 
+    }
+
+    public Date stringToDate(String str) throws ParseException {
+        Integer numero = Integer.parseInt(str);
+        SimpleDateFormat originalFormat = new SimpleDateFormat("ddMMyyyy");
+        Date date = originalFormat.parse(numero.toString());
+        return date;
     }
 
     public static boolean isInteger(String s)
