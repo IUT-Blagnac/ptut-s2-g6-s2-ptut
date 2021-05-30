@@ -99,6 +99,12 @@ public class AccessProjet {
 				throw new DataAccessException(Table.Projet, Order.SELECT, "Erreur accés", e);
 	     }
 	}
+
+	//vide pour l'instant pour les tests, pour Nathan
+	public void updateProjet(Projet pfProjet)
+	{
+
+	}
 	
 	
 }
