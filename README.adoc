@@ -68,7 +68,7 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |         | Doc. Util. V1 |link:Documentations/doc_utilisateur/doc_utilisateur_V1.pdf[PDF]              |          
 |         | Doc. Tec. V1 |link:doc/docTechnique.adoc[ADOC]                   |    
 |         | Code V1     |                       |
-|         | Recette V1  |                       |
+|         | Recette V1  | link:Documentations/cahier_de_recettes_v1.pdf[PDF]                      |
 |         | `jar` projet |    |
 | 31/05   | Gantt V2-1    |       |
 | 01/06   | Doc. Util. V2 |            |           
