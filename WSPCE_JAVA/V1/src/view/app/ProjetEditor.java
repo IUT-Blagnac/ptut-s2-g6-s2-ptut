@@ -1,8 +1,6 @@
 package view.app;
 
 import model.data.*;
-import model.orm.AccessCompetence;
-import model.orm.AccessNiveau;
 import model.orm.exception.DataAccessException;
 import model.orm.exception.DatabaseConnexionException;
 
@@ -82,9 +80,6 @@ public class ProjetEditor extends JDialog {
     private JRadioButton chefBouton ;
     private JRadioButton employeBouton ;
 
-    // Acces en BD
-    private AccessCompetence ac = new AccessCompetence();
-    private AccessNiveau an = new AccessNiveau();
 
     // données en BD
     private ArrayList<Competence> alCompetenceBD;
@@ -143,15 +138,7 @@ public class ProjetEditor extends JDialog {
         this.projetResult = null;
         this.modeActuel = pfMode;
 
-        try {
-            alCompetenceBD = ac.getAllCompetence() ;
-            alNiveauBD = an.getAllNiveaux() ;
-        } catch (DatabaseConnexionException | DataAccessException e1) {
-            new ExceptionDialog(this, e1);
-            JOptionPane.showMessageDialog(this,
-                    "Impossible de continuer !\nMise à jour annulée.", "ERREUR", JOptionPane.ERROR_MESSAGE);
-            actionAnnuler();
-        }
+
 
 
 
@@ -394,7 +381,7 @@ public class ProjetEditor extends JDialog {
 
         int estActifE;
         estActifE = (estActifTB.isSelected() ? Employe.EST_ACTIF : Employe.EST_INACTIF);
-        // On récupere tous les elements pour créer l'employé
+        // On récupere tous les elements pour créer le projet
         Projet projet ;
         if (modeActuel == ProjetEditor.ModeEdition.CREATION){
             projet = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() , null, null, null, 1 ) ;
@@ -437,12 +424,56 @@ public class ProjetEditor extends JDialog {
 
     private boolean verifDate()
     {
+        Boolean b1 = false;
+        Boolean b2 = false;
+        Boolean b3 = false;
 
-        Integer d1 = Integer.parseInt(dateDebutText.getText());
-        Integer d2 = Integer.parseInt(dateFinEstimeeText.getText());
-        Integer d3 = Integer.parseInt(dateFinReelText.getText());
-        
+        if (dateDebutText.getText().length() == 8 && dateFinReelText.getText().length() == 8 && dateFinEstimeeText.getText().length() == 8 )
+        {
+            if (isInteger(dateDebutText.getText()))
+            {
+                b1 = true;
+            }
 
+            if(isInteger(dateFinEstimeeText.getText()))
+            {
+                b2 = true;
+            }
+
+            if(isInteger(dateFinReelText.getText()))
+            {
+                b3 = true;
+            }
+
+            if (b1 && b2 && b3)
+            {
+                return true;
+            }
+            else
+            {
+                JOptionPane.showMessageDialog(null, "Ecrivez des dates valide");
+
+                return false;
+            }
+        }
+
+        else
+        {
+            JOptionPane.showMessageDialog(null, "Ecrivez des dates valide");
+            return false;
+        }
+
+    }
+
+    public static boolean isInteger(String s)
+    {
+        try {
+            Integer.parseInt(s);
+        } catch(NumberFormatException e) {
+            return false;
+        } catch(NullPointerException e) {
+            return false;
+        }
 
         return true;
     }
