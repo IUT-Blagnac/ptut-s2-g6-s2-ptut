@@ -22,8 +22,8 @@ public class AccessProjet {
 		try {
 			Connection con = LogToDatabase.getConnexion();
 			
-			String query = "Select p.*"
-					+ "From Projet p"
+			String query = "Select p.* "
+					+ "From Projet p "
 					+ "Order by p.nom";
 			
 			PreparedStatement pst = con.prepareStatement(query);	
@@ -48,11 +48,11 @@ public class AccessProjet {
 		try {
 			Connection con = LogToDatabase.getConnexion();
 			
-			pNom = "%" + pNom.toUpperCase() + "%";
+			pNom = "'" + pNom.toUpperCase() + "'";
 			
 			String query = "Select p.* "
 					+ "From Projet p "
-					+ "Where (upper(p.nom)) like ?";
+					+ "Where (upper(p.nom) like ?)";
 			
 			PreparedStatement pst = con.prepareStatement(query);	
 			pst.setString(1, pNom);

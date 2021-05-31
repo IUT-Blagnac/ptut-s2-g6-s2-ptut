@@ -63,7 +63,7 @@ public class GestionProjet extends JDialog
 
 
         createButton = new JButton("Créer");
-        //createButton.addActionListener(e -> actionCreer());
+        createButton.addActionListener(e -> actionCreer());
         createButton.setBackground(new Color(104, 177, 255)) ;
 
         rendreInactifButton = new JButton("Rendre actif/inactif");
@@ -115,7 +115,7 @@ public class GestionProjet extends JDialog
         scroll.setBorder(BorderFactory.createTitledBorder("Liste des projets"));
         contentList.setBorder(BorderFactory.createEmptyBorder(25,30,0,0));
 
-        JLabel titre = new JLabel("Gestion des employés");
+        JLabel titre = new JLabel("Gestion des projets");
         titre.setFont(new Font("Arial",Font.BOLD,22));
         titre.setHorizontalAlignment(SwingConstants.CENTER);
         titre.setBorder(BorderFactory.createEmptyBorder(20,0,20,0));
@@ -150,7 +150,7 @@ public class GestionProjet extends JDialog
 
 
     /**
-     * Permet de vrifier si l'utilisateur a saisi un employe avant de cliquer sur les boutons
+     * Permet de vrifier si l'utilisateur a saisi un projet avant de cliquer sur les boutons
      */
 
     private void verifierEtatComposants(){
@@ -165,12 +165,12 @@ public class GestionProjet extends JDialog
 
     private void actionRechercherProjets() {
 
-        String debutNomOuPrenom = this.researchBar.getText();
+        String debutNom = this.researchBar.getText();
 
         ArrayList<Projet> listeProjets = new ArrayList<>();
 
         try {
-            listeProjets = ap.getProjet(debutNomOuPrenom);
+            listeProjets = ap.getProjet(debutNom);
         } catch (DatabaseConnexionException e) {
             new ExceptionDialog(this, e);
             dispose();
