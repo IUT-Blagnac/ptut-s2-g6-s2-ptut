@@ -72,15 +72,6 @@ public class ProjetEditor extends JDialog {
 
 
 
-    // Liste de valeurs des ComboBox
-    private String[] allStringComp ;
-    private String[] allStringNiveau ;
-
-    // Radio bouton (pour le role)
-    private ButtonGroup boutonGroup ;
-    private JRadioButton chefBouton ;
-    private JRadioButton employeBouton ;
-
 
     // données en BD
     private ArrayList<Competence> alCompetenceBD;
@@ -262,7 +253,7 @@ public class ProjetEditor extends JDialog {
         champsPanel.add(dateFinEstimeeText);
 
         // Date de fin réelle
-        dateFinReelLabel = new JLabel("Date de début") ;
+        dateFinReelLabel = new JLabel("Date fin réelle") ;
         dateFinReelLabel.setHorizontalAlignment(0);
         dateFinReelLabel.setPreferredSize(dimensionLabel);
         dateFinReelLabel.setFont(normalFont);
@@ -297,11 +288,10 @@ public class ProjetEditor extends JDialog {
                 nomText.setEnabled(true);
                 descriptionText.setEnabled(true);
                 dateDebutText.setEnabled(true);
-                dateFinReelText.setEnabled(true);
+                dateFinReelText.setEnabled(false);
                 dateFinEstimeeText.setEnabled(true);
                 estActifTB.setEnabled(true);
-                chefBouton.setEnabled(true);
-                employeBouton.setEnabled(true);
+
 
                 titreLabel.setText("Créer Projet");
 
@@ -316,8 +306,7 @@ public class ProjetEditor extends JDialog {
                 dateFinReelText.setEnabled(true);
                 dateFinEstimeeText.setEnabled(true);
                 estActifTB.setEnabled(true);
-                chefBouton.setEnabled(true);
-                employeBouton.setEnabled(true);
+
 
                 titreLabel.setText("Modifier Projet");
 
@@ -332,8 +321,7 @@ public class ProjetEditor extends JDialog {
                 dateFinReelText.setEnabled(false);
                 dateFinEstimeeText.setEnabled(false);
                 estActifTB.setEnabled(false);
-                chefBouton.setEnabled(false);
-                employeBouton.setEnabled(false);
+
 
                 titreLabel.setText("Voir Projet");
 
@@ -378,13 +366,7 @@ public class ProjetEditor extends JDialog {
      * @return un projet
      */
     private Projet generateProjet() throws ParseException {
-        // On génére le role de l'employe
-        int roleId ;
-        if (chefBouton.isSelected()){
-            roleId = Role.ID_ROLE_CHEF_PROJET ;
-        } else {
-            roleId = Role.ID_ROLE_EMPLOYE ;
-        }
+
 
         int estActifP;
         estActifP = (estActifTB.isSelected() ? Projet.EST_ACTIF : Projet.EST_INACTIF);
@@ -393,9 +375,9 @@ public class ProjetEditor extends JDialog {
         if (modeActuel == ProjetEditor.ModeEdition.CREATION){
 
             //à confirmer pour le dernier argument du constructeur.
-            projet = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, roleId ) ;
+            projet = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, 1 ) ;
         }else {
-            projet = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, roleId ) ;
+            projet = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, 1 ) ;
         }
 
 
