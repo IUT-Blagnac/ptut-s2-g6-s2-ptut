@@ -1,15 +1,16 @@
 package view.app;
 
 import model.data.*;
+import model.orm.AccessCompetence;
+import model.orm.AccessNiveau;
+import model.orm.exception.DataAccessException;
+import model.orm.exception.DatabaseConnexionException;
 
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import java.awt.*;
-import java.text.ParseException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -53,24 +54,26 @@ public class ProjetEditor extends JDialog {
     // Zones de texte titres des saisies
     private JLabel idLabel ;
     private JLabel nomLabel ;
-    private JLabel descriptionLabel ;
-    private JLabel dateDebutLabel ;
-    private JLabel dateFinEstimeeLabel ;
-    private JLabel dateFinReelLabel ;
+    private JLabel prenomLabel ;
+    private JLabel entrepriseLabel ;
+    private JLabel emailLabel ;
+    private JLabel numeroLabel ;
     private JLabel estActifLabel;
-
+    private JLabel competenceLabel ;
+    private JLabel niveauLabel ;
 
     // Zones de saisie
     private JTextField idText ;
     private JTextField nomText ;
-    private JTextField descriptionText ;
-    private JTextField dateDebutText ;
-    private JTextField dateFinEstimeeText ;
-    private JTextField dateFinReelText ;
+    private JTextField prenomText ;
+    private JTextField entrepriseText ;
+    private JTextField emailText ;
+    private JTextField numeroText ;
 
     private JCheckBox estActifTB;
 
-
+    private JComboBox<String> comboBoxCompetence ;
+    private JComboBox<String> comboBoxNiveau ;
 
     // Liste de valeurs des ComboBox
     private String[] allStringComp ;
@@ -81,6 +84,9 @@ public class ProjetEditor extends JDialog {
     private JRadioButton chefBouton ;
     private JRadioButton employeBouton ;
 
+    // Acces en BD
+    private AccessCompetence ac = new AccessCompetence();
+    private AccessNiveau an = new AccessNiveau();
 
     // données en BD
     private ArrayList<Competence> alCompetenceBD;
@@ -93,7 +99,7 @@ public class ProjetEditor extends JDialog {
     private Projet projetEdite;
 
     // Projet résultat (saisi ou modifié), null si annulation
-    private Projet projetResult;
+    private Client projetResult;
 
     /**
      * Ouverture de la boite de dialogue d'édition d'un employé
@@ -139,7 +145,15 @@ public class ProjetEditor extends JDialog {
         this.projetResult = null;
         this.modeActuel = pfMode;
 
-
+        try {
+            alCompetenceBD = ac.getAllCompetence() ;
+            alNiveauBD = an.getAllNiveaux() ;
+        } catch (DatabaseConnexionException | DataAccessException e1) {
+            new ExceptionDialog(this, e1);
+            JOptionPane.showMessageDialog(this,
+                    "Impossible de continuer !\nMise à jour annulée.", "ERREUR", JOptionPane.ERROR_MESSAGE);
+            actionAnnuler();
+        }
 
 
 
@@ -186,13 +200,7 @@ public class ProjetEditor extends JDialog {
         enregistrerBouton = new JButton("Enregister");
         enregistrerBouton.setBackground(new Color(104, 177, 255)) ;
         enregistrerBouton.setPreferredSize(dimensionBouton);
-        enregistrerBouton.addActionListener(e -> {
-            try {
-                actionOK();
-            } catch (ParseException parseException) {
-                parseException.printStackTrace();
-            }
-        });
+        enregistrerBouton.addActionListener(e -> actionOK());
 
         boutonsPanel.add(enregistrerBouton);
 
@@ -228,50 +236,50 @@ public class ProjetEditor extends JDialog {
         nomText.setPreferredSize(dimensionText);
         champsPanel.add(nomText);
 
-        // Description
-        descriptionLabel = new JLabel ("Description") ;
-        descriptionLabel.setHorizontalAlignment(0);
-        descriptionLabel.setPreferredSize(dimensionLabel);
-        descriptionLabel.setFont(normalFont);
-        champsPanel.add(descriptionLabel);
+        // Prenom
+        prenomLabel = new JLabel ("Prénom") ;
+        prenomLabel.setHorizontalAlignment(0);
+        prenomLabel.setPreferredSize(dimensionLabel);
+        prenomLabel.setFont(normalFont);
+        champsPanel.add(prenomLabel);
 
-        descriptionText = new JTextField();
-        descriptionText.setPreferredSize(dimensionText);
-        champsPanel.add(descriptionText);
+        prenomText = new JTextField();
+        prenomText.setPreferredSize(dimensionText);
+        champsPanel.add(prenomText);
 
-        // Date début
-        dateDebutLabel = new JLabel("Date de début") ;
-        dateDebutLabel.setHorizontalAlignment(0);
-        dateDebutLabel.setPreferredSize(dimensionLabel);
-        dateDebutLabel.setFont(normalFont);
-        champsPanel.add(dateDebutLabel);
+        // Entreprise
+        entrepriseLabel = new JLabel("Entreprise") ;
+        entrepriseLabel.setHorizontalAlignment(0);
+        entrepriseLabel.setPreferredSize(dimensionLabel);
+        entrepriseLabel.setFont(normalFont);
+        champsPanel.add(entrepriseLabel);
 
-        dateDebutText = new JTextField();
-        dateDebutText.setPreferredSize(dimensionText);
-        champsPanel.add(dateDebutText);
+        entrepriseText = new JTextField();
+        entrepriseText.setPreferredSize(dimensionText);
+        champsPanel.add(entrepriseText);
 
-        // Date de fin estimée
-        dateFinEstimeeLabel = new JLabel("Date fin estimée") ;
-        dateFinEstimeeLabel.setHorizontalAlignment(0);
-        dateFinEstimeeLabel.setPreferredSize(dimensionLabel);
-        dateFinEstimeeLabel.setFont(normalFont);
-        champsPanel.add(dateFinEstimeeLabel);
+        // Email
+        emailLabel = new JLabel("Email") ;
+        emailLabel.setHorizontalAlignment(0);
+        emailLabel.setPreferredSize(dimensionLabel);
+        emailLabel.setFont(normalFont);
+        champsPanel.add(entrepriseLabel);
 
-        dateDebutText = new JTextField();
-        dateDebutText.setPreferredSize(dimensionText);
-        champsPanel.add(dateDebutText);
+        emailText = new JTextField();
+        emailText.setPreferredSize(dimensionText);
+        champsPanel.add(emailText);
 
-        // Date de fin réelle
-        dateFinReelLabel = new JLabel("Date de début") ;
-        dateFinReelLabel.setHorizontalAlignment(0);
-        dateFinReelLabel.setPreferredSize(dimensionLabel);
-        dateFinReelLabel.setFont(normalFont);
-        champsPanel.add(dateFinReelLabel);
+        // Numéro
+        numeroLabel = new JLabel("Email") ;
+        numeroLabel.setHorizontalAlignment(0);
+        numeroLabel.setPreferredSize(dimensionLabel);
+        numeroLabel.setFont(normalFont);
+        champsPanel.add(numeroLabel);
 
-        dateDebutText = new JTextField();
-        dateDebutText.setPreferredSize(dimensionText);
-        champsPanel.add(dateDebutText);
-        
+        numeroText = new JTextField();
+        numeroText.setPreferredSize(dimensionText);
+        champsPanel.add(numeroText);
+
 
         // estActif
         estActifLabel = new JLabel("estActif ?") ;
@@ -295,11 +303,13 @@ public class ProjetEditor extends JDialog {
             case CREATION :
                 idText.setEnabled(false);
                 nomText.setEnabled(true);
-                descriptionText.setEnabled(true);
-                dateDebutText.setEnabled(true);
-                dateFinReelText.setEnabled(true);
-                dateFinEstimeeText.setEnabled(true);
+                prenomText.setEnabled(true);
+                entrepriseText.setEnabled(true);
                 estActifTB.setEnabled(true);
+                numeroText.setEnabled(true);
+                emailText.setEnabled(true);
+                comboBoxCompetence.setEnabled(true);
+                comboBoxNiveau.setEnabled(true);
                 chefBouton.setEnabled(true);
                 employeBouton.setEnabled(true);
 
@@ -311,11 +321,13 @@ public class ProjetEditor extends JDialog {
             case MODIFICATION:
                 idText.setEnabled(false);
                 nomText.setEnabled(true);
-                descriptionText.setEnabled(true);
-                dateDebutText.setEnabled(true);
-                dateFinReelText.setEnabled(true);
-                dateFinEstimeeText.setEnabled(true);
+                prenomText.setEnabled(true);
+                entrepriseText.setEnabled(true);
+                numeroText.setEnabled(true);
+                emailText.setEnabled(true);
                 estActifTB.setEnabled(true);
+                comboBoxCompetence.setEnabled(true);
+                comboBoxNiveau.setEnabled(true);
                 chefBouton.setEnabled(true);
                 employeBouton.setEnabled(true);
 
@@ -327,15 +339,17 @@ public class ProjetEditor extends JDialog {
             case VISUALISATION:
                 idText.setEnabled(false);
                 nomText.setEnabled(false);
-                descriptionText.setEnabled(false);
-                dateDebutText.setEnabled(false);
-                dateFinReelText.setEnabled(false);
-                dateFinEstimeeText.setEnabled(false);
+                prenomText.setEnabled(false);
+                entrepriseText.setEnabled(false);
+                numeroText.setEnabled(false);
+                emailText.setEnabled(false);
                 estActifTB.setEnabled(false);
+                comboBoxCompetence.setEnabled(false);
+                comboBoxNiveau.setEnabled(false);
                 chefBouton.setEnabled(false);
                 employeBouton.setEnabled(false);
 
-                titreLabel.setText("Voir Projet");
+                titreLabel.setText("Voir Employé");
 
                 enregistrerBouton.setText("");
                 enregistrerBouton.setEnabled(false);
@@ -347,9 +361,7 @@ public class ProjetEditor extends JDialog {
             // on remplit les champs
             idText.setText(Integer.toString(projetEdite.getId()));
             nomText.setText(projetEdite.getNom());
-            dateDebutText.setText(projetEdite.getDateDebut().toString());
-            dateFinEstimeeText.setText(projetEdite.getDateFinEstimee().toString());
-            dateFinReelText.setText(projetEdite.getDateFinReel().toString());
+            prenomText.setText(projetEdite.getPrenom());
             estActifTB.setSelected ( (projetEdite.getEstActif() == Employe.EST_ACTIF) );
 
         }
@@ -377,7 +389,7 @@ public class ProjetEditor extends JDialog {
      * Genere l'employe avec la valeurs des champs remplis
      * @return un employe
      */
-    private Projet generateProjet() throws ParseException {
+    private Client generateEmploye(){
         // On génére le role de l'employe
         int roleId ;
         if (chefBouton.isSelected()){
@@ -386,25 +398,31 @@ public class ProjetEditor extends JDialog {
             roleId = Role.ID_ROLE_EMPLOYE ;
         }
 
+        int indexComp = comboBoxCompetence.getSelectedIndex() ;
+        int compId = alCompetenceBD.get(indexComp).getIdCompetence();
+        int indexNiv = comboBoxNiveau.getSelectedIndex() ;
+        int nivId = alNiveauBD.get(indexNiv).getIdNiveau();
         int estActifE;
         estActifE = (estActifTB.isSelected() ? Employe.EST_ACTIF : Employe.EST_INACTIF);
-        // On récupere tous les elements pour créer le projet
-        Projet projet ;
+        // On récupere tous les elements pour créer l'employé
+        Client emp ;
         if (modeActuel == ProjetEditor.ModeEdition.CREATION){
-            projet = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), 1 ) ;
+            emp = new Client( -1 , nomText.getText().trim() , prenomText.getText().trim() , entrepriseText.getText().trim() , emailText.getText().trim(), numeroText.getText().trim(), 1 ) ;
         }else {
-            projet = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), 1 ) ;
+            emp = new Client( Integer.parseInt(idText.getText()) , nomText.getText() , prenomText.getText() , entrepriseText.getText() ,emailText.getText().trim(), numeroText.getText().trim(), 1 ) ;
         }
 
+        // public Client(int idC, String nomC, String prenomC, String entrepriseC, String emailC, String numeroC, int estActifC)
+        //public Employe(int idE, String nomE, String prenomE, String loginE, String mdpE, int estActifE, int idRoleE, int idCompetenceE, int idNiveauE){
 
-        return projet ;
+        return emp ;
     }
 
-    private void actionOK() throws ParseException {
+    private void actionOK() {
         if (verifChamps())
         {
 
-            this.projetResult = generateProjet() ;
+            this.projetResult = generateEmploye() ;
             this.setVisible(false);
         }
         else
@@ -420,76 +438,11 @@ public class ProjetEditor extends JDialog {
      * @return vrai ou faux
      */
     private boolean verifChamps() {
-        if (nomText.getText().trim().isEmpty() || descriptionText.getText().trim().isEmpty() || dateDebutText.getText().trim().isEmpty() || dateDebutText.getText().trim().isEmpty() || dateFinEstimeeText.getText().trim().isEmpty() || dateFinReelText.getText().trim().isEmpty() || !verifDate())
-        {
+        if (nomText.getText().trim().isEmpty() || prenomText.getText().trim().isEmpty() || entrepriseText.getText().trim().isEmpty() || numeroText.getText().trim().isEmpty() || emailText.getText().trim().isEmpty()) {
             return false;
         }
         return true;
     }
-
-    private boolean verifDate()
-    {
-        Boolean b1 = false;
-        Boolean b2 = false;
-        Boolean b3 = false;
-
-        if (dateDebutText.getText().length() == 8 && dateFinReelText.getText().length() == 8 && dateFinEstimeeText.getText().length() == 8 )
-        {
-            if (isInteger(dateDebutText.getText()))
-            {
-                b1 = true;
-            }
-
-            if(isInteger(dateFinEstimeeText.getText()))
-            {
-                b2 = true;
-            }
-
-            if(isInteger(dateFinReelText.getText()))
-            {
-                b3 = true;
-            }
-
-            if (b1 && b2 && b3)
-            {
-                return true;
-            }
-            else
-            {
-                JOptionPane.showMessageDialog(null, "Ecrivez des dates valide");
-
-                return false;
-            }
-        }
-
-        else
-        {
-            JOptionPane.showMessageDialog(null, "Ecrivez des dates valide");
-            return false;
-        }
-
-    }
-
-    public Date stringToDate(String str) throws ParseException {
-        Integer numero = Integer.parseInt(str);
-        SimpleDateFormat originalFormat = new SimpleDateFormat("ddMMyyyy");
-        Date date = originalFormat.parse(numero.toString());
-        return date;
-    }
-
-    public static boolean isInteger(String s)
-    {
-        try {
-            Integer.parseInt(s);
-        } catch(NumberFormatException e) {
-            return false;
-        } catch(NullPointerException e) {
-            return false;
-        }
-
-        return true;
-    }
-
 
     private void actionAnnuler() {
         this.projetResult = null;

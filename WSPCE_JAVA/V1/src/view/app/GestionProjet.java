@@ -5,6 +5,7 @@ import model.data.Client;
 import model.data.Employe;
 
 import model.data.Projet;
+import model.orm.AccessEmploye;
 import model.orm.AccessProjet;
 import model.orm.exception.DataAccessException;
 import model.orm.exception.DatabaseConnexionException;
@@ -28,7 +29,7 @@ public class GestionProjet extends JDialog
     // L'employé qui utilise l'application
     private Employe employeUtilisateur;
 
-    private AccessProjet ap = new AccessProjet() ;
+    private AccessProjet ae = new AccessProjet() ;
 
     private DefaultListModel<Projet> model = new DefaultListModel<Projet>();
 
@@ -51,7 +52,7 @@ public class GestionProjet extends JDialog
 
         setModal(true);
 
-        setTitle("Gestion des projets");
+        setTitle("Gestion des employés");
         setResizable(true);
         setSize(600,450);
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -170,7 +171,7 @@ public class GestionProjet extends JDialog
         ArrayList<Projet> listeProjets = new ArrayList<>();
 
         try {
-            listeProjets = ap.getProjet(debutNomOuPrenom);
+            listeProjets = ae.getProjet(debutNomOuPrenom);
         } catch (DatabaseConnexionException e) {
             new ExceptionDialog(this, e);
             dispose();
@@ -207,18 +208,18 @@ public class GestionProjet extends JDialog
                 ProjetEditor.ModeEdition.VISUALISATION);
     }
 
+   /*
 
-// mettre en commentaire à partir d'ici si problème
     private void actionModifier() {
-        Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
-        Projet result ;
-        result = ProjetEditor.showProjetEditor(this,
-                employeUtilisateur, projetEdite,
-                ProjetEditor.ModeEdition.MODIFICATION);
+        Employe employeEdite = model.get(selectionProjet.getSelectedIndex());
+        Employe result ;
+        result = EmployeEditor.showEmployeEditor(this,
+                employeUtilisateur, employeEdite,
+                EmployeEditor.ModeEdition.MODIFICATION);
 
         if (result != null) { // modif validée
             try {
-                ap.updateProjet(result);
+                ae.updateEmploye(result);
             } catch (RowNotFoundOrTooManyRowsException e) {
                 new ExceptionDialog(this, e);
             } catch (DataAccessException e) {
@@ -232,17 +233,21 @@ public class GestionProjet extends JDialog
         }
     }
 
-
+    private void actionCreer() {
+        Client result ;
+        result = ClientEditor.showClientEditor(this,
+                employeUtilisateur, null,
+                ClientEditor.ModeEdition.CREATION);
 
 
 
 
         private void actionCreer()
         {
-            Projet result ;
-            result = ProjetEditor.showProjetEditor(this,
+            Employe result ;
+            result = EmployeEditor.showEmployeEditor(this,
                     employeUtilisateur, null,
-                    ProjetEditor.ModeEdition.CREATION);
+                    EmployeEditor.ModeEdition.CREATION);
 
 
 
@@ -250,7 +255,7 @@ public class GestionProjet extends JDialog
 
         if (result != null) { // saisie validée
             try {
-                ap.insertProjet(result);
+                ae.insertEmploye(result);
             } catch (RowNotFoundOrTooManyRowsException e) {
                 new ExceptionDialog(this, e);
             } catch (DataAccessException e) {
@@ -266,7 +271,7 @@ public class GestionProjet extends JDialog
 
     }
 
-
+    */
 
     private void actionRendreInactif()
     {
