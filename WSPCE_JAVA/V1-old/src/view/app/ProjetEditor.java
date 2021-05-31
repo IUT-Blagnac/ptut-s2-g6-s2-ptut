@@ -257,9 +257,9 @@ public class ProjetEditor extends JDialog {
         dateFinEstimeeLabel.setFont(normalFont);
         champsPanel.add(dateFinEstimeeLabel);
 
-        dateDebutText = new JTextField();
-        dateDebutText.setPreferredSize(dimensionText);
-        champsPanel.add(dateDebutText);
+        dateFinEstimeeText = new JTextField();
+        dateFinEstimeeText.setPreferredSize(dimensionText);
+        champsPanel.add(dateFinEstimeeText);
 
         // Date de fin réelle
         dateFinReelLabel = new JLabel("Date de début") ;
@@ -268,9 +268,9 @@ public class ProjetEditor extends JDialog {
         dateFinReelLabel.setFont(normalFont);
         champsPanel.add(dateFinReelLabel);
 
-        dateDebutText = new JTextField();
-        dateDebutText.setPreferredSize(dimensionText);
-        champsPanel.add(dateDebutText);
+        dateFinReelText = new JTextField();
+        dateFinReelText.setPreferredSize(dimensionText);
+        champsPanel.add(dateFinReelText);
         
 
         // estActif
@@ -391,9 +391,11 @@ public class ProjetEditor extends JDialog {
         // On récupere tous les elements pour créer le projet
         Projet projet ;
         if (modeActuel == ProjetEditor.ModeEdition.CREATION){
-            projet = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, 1 ) ;
+
+            //à confirmer pour le dernier argument du constructeur.
+            projet = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, roleId ) ;
         }else {
-            projet = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, 1 ) ;
+            projet = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, roleId ) ;
         }
 
 
