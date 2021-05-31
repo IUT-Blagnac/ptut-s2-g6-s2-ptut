@@ -350,7 +350,7 @@ public class ProjetEditor extends JDialog {
             dateDebutText.setText(projetEdite.getDateDebut().toString());
             dateFinEstimeeText.setText(projetEdite.getDateFinEstimee().toString());
             dateFinReelText.setText(projetEdite.getDateFinReel().toString());
-            estActifTB.setSelected ( (projetEdite.getEstActif() == Employe.EST_ACTIF) );
+            estActifTB.setSelected ( (projetEdite.getEstActif() == Projet.EST_ACTIF) );
 
         }
     }

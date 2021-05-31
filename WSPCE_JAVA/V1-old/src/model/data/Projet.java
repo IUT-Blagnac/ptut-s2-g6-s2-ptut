@@ -12,7 +12,7 @@ public class Projet {
 	private Date dateDebut;
 	private Date dateFinEstimee;
 	private Date dateFinReel;
-	private int estActif;
+	public static int EST_ACTIF;
 	private int idCli;
 	
 	public Projet() {
