@@ -303,7 +303,7 @@ public class ProjetEditor extends JDialog {
                 chefBouton.setEnabled(true);
                 employeBouton.setEnabled(true);
 
-                titreLabel.setText("Créer Employé");
+                titreLabel.setText("Créer Projet");
 
                 enregistrerBouton.setText("Enregister");
                 annulerBouton.setText("Annuler");
@@ -319,7 +319,7 @@ public class ProjetEditor extends JDialog {
                 chefBouton.setEnabled(true);
                 employeBouton.setEnabled(true);
 
-                titreLabel.setText("Modifier Employé");
+                titreLabel.setText("Modifier Projet");
 
                 enregistrerBouton.setText("Modifier");
                 annulerBouton.setText("Annuler");
