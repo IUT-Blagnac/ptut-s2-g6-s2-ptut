@@ -13,7 +13,7 @@ image:https://www.iut-blagnac.fr/images/structure/iut-blagnac-logo.png[IUT,width
 image::https://www.iut-blagnac.fr/images/structure/logo-iut-blagnac.png[UT2J,width=20%]
 
 
-*Membres* : _Alice, Bob_
+*Membres* : _Nathan, Hugo, Vincent, Clément_
 
 
 toc::[]
@@ -42,8 +42,8 @@ NOTE: Vous pouvez pour cela reprendre la façon de faire du projet BCOO.
 
 Voici la liste des fonctionalités développées :
 
-- bla
-- bla
+- Gestion de projets
+- Gestion de clients
 
 NOTE: Doit être cohérent avec votre diagramme des UC.
 
@@ -86,18 +86,45 @@ Le CRUD des prélèvements automatiques est découpé sur les versions 2 (Liste 
 
 == Nouvelles fonctionnalités
 
-=== Fonctionnalité xxx
+=== Fonctionnalité gestion de projets
 - Use Case
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/848593553789550632/unknown.png[UC]
+
 - Diagramme de classes
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/848593581550731294/unknown.png[DC]
+
+
 - SNI
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/848595115634589756/unknown.png[SNI]
+
+- Diagramme de séquence de gestion de projets
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/848593612476514334/unknown.png[DS-GP]
+
 - Extraits de code significatifs commentés si nécessaires avec spéc.
 ddés
 - Éléments complément. nécessaires à mise en œuvre du dvpt
 
-=== Fonctionnalité xxx
+=== Fonctionnalité gestion de clients
 - Use Case
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/848593553789550632/unknown.png[UC]
+
 - Diagramme de classes
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/848593581550731294/unknown.png[DC]
+
 - SNI
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/848595115634589756/unknown.png[SNI]
+
+- Diagramme de séquence de gestion de clients
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/848593648513712168/unknown.png[DS-GC]
+
 - Extraits de code significatifs commentés si nécessaires avec spéc.
 ddés
 - Éléments complément. nécessaires à mise en œuvre du dvpt

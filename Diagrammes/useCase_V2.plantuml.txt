@@ -1,0 +1,11 @@
+@startuml
+top to bottom direction
+actor ChefDeProjet as C
+C-> (Gérer les projets)
+(Gérer les projets) <. (Créer une tâche) : extends
+(Gérer tâche) .> (Créer une tâche) : include
+C --> (Gérer les employés)
+C --> (Gérer les clients)
+
+
+@enduml

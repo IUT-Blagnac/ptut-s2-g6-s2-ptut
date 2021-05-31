@@ -1,0 +1,47 @@
+@startuml
+
+hide circle
+hide empty members
+hide empty methods
+
+
+participant ChefDeProjet as c
+participant Application as App
+participant Serveur as s
+
+activate c
+activate App
+
+c -> App : Connexion
+
+activate s
+App -> s : Demande vérification de l'association mdp/login
+App <-- s : Renvoie une réponse
+deactivate s
+c -> App : Selectionne un projet
+c <- App : Renvoie les détails du projet
+c -> App : Demande création d une tâche
+c <-- App : Demande la saisie des données
+c -> App : Envoi nom
+c -> App : Envoi description
+c -> App : Envoi date de début
+c -> App : Envoi date de fin
+
+activate s
+App -> s : Envoi les données saisies
+s -> s : Stock les données
+s --> App : Confirmation de la création de la tâche
+App -> c : Confirmation de la création de la tâche
+
+App --> c:Demande le niveau et les compétences requises
+c -> App :Envoi le niveau et les compétences requises
+App -> s : Envoi les données saisies
+s -> s : Stock les données
+s --> App : Confirmation de l enregistrement
+App -> c : Confirmation de l enregistrement
+
+deactivate c
+deactivate App
+deactivate s
+
+@enduml
