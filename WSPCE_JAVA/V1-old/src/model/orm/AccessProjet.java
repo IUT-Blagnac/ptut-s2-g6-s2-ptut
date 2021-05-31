@@ -31,7 +31,7 @@ public class AccessProjet {
 			ResultSet rs = pst.executeQuery();
 			
 			 while (rs.next()) {
-				 Projet pro = new Projet(rs.getInt("id"), rs.getString("nom"), rs.getString("description"), rs.getDate("dateDebut"), rs.getDate("dateFinEstimee"), rs.getDate("dateFinReel"), rs.getInt("estActif"));
+				 Projet pro = new Projet(rs.getInt("id"), rs.getString("nom"), rs.getString("description"), rs.getDate("dateDebut"), rs.getDate("dateFinEstimee"), rs.getDate("dateFinReel"), rs.getInt("estActif"), rs.getInt("idNomCli"));
 				 alProjet.add(pro);
 			 }
 
@@ -50,23 +50,49 @@ public class AccessProjet {
 			
 			String query = "Select p.*"
 					+ "From Projet p"
-					+ "Where nom = p.nom";
+					+ "Where nom = ?";
 			
 			PreparedStatement pst = con.prepareStatement(query);	
 			System.err.println(query);
 			ResultSet rs = pst.executeQuery();
 			
 			 while (rs.next()) {
-				 Projet pro = new Projet(rs.getInt("id"), rs.getString("nom"), rs.getString("description"), rs.getDate("dateDebut"), rs.getDate("dateFinEstimee"), rs.getDate("dateFinReel"), rs.getInt("estActif"));
+				 Projet pro = new Projet(rs.getInt("id"), rs.getString("nom"), rs.getString("description"), rs.getDate("dateDebut"), rs.getDate("dateFinEstimee"), rs.getDate("dateFinReel"), rs.getInt("estActif"), rs.getInt("estActif"));
 				 alProjet.add(pro);
 			 }
 
 			return alProjet;
 			
 		}catch (SQLException e) {
-			throw new DataAccessException(Table.Projet, Order.SELECT, "Erreur accÃ©s", e);
+			throw new DataAccessException(Table.Projet, Order.SELECT, "Erreur accés", e);
         }
 		
+	}
+	
+	public ArrayList<Projet> getProjet(int pIdCli) throws DatabaseConnexionException, DataAccessException{
+		ArrayList<Projet> alProjet =  new ArrayList<>();
+		
+		try {
+			Connection con = LogToDatabase.getConnexion();
+			
+			String query = "Select p.*"
+					+ "From Projet p"
+					+ "Where p.IDNOMCLI = ";
+			
+			PreparedStatement pst = con.prepareStatement(query);	
+			System.err.println(query);
+			ResultSet rs = pst.executeQuery();
+			
+			 while (rs.next()) {
+				 Projet pro = new Projet(rs.getInt("id"), rs.getString("nom"), rs.getString("description"), rs.getDate("dateDebut"), rs.getDate("dateFinEstimee"), rs.getDate("dateFinReel"), rs.getInt("estActif"), rs.getInt("estActif"));
+				 alProjet.add(pro);
+			 }
+
+			return alProjet;
+			
+		}catch (SQLException e) {
+			throw new DataAccessException(Table.Projet, Order.SELECT, "Erreur accés", e);
+        }	
 	}
 	
 	public void insertProjet (Projet pProjet) throws RowNotFoundOrTooManyRowsException, DataAccessException, DatabaseConnexionException {
@@ -82,29 +108,60 @@ public class AccessProjet {
 			 call.setDate(3, (Date) pProjet.getDateDebut());
 			 call.setDate(4, (Date) pProjet.getDateFinEstimee());
 			 call.setInt(5, pProjet.getEstActif());
+			 call.setInt(6, pProjet.getIdCli());
 			 
-			 call.registerOutParameter(6, java.sql.Types.INTEGER);
+			 call.registerOutParameter(7, java.sql.Types.INTEGER);
 			 
 			 call.execute();
 			 
-			 int retour = call.getInt(6);
+			 int retour = call.getInt(7);
 			 
 			 if (retour==0) {
-				 System.out.println("AjoutÃ©e");
+				 System.out.println("Ajoutée");
 			 }else {
 				 System.out.println("erreur");
 			 }
 			 
 		 }catch (SQLException e) {
-				throw new DataAccessException(Table.Projet, Order.SELECT, "Erreur accÃ©s", e);
+				throw new DataAccessException(Table.Projet, Order.SELECT, "Erreur accés", e);
 	     }
 	}
+	
+	public void updateProjet (Projet pProjet) throws RowNotFoundOrTooManyRowsException, DataAccessException, DatabaseConnexionException {
+		 try {
+	            Connection con = LogToDatabase.getConnexion();
 
-	//vide pour l'instant pour les tests, pour Nathan
-	public void updateProjet(Projet pfProjet)
-	{
+	            String query = "UPDATE PROJET SET "
+	                    + "NOM = " + "?" + " , "
+	                    + "DESCRIPTION = " + "?" + " , "
+	                    + "DATEDEBUT = " + "?" + " , "
+	                    + "DATEFINESTIMEE = " + "?"  + " , "
+	                    + "ESTACTIF = " + "?"  + " , "
+	                    + "IDNOMCLI = "  + "?" + " , "
+	                    + "WHERE IDNOM = ? ";
 
+	            PreparedStatement pst = con.prepareStatement(query);
+	            pst.setString(1, pProjet.getNom());
+	            pst.setString(2, pProjet.getDescription()) ;
+	            pst.setDate(3, (Date) pProjet.getDateDebut());
+	            pst.setDate(4, (Date) pProjet.getDateFinEstimee());
+	            pst.setInt(5, pProjet.getEstActif());
+	            pst.setInt (6, pProjet.getIdCli());
+	            pst.setInt (7, pProjet.getId());
+
+	            System.err.println(query);
+
+	            int result = pst.executeUpdate();
+	            pst.close();
+
+	            if (result != 1) {
+	                con.rollback();
+	                throw new  RowNotFoundOrTooManyRowsException(Table.Projet, Order.UPDATE, "Update anormal (update de moins ou plus d'une ligne)", null, result);
+	            }
+	            con.commit();
+
+	        } catch (SQLException e) {
+	        	throw new DataAccessException(Table.Projet, Order.UPDATE, "Erreur accés", e);
+	        }
 	}
-	
-	
 }
