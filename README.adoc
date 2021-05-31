@@ -70,7 +70,7 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |         | Code V1     |                       |
 |         | Recette V1  | link:Documentations/cahier_de_recettes_v1.pdf[PDF]                      |
 |         | `jar` projet |    |
-| 31/05   | Gantt V2-1    |       |
+| 31/05   | Gantt V2-1    | link:/gantt/V2/ptut_v2.pdf[PDF]      |
 | 01/06   | Doc. Util. V2 |            |           
 |         | Doc. Tec. V2 |                  |     
 |         | Code V2     |                       |
