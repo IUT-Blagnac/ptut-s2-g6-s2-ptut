@@ -5,6 +5,10 @@ import java.util.Date;
 public class Projet {
 	
 	public static final int ID_PROJET_INEXISTANT = -1000;
+
+	public static final int EST_ACTIF = 1;
+	public static final int EST_INACTIF = 0;
+
 	
 	private int id;
 	private String nom;
@@ -12,7 +16,7 @@ public class Projet {
 	private Date dateDebut;
 	private Date dateFinEstimee;
 	private Date dateFinReel;
-	public static int EST_ACTIF;
+	private int estActif ;
 	private int idCli;
 	
 	public Projet() {

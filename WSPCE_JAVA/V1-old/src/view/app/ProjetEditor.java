@@ -374,8 +374,8 @@ public class ProjetEditor extends JDialog {
     }
 
     /**
-     * Genere l'employe avec la valeurs des champs remplis
-     * @return un employe
+     * Genere le projet avec la valeurs des champs remplis
+     * @return un projet
      */
     private Projet generateProjet() throws ParseException {
         // On génére le role de l'employe
@@ -386,14 +386,14 @@ public class ProjetEditor extends JDialog {
             roleId = Role.ID_ROLE_EMPLOYE ;
         }
 
-        int estActifE;
-        estActifE = (estActifTB.isSelected() ? Employe.EST_ACTIF : Employe.EST_INACTIF);
+        int estActifP;
+        estActifP = (estActifTB.isSelected() ? Projet.EST_ACTIF : Projet.EST_INACTIF);
         // On récupere tous les elements pour créer le projet
         Projet projet ;
         if (modeActuel == ProjetEditor.ModeEdition.CREATION){
-            projet = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), 1, 1 ) ;
+            projet = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, 1 ) ;
         }else {
-            projet = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), 1, 1 ) ;
+            projet = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, 1 ) ;
         }
 
 
