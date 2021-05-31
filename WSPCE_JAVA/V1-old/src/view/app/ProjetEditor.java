@@ -365,18 +365,22 @@ public class ProjetEditor extends JDialog {
      * Genere le projet avec la valeurs des champs remplis
      * @return un projet
      */
-    private Projet generateProjet() throws ParseException {
+    private Projet generateProjet() throws ParseException
+    {
 
 
         int estActifP;
         estActifP = (estActifTB.isSelected() ? Projet.EST_ACTIF : Projet.EST_INACTIF);
         // On récupere tous les elements pour créer le projet
         Projet projet ;
-        if (modeActuel == ProjetEditor.ModeEdition.CREATION){
+        if (modeActuel == ProjetEditor.ModeEdition.CREATION)
+        {
 
             //à confirmer pour le dernier argument du constructeur.
             projet = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, 1 ) ;
-        }else {
+        }
+        else
+        {
             projet = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, 1 ) ;
         }
 
@@ -384,7 +388,8 @@ public class ProjetEditor extends JDialog {
         return projet ;
     }
 
-    private void actionOK() throws ParseException {
+    private void actionOK() throws ParseException
+    {
         if (verifChamps())
         {
 
