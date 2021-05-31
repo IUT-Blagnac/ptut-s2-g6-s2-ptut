@@ -16,31 +16,6 @@ import model.orm.exception.RowNotFoundOrTooManyRowsException;
 import model.orm.exception.Table;
 
 public class AccessProjet {
-	public ArrayList<Projet> getProjet() throws DataAccessException, DatabaseConnexionException, RowNotFoundOrTooManyRowsException {
-		ArrayList<Projet> alProjet =  new ArrayList<>();
-		
-		try {
-			Connection con = LogToDatabase.getConnexion();
-			
-			String query = "Select p.* "
-					+ "From Projet p "
-					+ "Order by p.nom";
-			
-			PreparedStatement pst = con.prepareStatement(query);	
-			System.err.println(query);
-			ResultSet rs = pst.executeQuery();
-			
-			 while (rs.next()) {
-				 Projet pro = new Projet(rs.getInt("id"), rs.getString("nom"), rs.getString("description"), rs.getDate("dateDebut"), rs.getDate("dateFinEstimee"), rs.getDate("dateFinReel"), rs.getInt("estActif"), rs.getInt("idNomCli"));
-				 alProjet.add(pro);
-			 }
-
-			return alProjet;
-			
-		}catch (SQLException e) {
-			throw new DataAccessException(Table.Projet, Order.SELECT, "Erreur accés", e);
-        }
-	}
 	
 	public ArrayList<Projet> getProjet(String pNom) throws DataAccessException, DatabaseConnexionException, RowNotFoundOrTooManyRowsException {
 		ArrayList<Projet> alProjet =  new ArrayList<>();
@@ -48,7 +23,7 @@ public class AccessProjet {
 		try {
 			Connection con = LogToDatabase.getConnexion();
 			
-			pNom = "'" + pNom.toUpperCase() + "'";
+			pNom = "%" + pNom.toUpperCase() + "%";
 			
 			String query = "Select p.* "
 					+ "From Projet p "
@@ -60,7 +35,7 @@ public class AccessProjet {
 			ResultSet rs = pst.executeQuery();
 			
 			 while (rs.next()) {
-				 Projet pro = new Projet(rs.getInt("id"), rs.getString("nom"), rs.getString("description"), rs.getDate("dateDebut"), rs.getDate("dateFinEstimee"), rs.getDate("dateFinReel"), rs.getInt("estActif"), rs.getInt("estActif"));
+				 Projet pro = new Projet(rs.getInt("idNom"), rs.getString("nom"), rs.getString("descriptions"), rs.getDate("dateDebut"), rs.getDate("dateFinEstimee"), rs.getDate("dateFinReel"), rs.getInt("estActif"), rs.getInt("idNomCli"));
 				 alProjet.add(pro);
 			 }
 
@@ -80,9 +55,10 @@ public class AccessProjet {
 			
 			String query = "Select p.*"
 					+ "From Projet p"
-					+ "Where p.IDNOMCLI = ";
+					+ "Where p.idNomCli = ?";
 			
 			PreparedStatement pst = con.prepareStatement(query);	
+			pst.setInt(1, pIdCli);
 			System.err.println(query);
 			ResultSet rs = pst.executeQuery();
 			
