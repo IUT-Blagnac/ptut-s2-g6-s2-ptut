@@ -112,7 +112,7 @@ public class GestionProjet extends JDialog
         scroll.setPreferredSize(new Dimension(270, 270));
         scroll.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
         contentList.add(scroll);
-        scroll.setBorder(BorderFactory.createTitledBorder("Liste des employés"));
+        scroll.setBorder(BorderFactory.createTitledBorder("Liste des projets"));
         contentList.setBorder(BorderFactory.createEmptyBorder(25,30,0,0));
 
         JLabel titre = new JLabel("Gestion des employés");
@@ -122,7 +122,7 @@ public class GestionProjet extends JDialog
 
         rechercherButton = new JButton("Rechercher");
 
-        rechercherButton.addActionListener(e -> actionRechercheEmployes());
+        rechercherButton.addActionListener(e -> actionRechercherProjets());
 
 
         researchBar = new JTextField("");
@@ -144,7 +144,7 @@ public class GestionProjet extends JDialog
 
         this.setLocationRelativeTo(this.getParent());
 
-        actionRechercheEmployes();
+        actionRechercherProjets();
         verifierEtatComposants();
     }
 
@@ -163,7 +163,7 @@ public class GestionProjet extends JDialog
         }
     }
 
-    private void actionRechercheEmployes() {
+    private void actionRechercherProjets() {
 
         String debutNomOuPrenom = this.researchBar.getText();
 
@@ -193,7 +193,7 @@ public class GestionProjet extends JDialog
     }
 
     private void actionResearchBar() {
-        this.actionRechercheEmployes();
+        this.actionRechercherProjets();
     }
 
     private void actionRetour() {
@@ -228,7 +228,7 @@ public class GestionProjet extends JDialog
                 this.dispose();;
             }
 
-            actionRechercheEmployes ();
+            actionRechercherProjets ();
         }
     }
 
@@ -260,7 +260,7 @@ public class GestionProjet extends JDialog
                 this.dispose();;
             }
 
-            actionRechercheEmployes ();
+            actionRechercherProjets ();
         }
 
 
