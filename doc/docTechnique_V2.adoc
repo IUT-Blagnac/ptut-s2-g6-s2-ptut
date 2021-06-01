@@ -129,6 +129,27 @@ image:https://cdn.discordapp.com/attachments/848593512563605504/8485936485137121
 ddés
 - Éléments complément. nécessaires à mise en œuvre du dvpt
 
+=== Fonctionnalité gestion de tâches
+- Use Case
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/849208812790480896/unknown.png[UC]
+
+- Diagramme de classes
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/849209534576721931/unknown.png[DC]
+
+- SNI
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/849209976039276556/unknown.png[SNI]
+
+- Diagramme de séquence de gestion de tâches
+
+image:https://cdn.discordapp.com/attachments/848593512563605504/849209048816681010/unknown.png[DS-GC]
+
+- Extraits de code significatifs commentés si nécessaires avec spéc.
+ddés
+- Éléments complément. nécessaires à mise en œuvre du dvpt
+
 == Ressources complémentaires
 
 - La javadoc générée à partir de notre code Java est ici : ??
