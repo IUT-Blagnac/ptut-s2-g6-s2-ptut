@@ -70,11 +70,6 @@ public class ProjetEditor extends JDialog {
 
 
 
-
-    // données en BD
-    private ArrayList<Competence> alCompetenceBD;
-    private ArrayList<Niveau> alNiveauBD;
-
     // Employe qui utilise l'application
     private Employe employueUtilisateur;
 
@@ -130,9 +125,7 @@ public class ProjetEditor extends JDialog {
         this.projetResult = null;
         this.modeActuel = pfMode;
 
-
-
-
+        
 
         setTitle("Gestion d'un projet");
         setSize(400, 620) ;
@@ -361,24 +354,7 @@ public class ProjetEditor extends JDialog {
         }
     }
 
-    private int comptenceValueToIndex (int idCompetence) {
-        for (int i=0; i<alCompetenceBD.size(); i++) {
-            if (alCompetenceBD.get(i).getIdCompetence() == idCompetence) {
-                return i;
-            }
-        }
-        return -1; // Fin anormale
-    }
-
-    private int niveauValueToIndex (int idNiveau) {
-        for (int i=0; i<alNiveauBD.size(); i++) {
-            if (alNiveauBD.get(i).getIdNiveau() == idNiveau) {
-                return i;
-            }
-        }
-        return -1; // Fin anormale
-    }
-
+  
     /**
      * Genere le projet avec la valeurs des champs remplis
      * @return un projet

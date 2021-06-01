@@ -33,7 +33,6 @@ public class GestionClient extends JDialog
 
     private JButton createButton;
     private JButton voirButton;
-    private JButton changerMPButton;
     private JButton modifierButton;
     private JButton rechercherButton;
     private JButton retourButton;
@@ -230,22 +229,9 @@ public class GestionClient extends JDialog
                 employeUtilisateur, null,
                 ClientEditor.ModeEdition.CREATION);
 
-
-
-/*
-        private void actionCreer() {
-            Employe result ;
-            result = EmployeEditor.showEmployeEditor(this,
-                    employeUtilisateur, null,
-                    EmployeEditor.ModeEdition.CREATION);
-
-
-
-
-
         if (result != null) { // saisie validée
             try {
-                ae.insertEmploye(result);
+                ac.insertClient(result);
             } catch (RowNotFoundOrTooManyRowsException e) {
                 new ExceptionDialog(this, e);
             } catch (DataAccessException e) {
@@ -255,10 +241,10 @@ public class GestionClient extends JDialog
                 this.dispose();;
             }
 
-            actionRechercheEmployes ();
+            actionRechercheClient();
         }
 
- */
+
     }
 
 }
