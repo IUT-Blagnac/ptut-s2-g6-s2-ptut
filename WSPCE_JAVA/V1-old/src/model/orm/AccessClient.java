@@ -16,12 +16,12 @@ import model.orm.exception.Table;
 
 public class AccessClient {
 	
-	public ArrayList<Client> getClient() throws DataAccessException, DatabaseConnexionException{
+	public ArrayList<Client> getClient(String pNom) throws DataAccessException, DatabaseConnexionException{
 		ArrayList<Client> alClient=  new ArrayList<>();		
 		try {
 			Connection con = LogToDatabase.getConnexion();
 			
-			String pNom = "%%";
+			pNom = "%"+pNom.toUpperCase()+"%";
 			
 			String query = "Select c.* "
 					+ "From Client c "
@@ -75,17 +75,17 @@ public class AccessClient {
 				throw new DataAccessException(Table.Client, Order.SELECT, "Erreur acc�s", e);
 	     }
 	}
-	public void updateProjet (Client pClient) throws RowNotFoundOrTooManyRowsException, DataAccessException, DatabaseConnexionException {
+	public void updateClient (Client pClient) throws RowNotFoundOrTooManyRowsException, DataAccessException, DatabaseConnexionException {
 		try {
 			Connection con = LogToDatabase.getConnexion();
 
 	        String query = "UPDATE CLIENT SET "
 	                    + "NOM = " + "?" + " , "
-	                    + "DESCRIPTION = " + "?" + " , "
-	                    + "DATEDEBUT = " + "?" + " , "
-	                    + "DATEFINESTIMEE = " + "?"  + " , "
-	                    + "ESTACTIF = " + "?"  + " , "
-	                    + "IDNOMCLI = "  + "?" + " , "
+	                    + "PRENOM = " + "?" + " , "
+	                    + "ENTREPRISE = " + "?" + " , "
+	                    + "EMAIL = " + "?"  + " , "
+	                    + "NUMERO = " + "?"  + " , "
+	                    + "ESTACTIF = "  + "?" + " , "
 	                    + "WHERE IDNOM = ? ";
 
 	        PreparedStatement pst = con.prepareStatement(query);

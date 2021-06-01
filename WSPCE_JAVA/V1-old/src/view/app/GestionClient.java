@@ -3,7 +3,7 @@ package view.app;
 
 import model.data.Client;
 import model.data.Employe;
-
+import model.orm.AccessClient;
 import model.orm.AccessEmploye;
 import model.orm.exception.DataAccessException;
 import model.orm.exception.DatabaseConnexionException;
@@ -27,9 +27,9 @@ public class GestionClient extends JDialog
     // L'employé qui utilise l'application
     private Employe employeUtilisateur;
 
-    private AccessEmploye ae = new AccessEmploye() ;
+    private AccessClient ac = new AccessClient() ;
 
-    private DefaultListModel<Employe> model = new DefaultListModel<Employe>();
+    private DefaultListModel<Client> model = new DefaultListModel<Client>();
 
     private JButton createButton;
     private JButton voirButton;
@@ -60,9 +60,6 @@ public class GestionClient extends JDialog
         JPanel contentButtons = new JPanel(new FlowLayout());
         JPanel contentList = new JPanel();
 
-        changerMPButton = new JButton("Modifier MDP");
-        changerMPButton.addActionListener(e -> actionChangerMP());
-        changerMPButton.setBackground(new Color(104, 177, 255)) ;
 
         createButton = new JButton("Créer");
         createButton.addActionListener(e -> actionCreer());
@@ -84,7 +81,6 @@ public class GestionClient extends JDialog
         voirButton.setPreferredSize(new Dimension(200,40));
         modifierButton.setPreferredSize(new Dimension(200,40));
         retourButton.setPreferredSize(new Dimension(200,40));
-        changerMPButton.setPreferredSize(new Dimension(200,20));
 
         contentButtons.add(createButton);
         contentButtons.add(voirButton);
@@ -96,7 +92,6 @@ public class GestionClient extends JDialog
         espace = new JLabel();
         espace.setPreferredSize(new Dimension(200,20));
         contentButtons.add(espace);
-        contentButtons.add(changerMPButton);
         contentButtons.setPreferredSize(new Dimension(250,300));
         contentButtons.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
 
@@ -122,7 +117,7 @@ public class GestionClient extends JDialog
 
         rechercherButton = new JButton("Rechercher");
 
-        rechercherButton.addActionListener(e -> actionRechercheEmployes());
+        rechercherButton.addActionListener(e -> actionRechercheClient());
 
 
         researchBar = new JTextField("");
@@ -144,7 +139,7 @@ public class GestionClient extends JDialog
 
         this.setLocationRelativeTo(this.getParent());
 
-        actionRechercheEmployes();
+        actionRechercheClient();
         verifierEtatComposants();
     }
 
@@ -156,37 +151,31 @@ public class GestionClient extends JDialog
     private void verifierEtatComposants(){
         if (selectionClient.getSelectedIndex()<0) {
             voirButton.setEnabled(false);
-            changerMPButton.setEnabled(false);
-            changerMPButton.setBackground(new Color(104, 177, 255)) ;
             modifierButton.setEnabled(false);
         } else {
             voirButton.setEnabled(true);
-            changerMPButton.setEnabled(true);
-            changerMPButton.setBackground(new Color(252, 109, 109)) ;
             modifierButton.setEnabled(true);
         }
     }
 
-    private void actionRechercheEmployes() {
+    private void actionRechercheClient() {
 
         String debutNomOuPrenom = this.researchBar.getText();
 
-        ArrayList<Employe> listeEmp = new ArrayList<>();
+        ArrayList<Client> listeClient = new ArrayList<>();
 
         try {
-            listeEmp = ae.getEmployes(debutNomOuPrenom);
+        	listeClient = ac.getClient(debutNomOuPrenom);
         } catch (DatabaseConnexionException e) {
             new ExceptionDialog(this, e);
             dispose();
         } catch (DataAccessException e) {
             new ExceptionDialog(this, e);
-        } catch (RowNotFoundOrTooManyRowsException e) {
-            new ExceptionDialog(this, e);
         }
 
         model.clear() ;
-        for (Employe employe : listeEmp) {
-            model.addElement(employe);
+        for (Client client : listeClient) {
+            model.addElement(client);
         }
 
         if (model.size() > 0) {
@@ -197,7 +186,7 @@ public class GestionClient extends JDialog
     }
 
     private void actionResearchBar() {
-        this.actionRechercheEmployes();
+        this.actionRechercheClient();
     }
 
     private void actionRetour() {
@@ -205,43 +194,23 @@ public class GestionClient extends JDialog
     }
 
     private void actionVoir() {
-        Employe employeEdite = model.get(selectionClient.getSelectedIndex());
-        EmployeEditor.showEmployeEditor(this,
-                employeUtilisateur, employeEdite,
-                EmployeEditor.ModeEdition.VISUALISATION);
+        Client clientEdite = model.get(selectionClient.getSelectedIndex());
+        ClientEditor.showClientEditor(this,
+                employeUtilisateur, clientEdite,
+                ClientEditor.ModeEdition.VISUALISATION);
     }
 
-    private void actionChangerMP() {
-        Employe employeEdite = model.get(selectionClient.getSelectedIndex());
-        String newMP = PasswordEditor.showPassWordEditor(this, employeEdite.getLogin(), PasswordEditor.ModeEdition.MODIFICATION);
-
-        if (newMP != null) {
-            Employe result = new Employe(employeEdite.getId(), employeEdite.getNom(), employeEdite.getPrenom(), employeEdite.getLogin(), newMP, employeEdite.getEstActif(), employeEdite.getIdRole(), employeEdite.getIdCompetence(), employeEdite.getIdNiveau());
-            try {
-                ae.updateEmploye(result);
-            } catch (RowNotFoundOrTooManyRowsException e) {
-                new ExceptionDialog(this, e);
-            } catch (DataAccessException e) {
-                new ExceptionDialog(this, e);
-            } catch (DatabaseConnexionException e) {
-                new ExceptionDialog(this, e);
-                this.dispose();
-            }
-
-            actionRechercheEmployes ();
-        }
-    }
 
     private void actionModifier() {
-        Employe employeEdite = model.get(selectionClient.getSelectedIndex());
-        Employe result ;
-        result = EmployeEditor.showEmployeEditor(this,
-                employeUtilisateur, employeEdite,
-                EmployeEditor.ModeEdition.MODIFICATION);
+        Client clientEdite = model.get(selectionClient.getSelectedIndex());
+        Client result ;
+        result = ClientEditor.showClientEditor(this,
+                employeUtilisateur, clientEdite,
+                ClientEditor.ModeEdition.MODIFICATION);
 
         if (result != null) { // modif validée
             try {
-                ae.updateEmploye(result);
+                ac.updateClient(result);
             } catch (RowNotFoundOrTooManyRowsException e) {
                 new ExceptionDialog(this, e);
             } catch (DataAccessException e) {
@@ -251,7 +220,7 @@ public class GestionClient extends JDialog
                 this.dispose();;
             }
 
-            actionRechercheEmployes ();
+            actionRechercheClient ();
         }
     }
 
