@@ -49,7 +49,7 @@ public class AccessClient {
 			 Connection con = LogToDatabase.getConnexion();
 			 CallableStatement call;
 			 
-			 String query = "{Execute create_projet(?, ?, ?, ?, ?, ?, ?)}";
+			 String query = "{call create_projet(?, ?, ?, ?, ?, ?, ?)}";
 			 call = con.prepareCall(query);
 			 
 			 call.setString(1, pClient.getNom());
@@ -66,9 +66,9 @@ public class AccessClient {
 			 int retour = call.getInt(7);
 			 
 			 if (retour==0) {
-				 System.out.println("Ajoutée");
+				 con.commit();
 			 }else {
-				 System.out.println("erreur");
+				 con.rollback();
 			 }
 			 
 		 }catch (SQLException e) {
@@ -86,7 +86,7 @@ public class AccessClient {
 	                    + "EMAIL = " + "?"  + " , "
 	                    + "NUMERO = " + "?"  + " , "
 	                    + "ESTACTIF = "  + "?" + " , "
-	                    + "WHERE IDNOM = ? ";
+	                    + "WHERE IDNOMCLI = ? ";
 
 	        PreparedStatement pst = con.prepareStatement(query);
 	        pst.setString(1, pClient.getNom());
@@ -111,4 +111,5 @@ public class AccessClient {
 	        throw new DataAccessException(Table.Client, Order.UPDATE, "Erreur accï¿½s", e);
 	    }
 	}
+	
 }

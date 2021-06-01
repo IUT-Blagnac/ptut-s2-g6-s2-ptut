@@ -1,11 +1,7 @@
 package view.app;
 
 import model.data.*;
-import model.orm.AccessCompetence;
-import model.orm.AccessNiveau;
 import model.orm.AccessProjet;
-import model.orm.exception.DataAccessException;
-import model.orm.exception.DatabaseConnexionException;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -69,17 +65,6 @@ public class ClientEditor extends JDialog {
     
     private JCheckBox estActifTB;
 
-    private JComboBox<String> comboBoxProjet ;
-    
-    // Liste de valeurs des ComboBox
-    private String[] allStringProjet ;
-
-
-    // Acces en BD
-    private AccessProjet ap = new AccessProjet();
-
-    // données en BD
-    private ArrayList<Projet> alProjetBD;
 
     // Employe qui utilise l'application
 	private Employe employueUtilisateur;
@@ -379,10 +364,7 @@ public class ClientEditor extends JDialog {
      * @return un employe
      */
     private Client generateClient(){
-        // On génére le role de l'employe
-
-        //int indexNiv = comboBoxNiveau.getSelectedIndex() ;
-        //int nivId = alNiveauBD.get(indexNiv).getIdNiveau();
+        
         int estActifE;
         estActifE = (estActifTB.isSelected() ? Client.EST_ACTIF : Client.EST_INACTIF);
         // On récupere tous les elements pour créer l'employé
