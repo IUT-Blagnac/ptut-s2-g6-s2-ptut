@@ -6,3 +6,10 @@ WSPCE_JAVA/V1-old/bin/view/app/ProjetEditor$1.class
 WSPCE_JAVA/V1-old/bin/view/app/ProjetEditor$1.class
 WSPCE_JAVA/V1-old/bin/view/app/ProjetEditor.class
 *.class
+WSPCE_JAVA/V1-old/bin/view/app/GestionProjet.class
+*.class
+WSPCE_JAVA/V1-old/bin/model/orm/AccessProjet.class
+WSPCE_JAVA/V1-old/bin/view/app/GestionProjet$1.class
+WSPCE_JAVA/V1-old/bin/view/app/GestionProjet.class
+WSPCE_JAVA/V1-old/bin/view/app/ProjetEditor$ModeEdition.class
+WSPCE_JAVA/V1-old/bin/view/app/ProjetEditor.class

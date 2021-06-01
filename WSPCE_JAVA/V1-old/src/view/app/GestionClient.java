@@ -37,7 +37,7 @@ public class GestionClient extends JDialog
     private JButton modifierButton;
     private JButton rechercherButton;
     private JButton retourButton;
-    private JList<Employe> selectionEmploye;
+    private JList<Client> selectionClient;
     private JScrollPane scroll;
     private JTextField researchBar;
 
@@ -50,7 +50,7 @@ public class GestionClient extends JDialog
 
         setModal(true);
 
-        setTitle("Gestion des employés");
+        setTitle("Gestion des clients");
         setResizable(true);
         setSize(600,450);
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -102,20 +102,20 @@ public class GestionClient extends JDialog
 
         model = new DefaultListModel<>();
 
-        selectionEmploye = new JList<>(model);
-        selectionEmploye.addListSelectionListener(new ListSelectionListener() {
+        selectionClient = new JList<>(model);
+        selectionClient.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent arg0) {
                 verifierEtatComposants();
             }
         });
-        scroll = new JScrollPane(selectionEmploye);
+        scroll = new JScrollPane(selectionClient);
         scroll.setPreferredSize(new Dimension(270, 270));
         scroll.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
         contentList.add(scroll);
-        scroll.setBorder(BorderFactory.createTitledBorder("Liste des employés"));
+        scroll.setBorder(BorderFactory.createTitledBorder("Liste des clients"));
         contentList.setBorder(BorderFactory.createEmptyBorder(25,30,0,0));
 
-        JLabel titre = new JLabel("Gestion des employés");
+        JLabel titre = new JLabel("Gestion des clients");
         titre.setFont(new Font("Arial",Font.BOLD,22));
         titre.setHorizontalAlignment(SwingConstants.CENTER);
         titre.setBorder(BorderFactory.createEmptyBorder(20,0,20,0));
@@ -154,7 +154,7 @@ public class GestionClient extends JDialog
      */
 
     private void verifierEtatComposants(){
-        if (selectionEmploye.getSelectedIndex()<0) {
+        if (selectionClient.getSelectedIndex()<0) {
             voirButton.setEnabled(false);
             changerMPButton.setEnabled(false);
             changerMPButton.setBackground(new Color(104, 177, 255)) ;
@@ -190,9 +190,9 @@ public class GestionClient extends JDialog
         }
 
         if (model.size() > 0) {
-            selectionEmploye.ensureIndexIsVisible(0);
+            selectionClient.ensureIndexIsVisible(0);
         }
-        selectionEmploye.setSelectedIndex(-1);
+        selectionClient.setSelectedIndex(-1);
         verifierEtatComposants();
     }
 
@@ -205,14 +205,14 @@ public class GestionClient extends JDialog
     }
 
     private void actionVoir() {
-        Employe employeEdite = model.get(selectionEmploye.getSelectedIndex());
+        Employe employeEdite = model.get(selectionClient.getSelectedIndex());
         EmployeEditor.showEmployeEditor(this,
                 employeUtilisateur, employeEdite,
                 EmployeEditor.ModeEdition.VISUALISATION);
     }
 
     private void actionChangerMP() {
-        Employe employeEdite = model.get(selectionEmploye.getSelectedIndex());
+        Employe employeEdite = model.get(selectionClient.getSelectedIndex());
         String newMP = PasswordEditor.showPassWordEditor(this, employeEdite.getLogin(), PasswordEditor.ModeEdition.MODIFICATION);
 
         if (newMP != null) {
@@ -233,7 +233,7 @@ public class GestionClient extends JDialog
     }
 
     private void actionModifier() {
-        Employe employeEdite = model.get(selectionEmploye.getSelectedIndex());
+        Employe employeEdite = model.get(selectionClient.getSelectedIndex());
         Employe result ;
         result = EmployeEditor.showEmployeEditor(this,
                 employeUtilisateur, employeEdite,

@@ -79,13 +79,14 @@ public class AccessProjet {
 			 Connection con = LogToDatabase.getConnexion();
 			 CallableStatement call;
 			 
-			 String query = "Execute create_projet(?, ?, ?, ?, ?, ?)";
+			 String query = "{Execute create_projet(?, ?, ?, ?, ?, ?, ?)}";
 			 call = con.prepareCall(query);
 			 
 			 call.setString(1, pProjet.getNom());
 			 call.setString(2, pProjet.getDescription());
 			 call.setDate(3, (Date) pProjet.getDateDebut());
 			 call.setDate(4, (Date) pProjet.getDateFinEstimee());
+			 // call.setDate(5, (Date) pProjet.getDateFinReel());
 			 call.setInt(5, pProjet.getEstActif());
 			 call.setInt(6, pProjet.getIdCli());
 			 

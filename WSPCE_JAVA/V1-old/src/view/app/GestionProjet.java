@@ -1,7 +1,6 @@
 package view.app;
 
 
-import model.data.Client;
 import model.data.Employe;
 
 import model.data.Projet;
@@ -75,7 +74,7 @@ public class GestionProjet extends JDialog
         voirButton.setBackground(new Color(104, 177, 255)) ;
 
         modifierButton = new JButton("Modifier");
-        //modifierButton.addActionListener(e -> actionModifier());
+        modifierButton.addActionListener(e -> actionModifier());
         modifierButton.setBackground(new Color(104, 177, 255)) ;
 
         retourButton = new JButton("Retour");
@@ -86,10 +85,14 @@ public class GestionProjet extends JDialog
         voirButton.setPreferredSize(new Dimension(200,40));
         modifierButton.setPreferredSize(new Dimension(200,40));
         retourButton.setPreferredSize(new Dimension(200,40));
+        rendreInactifButton.setPreferredSize(new Dimension(200,40));
+
 
         contentButtons.add(createButton);
         contentButtons.add(voirButton);
         contentButtons.add(modifierButton);
+        contentButtons.add(rendreInactifButton);
+
         JLabel espace = new JLabel();
         espace.setPreferredSize(new Dimension(200,20));
         contentButtons.add(espace);
@@ -270,7 +273,10 @@ public class GestionProjet extends JDialog
 
     private void actionRendreInactif()
     {
-
+        Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
+        ProjetEditor.showProjetEditor(this,
+                employeUtilisateur, projetEdite,
+                ProjetEditor.ModeEdition.ACTIF);
     }
 
 }

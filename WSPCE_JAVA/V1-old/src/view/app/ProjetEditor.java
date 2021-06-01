@@ -102,6 +102,7 @@ public class ProjetEditor extends JDialog {
             projetEdite = new Projet();
         }
         else
+
         {
             projetEdite = new Projet(projetEdite);
         }
