@@ -79,7 +79,7 @@ public class AccessProjet {
 			 Connection con = LogToDatabase.getConnexion();
 			 CallableStatement call;
 			 
-			 String query = "{Execute create_projet(?, ?, ?, ?, ?, ?, ?)}";
+			 String query = "{call create_projet(?, ?, ?, ?, ?, ?, ?)}";
 			 call = con.prepareCall(query);
 			 
 			 call.setString(1, pProjet.getNom());
@@ -97,9 +97,9 @@ public class AccessProjet {
 			 int retour = call.getInt(7);
 			 
 			 if (retour==0) {
-				 System.out.println("Ajoutée");
+				 con.commit();
 			 }else {
-				 System.out.println("erreur");
+				 con.rollback();
 			 }
 			 
 		 }catch (SQLException e) {
