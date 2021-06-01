@@ -12,10 +12,9 @@ import java.sql.Date;
 import java.util.ArrayList;
 
 /**
- * Fenetre d'édition d'un employe : Create Update Delete
+ * Fenetre d'édition d'un projet : Create Update Delete
  */
 
-//copié collé et modifié de EmployeEditor, pas encore fini
 
 @SuppressWarnings("serial")
 public class ProjetEditor extends JDialog {
@@ -90,7 +89,7 @@ public class ProjetEditor extends JDialog {
      *
      * @param owner   fenêtre  mère de la boite de dialogue
      * @param employeUtilisateur Employ" connecté à l'application
-     * @param projetEdite  Objet de type Employé à éditer (éventuellement null en création).
+     * @param projetEdite  Objet de type Projet à éditer (éventuellement null en création).
      * @param mode    Mode d'ouverture (CREATION, MODIFICATION, VISUALISATION, ACTIF)
      *
      * @return un objet Client si l'action est validée / null sinon
@@ -119,7 +118,7 @@ public class ProjetEditor extends JDialog {
     // =======================================================================
     // Les constructeurs de la classe sont privés
     // Pour créer un éditeur, Il faut utiliser la méthode statique
-    // == > showEmployeEditor()
+    // == > showProjetEditor()
     // =======================================================================
     ProjetEditor(Projet pfProjetEdite, Employe pfEmployeUtilisateur, Window owner, ProjetEditor.ModeEdition pfMode)
     {
@@ -134,7 +133,7 @@ public class ProjetEditor extends JDialog {
 
 
 
-        setTitle("Gestion d'un Employé");
+        setTitle("Gestion d'un projet");
         setSize(400, 620) ;
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 

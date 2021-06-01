@@ -9,6 +9,7 @@ public class Projet {
 	public static final int EST_ACTIF = 1;
 	public static final int EST_INACTIF = 0;
 
+
 	
 	private int id;
 	private String nom;
