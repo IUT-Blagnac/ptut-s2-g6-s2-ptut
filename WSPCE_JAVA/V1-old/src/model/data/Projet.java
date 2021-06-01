@@ -1,6 +1,6 @@
 package model.data;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class Projet {
 	
@@ -8,6 +8,7 @@ public class Projet {
 
 	public static final int EST_ACTIF = 1;
 	public static final int EST_INACTIF = 0;
+
 
 	
 	private int id;

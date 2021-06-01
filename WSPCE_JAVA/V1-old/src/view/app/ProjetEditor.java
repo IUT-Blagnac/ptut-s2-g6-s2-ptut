@@ -8,21 +8,19 @@ import javax.swing.border.TitledBorder;
 
 import java.awt.*;
 import java.text.ParseException;
-import java.util.Date;
-import java.text.SimpleDateFormat;
+import java.sql.Date;
 import java.util.ArrayList;
 
 /**
- * Fenetre d'édition d'un employe : Create Update Delete
+ * Fenetre d'édition d'un projet : Create Update Delete
  */
 
-//copié collé et modifié de EmployeEditor, pas encore fini
 
 @SuppressWarnings("serial")
 public class ProjetEditor extends JDialog {
 
     public enum ModeEdition {
-        CREATION, MODIFICATION, VISUALISATION
+        CREATION, MODIFICATION, VISUALISATION, ACTIF
         // pas de suppression car fonctionnellement impossible
     };
 
@@ -91,8 +89,8 @@ public class ProjetEditor extends JDialog {
      *
      * @param owner   fenêtre  mère de la boite de dialogue
      * @param employeUtilisateur Employ" connecté à l'application
-     * @param projetEdite  Objet de type Employé à éditer (éventuellement null en création).
-     * @param mode    Mode d'ouverture (CREATION, MODIFICATION, VISUALISATION)
+     * @param projetEdite  Objet de type Projet à éditer (éventuellement null en création).
+     * @param mode    Mode d'ouverture (CREATION, MODIFICATION, VISUALISATION, ACTIF)
      *
      * @return un objet Client si l'action est validée / null sinon
      */
@@ -120,9 +118,10 @@ public class ProjetEditor extends JDialog {
     // =======================================================================
     // Les constructeurs de la classe sont privés
     // Pour créer un éditeur, Il faut utiliser la méthode statique
-    // == > showEmployeEditor()
+    // == > showProjetEditor()
     // =======================================================================
-    ProjetEditor(Projet pfProjetEdite, Employe pfEmployeUtilisateur, Window owner, ProjetEditor.ModeEdition pfMode) {
+    ProjetEditor(Projet pfProjetEdite, Employe pfEmployeUtilisateur, Window owner, ProjetEditor.ModeEdition pfMode)
+    {
 
         super(owner);
         this.employueUtilisateur = pfEmployeUtilisateur ;
@@ -134,7 +133,7 @@ public class ProjetEditor extends JDialog {
 
 
 
-        setTitle("Gestion d'un Employé");
+        setTitle("Gestion d'un projet");
         setSize(400, 620) ;
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 
@@ -288,7 +287,7 @@ public class ProjetEditor extends JDialog {
                 nomText.setEnabled(true);
                 descriptionText.setEnabled(true);
                 dateDebutText.setEnabled(true);
-                dateFinReelText.setEnabled(false);
+                dateFinReelText.setEnabled(true);
                 dateFinEstimeeText.setEnabled(true);
                 estActifTB.setEnabled(true);
 
@@ -313,6 +312,7 @@ public class ProjetEditor extends JDialog {
                 enregistrerBouton.setText("Modifier");
                 annulerBouton.setText("Annuler");
                 break;
+
             case VISUALISATION:
                 idText.setEnabled(false);
                 nomText.setEnabled(false);
@@ -324,6 +324,23 @@ public class ProjetEditor extends JDialog {
 
 
                 titreLabel.setText("Voir Projet");
+
+                enregistrerBouton.setText("");
+                enregistrerBouton.setEnabled(false);
+                annulerBouton.setText("Retour");
+                break;
+
+            case ACTIF:
+                idText.setEnabled(false);
+                nomText.setEnabled(false);
+                descriptionText.setEnabled(false);
+                dateDebutText.setEnabled(false);
+                dateFinReelText.setEnabled(false);
+                dateFinEstimeeText.setEnabled(false);
+                estActifTB.setEnabled(true);
+
+
+                titreLabel.setText("Rendre actif");
 
                 enregistrerBouton.setText("");
                 enregistrerBouton.setEnabled(false);
@@ -459,10 +476,24 @@ public class ProjetEditor extends JDialog {
 
     }
 
-    public Date stringToDate(String str) throws ParseException {
-        Integer numero = Integer.parseInt(str);
-        SimpleDateFormat originalFormat = new SimpleDateFormat("ddMMyyyy");
-        Date date = originalFormat.parse(numero.toString());
+    public Date stringToDate(String str) throws ParseException
+    {
+        String jour, mois, annee;
+        Date date;
+       if (str.length() == 8)
+       {
+           String[] dates = str.split("");
+           jour = dates[0] + dates[1];
+           mois = dates[2] + dates[3];
+           annee = dates[4] + dates[5] + dates[6] + dates[7];
+
+           date = new Date(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour));
+       }
+       else
+       {
+           date = null;
+       }
+
         return date;
     }
 

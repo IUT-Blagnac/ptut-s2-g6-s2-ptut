@@ -67,14 +67,14 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |         | Doc. Util. V1 |link:Documentations/doc_utilisateur/doc_utilisateur_V1.pdf[PDF]              |          Semble complète et détaillée. Bien!
 |         | Doc. Tec. V1 |link:doc/docTechnique.adoc[ADOC]                   |    Pas à jour sur les derniers diagrammes.
 |         | Code V1     |                       |
-|         | Recette V1  | link:Documentations/cahier_de_recettes_v1.pdf[PDF]                      | Indiquez si ces tests passent ou pas.
+|         | Recette V1  | link:Documentations/cahier_de_recettes/V1/cahier_de_recettes_v1.pdf[PDF]                      | Indiquez si ces tests passent ou pas.
 |         | `jar` projet |    | Au pire, mettez le .jar de la V0.
-| 31/05   | Gantt V2-1    | link:/gantt/V2/ptut_v2-1.pdf[PDF]      | Pas vu le diff avec V2
-| 01/06   | Doc. Util. V2 |            |           
-|         | Doc. Tec. V2 |                  |     
+| 31/05   | Gantt V2-1    | link:gantt/V2/ptut_v2-1.pdf[PDF]      | Pas vu le diff avec V2
+| 01/06   | Doc. Util. V2 | link:Documentations/doc_utilisateur/doc_utilisateur_V2.pdf[PDF]           |           
+|         | Doc. Tec. V2 | link:doc/docTechnique_V2.adoc[ADOC]                 |     
 |         | Code V2     |                       |
-|         | Recette V2  |                       |
-|         | Gantt V2-3    |                       |
+|         | Recette V2  |link:Documentations/cahier_de_recettes/V2/cahier_de_recettes_v2.pdf[PDF]                       |
+|         | Gantt V2-3    |link:gantt/V2/ptut_v2-2.pdf[PDF]                       |
 |         | `jar` projet |    |
 | 02/06   | Gantt V3-1    |       |
 | 03/06   | Doc. Util. V3 |            |           
