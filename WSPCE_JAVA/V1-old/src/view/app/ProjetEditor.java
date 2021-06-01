@@ -9,7 +9,6 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.text.ParseException;
 import java.sql.Date;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -122,7 +121,8 @@ public class ProjetEditor extends JDialog {
     // Pour créer un éditeur, Il faut utiliser la méthode statique
     // == > showEmployeEditor()
     // =======================================================================
-    ProjetEditor(Projet pfProjetEdite, Employe pfEmployeUtilisateur, Window owner, ProjetEditor.ModeEdition pfMode) {
+    ProjetEditor(Projet pfProjetEdite, Employe pfEmployeUtilisateur, Window owner, ProjetEditor.ModeEdition pfMode)
+    {
 
         super(owner);
         this.employueUtilisateur = pfEmployeUtilisateur ;
