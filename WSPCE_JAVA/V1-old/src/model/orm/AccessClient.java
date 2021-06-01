@@ -49,7 +49,7 @@ public class AccessClient {
 			 Connection con = LogToDatabase.getConnexion();
 			 CallableStatement call;
 			 
-			 String query = "{call create_projet(?, ?, ?, ?, ?, ?, ?)}";
+			 String query = "{call create_client(?, ?, ?, ?, ?, ?, ?)}";
 			 call = con.prepareCall(query);
 			 
 			 call.setString(1, pClient.getNom());

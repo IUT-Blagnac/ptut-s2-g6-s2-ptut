@@ -25,11 +25,12 @@ public class Client
 
     /**
      * Constructeur avec parametre
-     * @param idC id de l'employe
-     * @param nomC nom de l'employe
-     * @param prenomC prénom de l'employe
-     * @param entrepriseC login de l'employe
-     * @param estActifC actif (1) ou pas (0)
+     * @param idC id du client
+     * @param nomC nom du client
+     * @param prenomC prénom du client
+     * @param entrepriseC entreprise du client
+     * @param emailC email du client
+     * @param numeroC numéro du client
      */
     public Client(int idC, String nomC, String prenomC, String entrepriseC, String emailC, String numeroC, int estActifC)
     {
