@@ -262,7 +262,7 @@ public class GestionEmploye extends JDialog
 		
 		if (result != null) { // saisie validée
 			try {
-				ae.insertEmploye(result);
+				ae.insertEmploye(result, this);
 			} catch (RowNotFoundOrTooManyRowsException e) {
 				new ExceptionDialog(this, e);
 			} catch (DataAccessException e) {

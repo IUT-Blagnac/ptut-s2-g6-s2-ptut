@@ -14,6 +14,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 /**
  * Classe rÃ©alisant le lien entre le programme Java et les employÃ©s de la base de donnÃ©es Oracle
  */
@@ -153,43 +156,46 @@ public class AccessEmploye {
      * @throws DataAccessException 
      * @throws DatabaseConnexionException 
      */
-    public void insertEmploye(Employe pfEmploye) throws RowNotFoundOrTooManyRowsException, DataAccessException, DatabaseConnexionException {
+    public void insertEmploye(Employe pfEmploye, JDialog parent) throws RowNotFoundOrTooManyRowsException, DataAccessException, DatabaseConnexionException {
         try {
-            Connection con = LogToDatabase.getConnexion();
+        	if (!(loginAlreadyTaken(pfEmploye.getLogin()))) {
+            	Connection con = LogToDatabase.getConnexion();
 
-            String query = "INSERT INTO EMPLOYE VALUES ("
-                    + "seq_id_employe.NEXTVAL"
-                    + ", " + "?"
-                    + ", " + "?"
-                    + ", " + "?"
-                    + ", " + "?"
-                    + ", " + "?"
-                    + ", " + "?"
-                    + ", " + "?"
-                    + ", " + "?"
-                    +")";
+            	String query = "INSERT INTO EMPLOYE VALUES ("
+            			+ "seq_id_employe.NEXTVAL"
+            			+ ", " + "?"
+            			+ ", " + "?"
+            			+ ", " + "?"
+            			+ ", " + "?"
+            			+ ", " + "?"
+            			+ ", " + "?"
+            			+ ", " + "?"
+            			+ ", " + "?"
+            			+")";
 
-            PreparedStatement pst = con.prepareStatement(query);
-            pst.setString(1, pfEmploye.getNom());
-            pst.setString(2, pfEmploye.getPrenom());
-            pst.setString(3, pfEmploye.getLogin());
-            pst.setString(4, pfEmploye.getMdp());
-            pst.setInt (5, pfEmploye.getEstActif());
-            pst.setInt (6, pfEmploye.getIdRole());
-            pst.setInt (7, pfEmploye.getIdCompetence());
-            pst.setInt (8, pfEmploye.getIdNiveau());
+            	PreparedStatement pst = con.prepareStatement(query);
+            	pst.setString(1, pfEmploye.getNom());
+            	pst.setString(2, pfEmploye.getPrenom());
+            	pst.setString(3, pfEmploye.getLogin());
+            	pst.setString(4, pfEmploye.getMdp());
+            	pst.setInt (5, pfEmploye.getEstActif());
+            	pst.setInt (6, pfEmploye.getIdRole());
+            	pst.setInt (7, pfEmploye.getIdCompetence());
+            	pst.setInt (8, pfEmploye.getIdNiveau());
 
-            System.err.println(query);
+            	System.err.println(query);
+            
+            	int result = pst.executeUpdate();
+            	pst.close();
 
-            int result = pst.executeUpdate();
-            pst.close();
-
-            if (result != 1) {
-                con.rollback();
-                throw new RowNotFoundOrTooManyRowsException(Table.Employe, Order.INSERT, "Insert anormal (insert de moins ou plus d'une ligne)", null, result);
-            }
-            con.commit();
-
+            	if (result != 1) {
+            		con.rollback();
+            		throw new RowNotFoundOrTooManyRowsException(Table.Employe, Order.INSERT, "Insert anormal (insert de moins ou plus d'une ligne)", null, result);
+            	}
+            	con.commit();
+        	}else {
+        		JOptionPane.showMessageDialog(parent, "Login déjà utilisée");
+        	}
         } catch (SQLException e) {
         	throw new DataAccessException(Table.Employe, Order.INSERT, "Erreur accÃ©s", e);
         }
@@ -246,6 +252,32 @@ public class AccessEmploye {
         }
 
 
+    }
+    
+	private boolean loginAlreadyTaken (String pLogin) throws DatabaseConnexionException, DataAccessException {
+    	boolean isTaken = false; 
+    	try {
+             Connection con = LogToDatabase.getConnexion();
+             CallableStatement call;
+             
+             String q = "{call login_existe (?, ?)}";
+             call = con.prepareCall(q);
+             
+             call.setString(1, pLogin);
+             call.registerOutParameter(2, java.sql.Types.INTEGER);
+             
+             call.execute();
+             
+             int retour = call.getInt(2);
+             
+             if (retour > 0) {
+            	 isTaken = true;
+             }
+             
+    	}catch(SQLException e){ 
+    		throw new DataAccessException(Table.Employe, Order.SELECT, "Erreur accés", e);
+    	}
+    	return isTaken;
     }
 }
 
