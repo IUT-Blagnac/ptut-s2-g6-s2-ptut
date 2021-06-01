@@ -24,7 +24,7 @@ import java.util.ArrayList;
 public class ProjetEditor extends JDialog {
 	
 	public enum ModeEdition {
-		CREATION, MODIFICATION, VISUALISATION
+		CREATION, MODIFICATION, VISUALISATION,ACTIF
 		// pas de suppression car fonctionnellement impossible
 	};
 
@@ -355,6 +355,22 @@ public class ProjetEditor extends JDialog {
 			    enregistrerBouton.setEnabled(false);
 		        annulerBouton.setText("Retour");
 				break;
+			 case ACTIF:
+	                idText.setEnabled(false);
+	                nomText.setEnabled(false);
+	                descriptionText.setEnabled(false);
+	                dateDebutText.setEnabled(false);
+	                dateFinReelText.setEnabled(false);
+	                dateFinEstimeeText.setEnabled(false);
+	                estActifTB.setEnabled(true);
+
+
+	                titreLabel.setText("Rendre actif");
+
+	                enregistrerBouton.setText("");
+	                enregistrerBouton.setEnabled(false);
+	                annulerBouton.setText("Retour");
+	                break;
 		}
 		
         if (modeActuel != ProjetEditor.ModeEdition.CREATION) {
@@ -367,7 +383,7 @@ public class ProjetEditor extends JDialog {
 	        dateFinReelText.setText(projetEdite.getDateFinReel().toString());
 		    estActifTB.setSelected ( (projetEdite.getEstActif() == Employe.EST_ACTIF) );
 		    
-		    comboBoxClient.setSelectedIndex(comptenceValueToIndex(projetEdite.getIdClient()));
+		    comboBoxClient.setSelectedIndex(clientValueToIndex(projetEdite.getIdCli()));
 
         }
 	}
@@ -382,13 +398,15 @@ public class ProjetEditor extends JDialog {
     private Projet generateProjet() throws ParseException{
         // On génére le role de l'employe
     	int estActifP;
+    	int indexCli = comboBoxClient.getSelectedIndex() ;
+    	int compId = alClientBD.get(indexCli).getId(); 
         estActifP = (estActifTB.isSelected() ? Projet.EST_ACTIF : Projet.EST_INACTIF);
         // On récupere tous les elements pour créer l'employé
         Projet pjt ;
         if (modeActuel == ProjetEditor.ModeEdition.CREATION){
-            pjt = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() ,stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, 1) ;
+            pjt = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() ,stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, compId) ;
         }else {
-        	pjt = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, 1 ) ;        }
+        	pjt = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, compId ) ;        }
 
         return pjt ;
     }
@@ -440,5 +458,13 @@ public class ProjetEditor extends JDialog {
        }
 
         return date;
+    }
+    private int clientValueToIndex (int idClient) {
+    	for (int i=0; i<alClientBD.size(); i++) {
+    		if (alClientBD.get(i).getId() == idClient) {
+    			return i;
+    		}
+    	}
+    	return -1; // Fin anormale
     }
 }
