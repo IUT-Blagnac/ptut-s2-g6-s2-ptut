@@ -69,8 +69,8 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |         | Code V1     |                       |
 |         | Recette V1  | link:Documentations/cahier_de_recettes_v1.pdf[PDF]                      | Indiquez si ces tests passent ou pas.
 |         | `jar` projet |    | Au pire, mettez le .jar de la V0.
-| 31/05   | Gantt V2-1    | link:/gantt/V2/ptut_v2-1.pdf[PDF]      | Pas vu le diff avec V2
-| 01/06   | Doc. Util. V2 |            |           
+| 31/05   | Gantt V2-1    | link:gantt/V2/ptut_v2-1.pdf[PDF]      | Pas vu le diff avec V2
+| 01/06   | Doc. Util. V2 | link:Documentations/doc_utilisateur/doc_utilisateur_V2.pdf[PDF]           |           
 |         | Doc. Tec. V2 |                  |     
 |         | Code V2     |                       |
 |         | Recette V2  |                       |
