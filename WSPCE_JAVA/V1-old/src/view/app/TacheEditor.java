@@ -61,7 +61,6 @@ public class TacheEditor extends JDialog {
     private JLabel dateDebutLabel;
     private JLabel dureeEstimeeLabel ;
     private JLabel dureeReelLabel ;
-    private JLabel estActifLabel;
     private JLabel clientLabel;
     private JLabel competenceLabel ;
     private JLabel niveauLabel ;
@@ -74,8 +73,6 @@ public class TacheEditor extends JDialog {
     private JTextField dateDebutText;
     private JTextField dureeEstimeeText ;
     private JTextField dureeReelText ;
-
-    private JCheckBox estActifTB;
 
 
     private JComboBox<String> comboBoxClient ;
@@ -91,11 +88,11 @@ public class TacheEditor extends JDialog {
 
     // Acces en BD
     private AccessClient ac = new AccessClient();
-    private AccessEmploye ap = new AccessEmploye();
+    private AccessEmploye ae = new AccessEmploye();
 
     // données en BD
     private ArrayList<Client> alClientBD;
-    private ArrayList<Employe> BDalEmployeBD;
+    private ArrayList<Employe> alEmployeBD;
     private ArrayList<Competence> alCompetenceBD;
     private ArrayList<Niveau> alNiveauBD;
 
@@ -300,16 +297,6 @@ public class TacheEditor extends JDialog {
         champsPanel.add(dureeReelText);
 
 
-        // estActif
-        estActifLabel = new JLabel("estActif ?") ;
-        estActifLabel.setHorizontalAlignment(0);
-        estActifLabel.setPreferredSize(dimensionLabel);
-        estActifLabel.setFont(normalFont);
-        champsPanel.add(estActifLabel);
-
-        estActifTB = new JCheckBox();
-        estActifTB.setSelected(true);
-        champsPanel.add(estActifTB);
 
         // Clients
         clientLabel = new JLabel("Client") ;
@@ -377,7 +364,6 @@ public class TacheEditor extends JDialog {
                 dateFinText.setEnabled(true);
                 dureeEstimeeText.setEnabled(true);
                 dureeReelText.setEnabled(true);
-                estActifTB.setEnabled(true);
                 comboBoxClient.setEnabled(true);
 
                 titreLabel.setText("Creer Projet");
@@ -392,7 +378,6 @@ public class TacheEditor extends JDialog {
                 dateFinText.setEnabled(true);
                 dureeEstimeeText.setEnabled(true);
                 dureeReelText.setEnabled(true);
-                estActifTB.setEnabled(true);
                 comboBoxClient.setEnabled(true);
 
                 titreLabel.setText("Modifier Projet");
@@ -407,7 +392,6 @@ public class TacheEditor extends JDialog {
                 dateFinText.setEnabled(false);
                 dureeEstimeeText.setEnabled(false);
                 dureeReelText.setEnabled(false);
-                estActifTB.setEnabled(false);
                 comboBoxClient.setEnabled(false);
 
 
@@ -424,7 +408,6 @@ public class TacheEditor extends JDialog {
                 dateFinText.setEnabled(false);
                 dureeReelText.setEnabled(false);
                 dureeEstimeeText.setEnabled(false);
-                estActifTB.setEnabled(true);
 
 
                 titreLabel.setText("Rendre actif");
@@ -457,22 +440,26 @@ public class TacheEditor extends JDialog {
      */
 
 
-    /*
+
     private Tache generateTache() throws ParseException{
         // On génére le role de l'employe
         int estActifP;
         int indexCli = comboBoxClient.getSelectedIndex() ;
         int compId = alClientBD.get(indexCli).getId();
-        estActifP = (estActifTB.isSelected() ? Projet.EST_ACTIF : Projet.EST_INACTIF);
         // On récupere tous les elements pour créer l'employé
 
 
         Tache tache ;
-        if (modeActuel == TacheEditor.ModeEdition.CREATION){
-            tache = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() ,stringToDate(dateFinText.getText()), stringToDate(dureeEstimeeText.getText()), stringToDate(dureeReelText.getText()), estActifP, compId) ;
-        }else {
-            tache = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateFinText.getText()), stringToDate(dureeEstimeeText.getText()), stringToDate(dureeReelText.getText()), estActifP, compId ) ;        }
-
+        if (modeActuel == TacheEditor.ModeEdition.CREATION)
+        {
+            tache = new Tache(-1, null , null , null , new Date(0, 0, 0)
+            , new Date(0, 0, 0), 0, 0, 0, 0, 0, 0) ;
+        }
+        else
+        {
+            tache = new Tache(Integer.parseInt(idText.getText()), null, null, null, new Date(0, 0, 0)
+                    , new Date(0, 0, 0), 0, 0, 0, 0, 0, 0);
+        }
         return tache ;
     }
 
@@ -487,7 +474,7 @@ public class TacheEditor extends JDialog {
 
 
 
-     */
+
 
     /**
      * Vérifier si tous les champs ont été saisis
@@ -506,29 +493,22 @@ public class TacheEditor extends JDialog {
         this.setVisible(false);
 
     }
-    public Date stringToDate(String str) throws ParseException
+
+
+    private int clientValueToIndex (int idClient)
     {
-        String jour, mois, annee;
-        Date date;
-        if (str.length() == 8)
-        {
-            String[] dates = str.split("");
-            jour = dates[0] + dates[1];
-            mois = dates[2] + dates[3];
-            annee = dates[4] + dates[5] + dates[6] + dates[7];
-
-            date = new Date(Integer.parseInt(annee), Integer.parseInt(mois), Integer.parseInt(jour));
-        }
-        else
-        {
-            date = null;
-        }
-
-        return date;
-    }
-    private int clientValueToIndex (int idClient) {
         for (int i=0; i<alClientBD.size(); i++) {
             if (alClientBD.get(i).getId() == idClient) {
+                return i;
+            }
+        }
+        return -1; // Fin anormale
+    }
+
+    private int employeValueToIndex (int idEmploye)
+    {
+        for (int i=0; i<alEmployeBD.size(); i++) {
+            if (alClientBD.get(i).getId() == idEmploye) {
                 return i;
             }
         }
