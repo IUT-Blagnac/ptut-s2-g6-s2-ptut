@@ -2,7 +2,6 @@ package model.orm;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -84,9 +83,8 @@ public class AccessProjet {
 			 
 			 call.setString(1, pProjet.getNom());
 			 call.setString(2, pProjet.getDescription());
-			 call.setDate(3, (Date) pProjet.getDateDebut());
-			 call.setDate(4, (Date) pProjet.getDateFinEstimee());
-			 // call.setDate(5, (Date) pProjet.getDateFinReel());
+			 call.setDate(3, pProjet.getDateDebut());
+			 call.setDate(4, pProjet.getDateFinEstimee());
 			 call.setInt(5, pProjet.getEstActif());
 			 call.setInt(6, pProjet.getIdCli());
 			 
@@ -116,6 +114,7 @@ public class AccessProjet {
 	                    + "DESCRIPTIONS = " + "?" + " , "
 	                    + "DATEDEBUT = " + "?" + " , "
 	                    + "DATEFINESTIMEE = " + "?"  + " , "
+	                    + "DATEFINREEL = " + "?"  + " , "
 	                    + "ESTACTIF = " + "?"  + " , "
 	                    + "IDNOMCLI = "  + "?" + " "
 	                    + "WHERE IDNOM = ? ";
@@ -125,9 +124,10 @@ public class AccessProjet {
 	            pst.setString(2, pProjet.getDescription()) ;
 	            pst.setDate(3, pProjet.getDateDebut());
 	            pst.setDate(4, pProjet.getDateFinEstimee());
-	            pst.setInt(5, pProjet.getEstActif());
-	            pst.setInt (6, pProjet.getIdCli());
-	            pst.setInt (7, pProjet.getId());
+	            pst.setDate(5, pProjet.getDateFinReel());
+	            pst.setInt(6, pProjet.getEstActif());
+	            pst.setInt (7, pProjet.getIdCli());
+	            pst.setInt (8, pProjet.getId());
 
 	            System.err.println(query);
 

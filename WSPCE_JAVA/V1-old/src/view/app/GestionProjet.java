@@ -276,7 +276,7 @@ public class GestionProjet extends JDialog
         Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
         ProjetEditor.showProjetEditor(this,
                 employeUtilisateur, projetEdite,
-                ProjetEditor.ModeEdition.MODIFICATION);
+                ProjetEditor.ModeEdition.ACTIF);
     }
 
 }
