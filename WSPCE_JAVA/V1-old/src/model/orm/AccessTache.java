@@ -86,6 +86,7 @@ public class AccessTache {
         	throw new DataAccessException(Table.Tache, Order.INSERT, "Erreur accés", e);
         }
 	}
+
 	
 	public void updateTache (Tache pTache) throws DatabaseConnexionException, RowNotFoundOrTooManyRowsException, DataAccessException {
 		 try {
