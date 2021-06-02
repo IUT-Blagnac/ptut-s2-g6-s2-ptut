@@ -76,7 +76,7 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |         | Recette V2  |link:Documentations/cahier_de_recettes/V2/cahier_de_recettes_v2.pdf[PDF]                       |
 |         | Gantt V2-3    |link:gantt/V2/ptut_v2-2.pdf[PDF]                       |
 |         | `jar` projet |    |
-| 02/06   | Gantt V3-1    |       |
+| 02/06   | Gantt V3-1    |link:gantt/V3/ptut_v3.pdf[PDF]       |
 | 03/06   | Doc. Util. V3 |            |           
 |         | Doc. Tec. V3 |                  |     
 |         | Code V3     |                       |
