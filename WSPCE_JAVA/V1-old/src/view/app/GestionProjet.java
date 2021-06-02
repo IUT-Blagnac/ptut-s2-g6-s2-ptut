@@ -4,6 +4,7 @@ package view.app;
 import model.data.Employe;
 
 import model.data.Projet;
+import model.data.Tache;
 import model.orm.AccessProjet;
 import model.orm.exception.DataAccessException;
 import model.orm.exception.DatabaseConnexionException;
@@ -37,6 +38,7 @@ public class GestionProjet extends JDialog
     private JButton rendreInactifButton;
     private JButton rechercherButton;
     private JButton retourButton;
+    private JButton tacheButton;
     private JList<Projet> selectionProjet;
     private JScrollPane scroll;
     private JTextField researchBar;
@@ -77,6 +79,10 @@ public class GestionProjet extends JDialog
         modifierButton.addActionListener(e -> actionModifier());
         modifierButton.setBackground(new Color(104, 177, 255)) ;
 
+        tacheButton = new JButton("Gérer tâches");
+        tacheButton.addActionListener(e -> actionRetour());
+        tacheButton.setBackground(new Color(104, 177, 255)) ;
+
         retourButton = new JButton("Retour");
         retourButton.addActionListener(e -> actionRetour());
         retourButton.setBackground(new Color(104, 177, 255)) ;
@@ -86,12 +92,15 @@ public class GestionProjet extends JDialog
         modifierButton.setPreferredSize(new Dimension(200,40));
         retourButton.setPreferredSize(new Dimension(200,40));
         rendreInactifButton.setPreferredSize(new Dimension(200,40));
+        tacheButton.setPreferredSize(new Dimension(200,40));
 
 
         contentButtons.add(createButton);
         contentButtons.add(voirButton);
         contentButtons.add(modifierButton);
         contentButtons.add(rendreInactifButton);
+        contentButtons.add(tacheButton);
+
 
         JLabel espace = new JLabel();
         espace.setPreferredSize(new Dimension(200,20));
@@ -277,6 +286,18 @@ public class GestionProjet extends JDialog
         ProjetEditor.showProjetEditor(this,
                 employeUtilisateur, projetEdite,
                 ProjetEditor.ModeEdition.ACTIF);
+    }
+
+
+    private void actionTache()
+    {
+
+        ////////////////////
+        //NE FONCTIONNE PAS
+        ////////////////////
+        GestionTache gestionTache = new GestionTache(this, employeUtilisateur, model.get(selectionProjet.getSelectedIndex()));
+        gestionTache.setVisible(true);
+        gestionTache.dispose();
     }
 
 }
