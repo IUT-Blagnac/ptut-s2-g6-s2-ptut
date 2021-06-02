@@ -10,6 +10,7 @@ public enum Table {
 	Projet,
 	Client,
 	Competence,
+	Tache,
 	NiveauCompetence,
 	Niveau,
 	NONE

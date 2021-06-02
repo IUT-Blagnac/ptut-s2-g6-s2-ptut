@@ -1,10 +1,7 @@
 package view.app;
 
 import model.data.*;
-import model.orm.AccessClient;
-import model.orm.AccessCompetence;
-import model.orm.AccessEmploye;
-import model.orm.AccessNiveau;
+import model.orm.*;
 import model.orm.exception.DataAccessException;
 import model.orm.exception.DatabaseConnexionException;
 
@@ -25,7 +22,7 @@ import java.util.ArrayList;
 public class TacheEditor extends JDialog {
 
     public enum ModeEdition {
-        CREATION, MODIFICATION, VISUALISATION,ACTIF
+        CREATION, MODIFICATION, VISUALISATION,
         // pas de suppression car fonctionnellement impossible
     };
 
@@ -89,6 +86,7 @@ public class TacheEditor extends JDialog {
     // Acces en BD
     private AccessClient ac = new AccessClient();
     private AccessEmploye ae = new AccessEmploye();
+    private AccessTache at = new AccessTache();
 
     // données en BD
     private ArrayList<Client> alClientBD;
@@ -401,21 +399,7 @@ public class TacheEditor extends JDialog {
                 enregistrerBouton.setEnabled(false);
                 annulerBouton.setText("Retour");
                 break;
-            case ACTIF:
-                idText.setEnabled(false);
-                nomText.setEnabled(false);
-                descriptionText.setEnabled(false);
-                dateFinText.setEnabled(false);
-                dureeReelText.setEnabled(false);
-                dureeEstimeeText.setEnabled(false);
 
-
-                titreLabel.setText("Rendre actif");
-
-                enregistrerBouton.setText("");
-                enregistrerBouton.setEnabled(false);
-                annulerBouton.setText("Retour");
-                break;
         }
 
         if (modeActuel != TacheEditor.ModeEdition.CREATION) {
@@ -452,13 +436,11 @@ public class TacheEditor extends JDialog {
         Tache tache ;
         if (modeActuel == TacheEditor.ModeEdition.CREATION)
         {
-            tache = new Tache(-1, null , null , null , new Date(0, 0, 0)
-            , new Date(0, 0, 0), 0, 0, 0, 0, 0, 0) ;
+            tache = new Tache(Tache.ID_TACHE_INEXISTANTE, null, null, null,null, 0, 0, Tache.ID_TACHE_INEXISTANTE, Tache.ID_TACHE_INEXISTANTE, Tache.ID_TACHE_INEXISTANTE,Tache.ID_TACHE_INEXISTANTE) ;
         }
         else
         {
-            tache = new Tache(Integer.parseInt(idText.getText()), null, null, null, new Date(0, 0, 0)
-                    , new Date(0, 0, 0), 0, 0, 0, 0, 0, 0);
+            tache = new Tache(Integer.parseInt(idText.getText()), null, null, null,null, 0, 0, Tache.ID_TACHE_INEXISTANTE, Tache.ID_TACHE_INEXISTANTE, Tache.ID_TACHE_INEXISTANTE,Tache.ID_TACHE_INEXISTANTE);
         }
         return tache ;
     }

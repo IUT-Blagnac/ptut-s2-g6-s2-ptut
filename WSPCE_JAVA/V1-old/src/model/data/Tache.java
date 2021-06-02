@@ -2,6 +2,10 @@ package model.data;
 
 import java.sql.Date;
 
+import model.orm.AccessProjet;
+import model.orm.exception.DataAccessException;
+import model.orm.exception.DatabaseConnexionException;
+
 public class Tache
 {
 
@@ -109,9 +113,17 @@ public class Tache
 
 
     @Override
-    public String toString() {
-        return "[" +id+"] "+nom + " : "+description;    
-        
+    public String toString(){
+    	AccessProjet ap = new AccessProjet();
+    	String toStr ="";
+        try {
+			toStr= "[" +ap.getProjetById(idProjet).getNom()+"] "+nom + " : "+description;
+		} catch (DatabaseConnexionException e) {
+			e.printStackTrace();
+		} catch (DataAccessException e) {
+			e.printStackTrace();
+		}    
+        return toStr;
     }
 
 }

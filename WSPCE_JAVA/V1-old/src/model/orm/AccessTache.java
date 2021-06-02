@@ -87,7 +87,50 @@ public class AccessTache {
         }
 	}
 	
-	public void updateTache (Tache pTache) {
-		
+	public void updateTache (Tache pTache) throws DatabaseConnexionException, RowNotFoundOrTooManyRowsException, DataAccessException {
+		 try {
+	            Connection con = LogToDatabase.getConnexion();
+
+	            String query = "UPDATE TACHE SET "
+	                    + "NOM = " + "?" + " , "
+	                    + "DESCRIPTIONS = " + "?" + " , "
+	                    + "DATEDEBUTREAL = " + "?" + " , "
+	                    + "DATEFINREAL = " + "?"  + " , "
+	                    + "DUREEESTIMEEREAL = " + "?"  + " , "
+	                    + "DUREEREELREAL = " + "?"  + " , "
+	                    + "IDPROJET = "  + "?" + " , "
+	                    + "IDCOMPETENCE = " + "?"  + " , "
+	                    + "IDNIVEAU = " + "?"  + " , "
+	                    + "IDEMPLOYE = "  + "?"
+	                    + " " + "WHERE IDTACHE = ? ";
+
+	            PreparedStatement pst = con.prepareStatement(query);
+	            pst.setString(1, pTache.getNom());
+	            pst.setString(2, pTache.getDescription());
+	            pst.setDate(3, pTache.getDateDebut());
+	            pst.setDate(4, pTache.getDateFin());
+	            pst.setInt (5, pTache.getDureeEstimee());
+	            pst.setInt (6, pTache.getDureeReelle());
+	            pst.setInt (7, pTache.getIdProjet());
+	            pst.setInt (8, pTache.getIdCompetence());
+	            pst.setInt (9, pTache.getIdNiveau());
+	            pst.setInt (10, pTache.getIdEmploye());
+
+	            pst.setInt (11, pTache.getId());
+
+	            System.err.println(query);
+
+	            int result = pst.executeUpdate();
+	            pst.close();
+
+	            if (result != 1) {
+	                con.rollback();
+	                throw new  RowNotFoundOrTooManyRowsException(Table.Tache, Order.UPDATE, "Update anormal (update de moins ou plus d'une ligne)", null, result);
+	            }
+	            con.commit();
+
+	        } catch (SQLException e) {
+	        	throw new DataAccessException(Table.Tache, Order.UPDATE, "Erreur accées", e);
+	        }
 	}
 }
