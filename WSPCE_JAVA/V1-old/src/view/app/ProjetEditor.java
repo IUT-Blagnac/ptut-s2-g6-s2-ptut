@@ -362,12 +362,11 @@ public class ProjetEditor extends JDialog {
 			dateFinReelText.setEnabled(false);
 			dateFinEstimeeText.setEnabled(false);
 			estActifTB.setEnabled(true);
-
+			comboBoxClient.setEnabled(false);
 
 			titreLabel.setText("Rendre actif");
 
-			enregistrerBouton.setText("");
-			enregistrerBouton.setEnabled(false);
+			enregistrerBouton.setText("Modifier");
 			annulerBouton.setText("Retour");
 			break;
 		}

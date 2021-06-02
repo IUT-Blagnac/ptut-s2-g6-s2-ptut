@@ -280,13 +280,29 @@ public class GestionProjet extends JDialog
 
 
 
-    private void actionRendreInactif()
-    {
-        Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
-        ProjetEditor.showProjetEditor(this,
-                employeUtilisateur, projetEdite,
-                ProjetEditor.ModeEdition.ACTIF);
-    }
+        private void actionRendreInactif() {
+            Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
+            Projet result ;
+            result = ProjetEditor.showProjetEditor(this,
+                    employeUtilisateur, projetEdite,
+                    ProjetEditor.ModeEdition.ACTIF);
+
+            if (result != null) { // modif validée
+                try {
+                    ap.updateProjet(result);
+                } catch (RowNotFoundOrTooManyRowsException e) {
+                    new ExceptionDialog(this, e);
+                } catch (DataAccessException e) {
+                    new ExceptionDialog(this, e);
+                } catch (DatabaseConnexionException e) {
+                    new ExceptionDialog(this, e);
+                    this.dispose();;
+                }
+
+                actionRechercherProjets ();
+            }
+        }
+    
 
 
     private void actionTache()
