@@ -16,6 +16,31 @@ import model.orm.exception.Table;
 
 public class AccessProjet {
 	
+	public Projet getProjetById(int pId) throws DatabaseConnexionException, DataAccessException {
+		Projet p = new Projet();
+		try {
+			Connection con = LogToDatabase.getConnexion();
+			
+			String query = "Select p.* "
+					+ "From Projet p "
+					+ "Where idNom  = ? ";
+			
+			PreparedStatement pst = con.prepareStatement(query);	
+			pst.setInt(1, pId);
+			System.err.println(query);
+			ResultSet rs = pst.executeQuery();
+			
+			 while (rs.next()) {
+				 p = new Projet(rs.getInt("idNom"), rs.getString("nom"), rs.getString("descriptions"), rs.getDate("dateDebut"), rs.getDate("dateFinEstimee"), rs.getDate("dateFinReel"), rs.getInt("estActif"), rs.getInt("idNomCli"));
+			 }
+
+			return p;
+			
+		}catch (SQLException e) {
+			throw new DataAccessException(Table.Projet, Order.SELECT, "Erreur accés", e);
+        }
+	}
+	
 	public ArrayList<Projet> getProjet(String pNom) throws DataAccessException, DatabaseConnexionException, RowNotFoundOrTooManyRowsException {
 		ArrayList<Projet> alProjet =  new ArrayList<>();
 		
