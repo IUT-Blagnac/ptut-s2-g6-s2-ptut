@@ -78,7 +78,6 @@ public class Tache
         return dateFin;
     }
 
-
     public int getDureeEstimee() {
         return dureeEstimee;
     }
