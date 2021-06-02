@@ -70,6 +70,10 @@ public class Tache
         return nom;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public Date getDateDebut() {
         return dateDebut;
     }

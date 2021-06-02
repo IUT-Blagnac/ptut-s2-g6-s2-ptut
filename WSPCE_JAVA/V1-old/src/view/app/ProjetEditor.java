@@ -97,7 +97,7 @@ public class ProjetEditor extends JDialog {
 	 *
 	 * @param owner   fenêtre  mère de la boite de dialogue
 	 * @param employeUtilisateur Employ" connecté à l'application
-	 * @param employeEdite  Objet de type Employé à éditer (éventuellement null en création).
+	 * @param projetEdite  Objet de type Employé à éditer (éventuellement null en création).
 	 * @param mode    Mode d'ouverture (CREATION, MODIFICATION, VISUALISATION)
 	 * 
 	 * @return un objet Employe si l'action est validée / null sinon
