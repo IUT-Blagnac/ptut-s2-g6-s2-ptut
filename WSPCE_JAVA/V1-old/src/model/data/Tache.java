@@ -82,11 +82,11 @@ public class Tache
         return dateFin;
     }
 
-    public int getDureeEstimee() {
+    public Integer getDureeEstimee() {
         return dureeEstimee;
     }
 
-    public int  getDureeReelle() {
+    public Integer  getDureeReelle() {
         return dureeReelle;
     }
 

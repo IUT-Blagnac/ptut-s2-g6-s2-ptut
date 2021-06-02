@@ -442,14 +442,8 @@ public class TacheEditor extends JDialog {
             descriptionText.setText(tacheEdite.getDescription());
             dateFinText.setText(tacheEdite.getDateFin().toString());
             dateDebutText.setText(tacheEdite.getDateDebut().toString());
-            dureeEstimeeText.setText(tacheEdite.getDureeEstimee());
-
-
-            dureeEstimeeText.setText(tacheEdite.getDateFinEstimee().toString());
-            dureeReelText.setText(tacheEdite.getDateFinReel().toString());
-            estActifTB.setSelected ( (tacheEdite.getEstActif() == Employe.EST_ACTIF) );
-
-            comboBoxClient.setSelectedIndex(clientValueToIndex(tacheEdite.getIdCli()));
+            dureeEstimeeText.setText(tacheEdite.getDureeEstimee().toString());
+            dureeEstimeeText.setText(tacheEdite.getDureeReelle().toString());
 
         }
     }
@@ -461,6 +455,9 @@ public class TacheEditor extends JDialog {
      * @throws ParseException
      * @throws NumberFormatException
      */
+
+
+    /*
     private Tache generateTache() throws ParseException{
         // On génére le role de l'employe
         int estActifP;
@@ -468,6 +465,8 @@ public class TacheEditor extends JDialog {
         int compId = alClientBD.get(indexCli).getId();
         estActifP = (estActifTB.isSelected() ? Projet.EST_ACTIF : Projet.EST_INACTIF);
         // On récupere tous les elements pour créer l'employé
+
+
         Tache tache ;
         if (modeActuel == TacheEditor.ModeEdition.CREATION){
             tache = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() ,stringToDate(dateFinText.getText()), stringToDate(dureeEstimeeText.getText()), stringToDate(dureeReelText.getText()), estActifP, compId) ;
@@ -487,6 +486,8 @@ public class TacheEditor extends JDialog {
     }
 
 
+
+     */
 
     /**
      * Vérifier si tous les champs ont été saisis
