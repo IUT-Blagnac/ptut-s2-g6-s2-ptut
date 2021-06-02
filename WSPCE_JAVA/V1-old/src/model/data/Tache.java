@@ -14,20 +14,20 @@ public class Tache
     private Date dateFin;
     private int dureeEstimee;
     private int dureeReelle;
-    private Projet projet;
-    private Competence competence;
-    private Niveau niveau;
-    private Employe employe;
+    private int idProjet;
+    private int idCompetence;
+    private int idNiveau;
+    private int idEmploye;
 
     /**
      * Constructeur par default
      */
     public Tache()
     {
-        this(Tache.ID_TACHE_INEXISTANTE, null, null, null, null,null, 0, 0, null, null, null);
+        this(Tache.ID_TACHE_INEXISTANTE, null, null, null, null,null, 0, 0, Tache.ID_TACHE_INEXISTANTE, Tache.ID_TACHE_INEXISTANTE, Tache.ID_TACHE_INEXISTANTE,Tache.ID_TACHE_INEXISTANTE);
     }
 
-    public Tache(int idT, String nomT, String descT, Projet projetT, Date dateDebutT, Date dateFinT, int durEstT, int durRelT, Competence compT, Niveau nivT, Employe empT)
+    public Tache(int idT, String nomT, String descT, Projet projetT, Date dateDebutT, Date dateFinT, int durEstT, int durRelT, int idPro, int idComp, int idNiv, int idEmp)
     {
         this.id = idT;
         this.nom = nomT;
@@ -36,10 +36,10 @@ public class Tache
         this.dateFin = dateFinT;
         this.dureeReelle = durRelT;
         this.dureeEstimee = durEstT;
-        this.competence = compT;
-        this.niveau = nivT;
-        this.employe = empT;
-        this.projet = projetT;
+        this.idProjet = idPro;
+        this.idCompetence = idComp;
+        this.idNiveau = idNiv;
+        this.idEmploye = idEmp;
     }
 
     /**
@@ -55,10 +55,10 @@ public class Tache
         this.dateFin = t.dateFin;
         this.dureeReelle = t.dureeReelle;
         this.dureeEstimee = t.dureeEstimee;
-        this.competence = t.competence;
-        this.niveau = t.niveau;
-        this.employe = t.employe;
-        this.projet = t.projet;
+        this.idCompetence = t.idCompetence;
+        this.idNiveau = t.idNiveau;
+        this.idEmploye = t.idEmploye;
+        this.idProjet = t.idProjet;
     }
 
 
@@ -68,10 +68,6 @@ public class Tache
 
     public String getNom() {
         return nom;
-    }
-
-    public String getDescription() {
-        return description;
     }
 
     public Date getDateDebut() {
@@ -90,33 +86,28 @@ public class Tache
         return dureeReelle;
     }
 
-    public Competence getCompetence() {
-        return competence;
+    public int getCompetence() {
+        return idCompetence;
     }
 
-    public Niveau getNiveau() {
-        return niveau;
+    public int getNiveau() {
+        return idNiveau;
     }
 
-    public Employe getEmploye() {
-        return employe;
+    public int getEmploye() {
+        return idEmploye;
     }
 
-    public Projet getProjet() {
-        return projet;
+    public int getProjet() {
+        return idProjet;
     }
 
 
 
     @Override
     public String toString() {
-
-        return "[" +
-                "projet=" + projet.getNom() + "]" +
-                "  " + nom +
-                "  " + competence.toString() +
-                "  " + niveau.toString() +
-                "  " + employe.toString();
+        return "[" +id+"] "+nom + " : "+description;    
+        
     }
 
 }
