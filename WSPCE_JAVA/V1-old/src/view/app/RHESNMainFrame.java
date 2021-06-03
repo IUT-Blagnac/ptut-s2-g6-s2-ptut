@@ -3,6 +3,7 @@ package view.app;
 import model.data.Employe;
 import model.data.Role;
 import model.orm.LogToDatabase;
+import model.orm.exception.DataAccessException;
 import model.orm.exception.DatabaseConnexionException;
 
 import javax.swing.*;
@@ -82,7 +83,17 @@ public class RHESNMainFrame extends JFrame {
         tacheButton = new JButton("Tâches");
         tacheButton.setPreferredSize(new Dimension(200,50));
         tacheButton.setBackground(new Color(104, 177, 255)) ;
-        tacheButton.addActionListener(e -> actionTache());
+        tacheButton.addActionListener(e -> {
+			try {
+				actionTache();
+			} catch (DatabaseConnexionException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (DataAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
 
         String libRole = (employeUtilisateur.getIdRole() == Role.ID_ROLE_CHEF_PROJET ? Role.LIB_ROLE_CHEF_PROJET : Role.LIB_ROLE_EMPLOYE);
         employeLabel = new JLabel("<html><u>Employé connecté(e) :</u><br><br>Nom: <i>"+employeUtilisateur.getNom()+ "</i><br>Prénom: <i>"+ employeUtilisateur.getPrenom()+"</i><br>Role: <i>"+ libRole+"</i></html>\n");
@@ -168,7 +179,7 @@ public class RHESNMainFrame extends JFrame {
 	}
 
 
-	private void actionTache()
+	private void actionTache() throws DatabaseConnexionException, DataAccessException
     {
         GestionTache tache = new GestionTache(this, employeUtilisateur);
         tache.setVisible(true);

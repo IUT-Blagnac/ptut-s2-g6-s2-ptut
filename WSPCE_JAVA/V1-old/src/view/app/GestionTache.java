@@ -39,7 +39,6 @@ public class GestionTache extends JDialog
     private JButton createButton;
     private JButton voirButton;
     private JButton modifierButton;
-    private JButton rendreInactifButton;
     private JButton rechercherButton;
     private JButton retourButton;
     private JList<Tache> selectionTache;
@@ -82,19 +81,30 @@ public class GestionTache extends JDialog
 
 
         createButton = new JButton("Créer");
-        createButton.addActionListener(e -> actionCreer());
+        createButton.addActionListener(e -> {
+			try {
+				actionCreer();
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				e2.printStackTrace();
+			}
+		});
         createButton.setBackground(new Color(104, 177, 255)) ;
 
-        rendreInactifButton = new JButton("Rendre actif/inactif");
-        rendreInactifButton.addActionListener(e -> actionRendreInactif());
-        rendreInactifButton.setBackground(new Color(104, 177, 255)) ;
-
         voirButton = new JButton("Voir");
-        voirButton.addActionListener(e -> actionVoir());
+        voirButton.addActionListener(e -> {
+			try {
+				actionVoir();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
         voirButton.setBackground(new Color(104, 177, 255)) ;
 
         modifierButton = new JButton("Modifier");
-        modifierButton.addActionListener(e -> actionModifier());
+
+
         modifierButton.setBackground(new Color(104, 177, 255)) ;
 
         retourButton = new JButton("Retour");
@@ -106,14 +116,13 @@ public class GestionTache extends JDialog
         voirButton.setPreferredSize(new Dimension(200,40));
         modifierButton.setPreferredSize(new Dimension(200,40));
         retourButton.setPreferredSize(new Dimension(200,40));
-        rendreInactifButton.setPreferredSize(new Dimension(200,40));
+
 
 
 
         contentButtons.add(createButton);
         contentButtons.add(voirButton);
         contentButtons.add(modifierButton);
-        contentButtons.add(rendreInactifButton);
 
         JLabel espace = new JLabel();
         espace.setPreferredSize(new Dimension(200,20));
@@ -229,7 +238,7 @@ public class GestionTache extends JDialog
         this.setVisible(false);
     }
 
-    private void actionVoir() {
+    private void actionVoir() throws Exception {
         Tache projetEdite = model.get(selectionTache.getSelectedIndex());
         TacheEditor.showTacheEditor(this,
                 employeUtilisateur, projetEdite,
@@ -238,7 +247,8 @@ public class GestionTache extends JDialog
 
 
     // mettre en commentaire à partir d'ici si problème
-    private void actionModifier() {
+    @SuppressWarnings("unused")
+	private void actionModifier() throws Exception {
         Tache projetEdite = model.get(selectionTache.getSelectedIndex());
         Tache result ;
         result = TacheEditor.showTacheEditor(this,
@@ -266,7 +276,7 @@ public class GestionTache extends JDialog
 
 
 
-    private void actionCreer()
+    private void actionCreer() throws Exception
     {
         Tache result ;
         result = TacheEditor.showTacheEditor(this,
@@ -292,22 +302,6 @@ public class GestionTache extends JDialog
             actionRechercherProjets ();
         }
 
-
-    }
-
-
-
-    private void actionRendreInactif()
-    {
-        Tache projetEdite = model.get(selectionTache.getSelectedIndex());
-        TacheEditor.showTacheEditor(this,
-                employeUtilisateur, projetEdite,
-                TacheEditor.ModeEdition.MODIFICATION);
-    }
-
-
-    private void actionTaches()
-    {
 
     }
 

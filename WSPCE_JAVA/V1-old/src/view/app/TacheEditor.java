@@ -93,7 +93,8 @@ public class TacheEditor extends JDialog {
     private ArrayList<Niveau> alNiveauBD;
 
     // Employe qui utilise l'application
-    private Employe employueUtilisateur;
+    @SuppressWarnings("unused")
+	private Employe employueUtilisateur;
 
     // Tache modifié ou visualisé
     private Tache tacheEdite;
@@ -110,8 +111,9 @@ public class TacheEditor extends JDialog {
      * @param mode    Mode d'ouverture (CREATION, MODIFICATION, VISUALISATION)
      *
      * @return un objet Employe si l'action est validée / null sinon
+     * @throws Exception 
      */
-    public static Tache showTacheEditor(Window owner, Employe employeUtilisateur, Tache tacheEdite, TacheEditor.ModeEdition mode) {
+    public static Tache showTacheEditor(Window owner, Employe employeUtilisateur, Tache tacheEdite, TacheEditor.ModeEdition mode) throws Exception {
         int idProjet = 0;
 
         if (mode == TacheEditor.ModeEdition.CREATION) {
