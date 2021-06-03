@@ -45,3 +45,12 @@ WSPCE_JAVA/V1-old/bin/view/app/ClientEditor$1.class
 WSPCE_JAVA/V1-old/bin/model/orm/exception/Table.class
 WSPCE_JAVA/V1-old/bin/model/data/Projet.class
 WSPCE_JAVA/V1-old/bin/model/data/Client.class
+WSPCE_JAVA/V1-old/bin/model/data/Client.class
+WSPCE_JAVA/V1-old/bin/view/app/RHESNMainFrame.class
+WSPCE_JAVA/V1-old/bin/view/app/RHESNMainFrame$1.class
+WSPCE_JAVA/V1-old/bin/view/app/ClientEditor.class
+WSPCE_JAVA/V1-old/bin/view/app/ClientEditor$ModeEdition.class
+WSPCE_JAVA/V1-old/bin/view/app/ClientEditor$1.class
+WSPCE_JAVA/V1-old/bin/model/orm/exception/Table.class
+WSPCE_JAVA/V1-old/bin/model/data/Projet.class
+*.class

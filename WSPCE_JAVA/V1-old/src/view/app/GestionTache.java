@@ -4,7 +4,9 @@ package view.app;
 import model.data.Employe;
 
 import model.data.Projet;
+import model.data.Tache;
 import model.orm.AccessProjet;
+import model.orm.AccessTache;
 import model.orm.exception.DataAccessException;
 import model.orm.exception.DatabaseConnexionException;
 import model.orm.exception.RowNotFoundOrTooManyRowsException;
@@ -30,15 +32,15 @@ public class GestionTache extends JDialog
     private Projet projetConcerne;
 
     private AccessProjet ap = new AccessProjet() ;
+    private AccessTache at = new AccessTache();
 
-    private DefaultListModel<Projet> model = new DefaultListModel<Projet>();
+    private DefaultListModel<Tache> model = new DefaultListModel<Tache>();
 
     private JButton createButton;
     private JButton voirButton;
     private JButton modifierButton;
     private JButton rendreInactifButton;
     private JButton rechercherButton;
-    private JButton tacheButton;
     private JButton retourButton;
     private JList<Projet> selectionProjet;
     private JScrollPane scroll;
@@ -47,14 +49,26 @@ public class GestionTache extends JDialog
     /**
      * Constructeur
      */
-    public GestionTache(Window owner, Employe employeU, Projet projetC ){
+
+    public GestionTache(Window owner, Employe employeU, Projet projetC )
+    {
+       this(owner, employeU);
+        this.projetConcerne = projetC;
+        setTitle("Gestion des tâches du projet" + projetC.getNom());
+
+    }
+
+
+    public GestionTache(Window owner, Employe employeU)
+    {
+
         super(owner);
         this.employeUtilisateur = employeU;
-        this.projetConcerne = projetC;
+
 
         setModal(true);
 
-        setTitle("Gestion des tâches du projet" + projetC.getNom());
+        setTitle("Gestion des tâches de" + employeU.getNom());
         setResizable(true);
         setSize(600,450);
         setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -85,16 +99,12 @@ public class GestionTache extends JDialog
         retourButton.addActionListener(e -> actionRetour());
         retourButton.setBackground(new Color(104, 177, 255)) ;
 
-        tacheButton = new JButton("Tâches");
-        tacheButton.addActionListener(e -> actionTaches());
-        tacheButton.setBackground(new Color(104, 177, 255)) ;
 
         createButton.setPreferredSize(new Dimension(200,40));
         voirButton.setPreferredSize(new Dimension(200,40));
         modifierButton.setPreferredSize(new Dimension(200,40));
         retourButton.setPreferredSize(new Dimension(200,40));
         rendreInactifButton.setPreferredSize(new Dimension(200,40));
-        tacheButton.setPreferredSize(new Dimension(200,40));
 
 
 
@@ -102,7 +112,6 @@ public class GestionTache extends JDialog
         contentButtons.add(voirButton);
         contentButtons.add(modifierButton);
         contentButtons.add(rendreInactifButton);
-        contentButtons.add(tacheButton);
 
         JLabel espace = new JLabel();
         espace.setPreferredSize(new Dimension(200,20));
@@ -126,10 +135,10 @@ public class GestionTache extends JDialog
         scroll.setPreferredSize(new Dimension(270, 270));
         scroll.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
         contentList.add(scroll);
-        scroll.setBorder(BorderFactory.createTitledBorder("Liste des projets"));
+        scroll.setBorder(BorderFactory.createTitledBorder("Liste des tâches"));
         contentList.setBorder(BorderFactory.createEmptyBorder(25,30,0,0));
 
-        JLabel titre = new JLabel("Gestion des projets");
+        JLabel titre = new JLabel("Gestion des tâches");
         titre.setFont(new Font("Arial",Font.BOLD,22));
         titre.setHorizontalAlignment(SwingConstants.CENTER);
         titre.setBorder(BorderFactory.createEmptyBorder(20,0,20,0));
@@ -181,22 +190,20 @@ public class GestionTache extends JDialog
 
         String debutNom = this.researchBar.getText();
 
-        ArrayList<Projet> listeProjets = new ArrayList<>();
+        ArrayList<Tache> listeProjets = new ArrayList<>();
 
         try {
-            listeProjets = ap.getProjet(debutNom);
+            listeProjets = at.getTache(debutNom);
         } catch (DatabaseConnexionException e) {
             new ExceptionDialog(this, e);
             dispose();
         } catch (DataAccessException e) {
             new ExceptionDialog(this, e);
-        } catch (RowNotFoundOrTooManyRowsException e) {
-            new ExceptionDialog(this, e);
         }
 
         model.clear() ;
-        for (Projet projet : listeProjets) {
-            model.addElement(projet);
+        for (Tache tache : listeProjets) {
+            model.addElement(tache);
         }
 
         if (model.size() > 0) {
@@ -215,24 +222,24 @@ public class GestionTache extends JDialog
     }
 
     private void actionVoir() {
-        Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
-        ProjetEditor.showProjetEditor(this,
+        Tache projetEdite = model.get(selectionProjet.getSelectedIndex());
+        TacheEditor.showTacheEditor(this,
                 employeUtilisateur, projetEdite,
-                ProjetEditor.ModeEdition.VISUALISATION);
+                TacheEditor.ModeEdition.VISUALISATION);
     }
 
 
     // mettre en commentaire à partir d'ici si problème
     private void actionModifier() {
-        Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
-        Projet result ;
-        result = ProjetEditor.showProjetEditor(this,
+        Tache projetEdite = model.get(selectionProjet.getSelectedIndex());
+        Tache result ;
+        result = TacheEditor.showTacheEditor(this,
                 employeUtilisateur, projetEdite,
-                ProjetEditor.ModeEdition.MODIFICATION);
+                TacheEditor.ModeEdition.MODIFICATION);
 
         if (result != null) { // modif validée
             try {
-                ap.updateProjet(result);
+                at.updateTache(result);
             } catch (RowNotFoundOrTooManyRowsException e) {
                 new ExceptionDialog(this, e);
             } catch (DataAccessException e) {
@@ -253,10 +260,10 @@ public class GestionTache extends JDialog
 
     private void actionCreer()
     {
-        Projet result ;
-        result = ProjetEditor.showProjetEditor(this,
+        Tache result ;
+        result = TacheEditor.showTacheEditor(this,
                 employeUtilisateur, null,
-                ProjetEditor.ModeEdition.CREATION);
+                TacheEditor.ModeEdition.CREATION);
 
 
 
@@ -264,7 +271,7 @@ public class GestionTache extends JDialog
 
         if (result != null) { // saisie validée
             try {
-                ap.insertProjet(result);
+                at.insertTache(result);
             } catch (RowNotFoundOrTooManyRowsException e) {
                 new ExceptionDialog(this, e);
             } catch (DataAccessException e) {
@@ -284,10 +291,10 @@ public class GestionTache extends JDialog
 
     private void actionRendreInactif()
     {
-        Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
-        ProjetEditor.showProjetEditor(this,
+        Tache projetEdite = model.get(selectionProjet.getSelectedIndex());
+        TacheEditor.showTacheEditor(this,
                 employeUtilisateur, projetEdite,
-                ProjetEditor.ModeEdition.MODIFICATION);
+                TacheEditor.ModeEdition.MODIFICATION);
     }
 
 

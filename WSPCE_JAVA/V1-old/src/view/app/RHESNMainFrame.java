@@ -17,10 +17,13 @@ import java.awt.event.WindowEvent;
 @SuppressWarnings("serial")
 public class RHESNMainFrame extends JFrame {
 
+
+
     private JButton employeButton;
     private JButton projectButton;
     private JButton clientButton;
     private JButton deconnexionButton;
+    private JButton tacheButton;
     private JLabel employeLabel;
     private Employe employeUtilisateur;
     
@@ -75,6 +78,12 @@ public class RHESNMainFrame extends JFrame {
         clientButton.setBackground(new Color(104, 177, 255)) ;
         clientButton.addActionListener(e -> actionClient());
 
+
+        tacheButton = new JButton("Tâches");
+        tacheButton.setPreferredSize(new Dimension(200,50));
+        tacheButton.setBackground(new Color(104, 177, 255)) ;
+        tacheButton.addActionListener(e -> actionTache());
+
         String libRole = (employeUtilisateur.getIdRole() == Role.ID_ROLE_CHEF_PROJET ? Role.LIB_ROLE_CHEF_PROJET : Role.LIB_ROLE_EMPLOYE);
         employeLabel = new JLabel("<html><u>Employé connecté(e) :</u><br><br>Nom: <i>"+employeUtilisateur.getNom()+ "</i><br>Prénom: <i>"+ employeUtilisateur.getPrenom()+"</i><br>Role: <i>"+ libRole+"</i></html>\n");
         employeLabel.setBorder(BorderFactory.createLoweredBevelBorder());
@@ -108,9 +117,11 @@ public class RHESNMainFrame extends JFrame {
             contentButton.add(employeButton);
             contentButton.add(projectButton);
             contentButton.add(clientButton);
+            contentButton.add(tacheButton);
         } else if(this.employeUtilisateur.getIdRole() == Role.ID_ROLE_EMPLOYE){
             contentButton.add(projectButton);
             contentButton.add(clientButton);
+            contentButton.add(tacheButton);
         }
 	}
 
@@ -155,5 +166,13 @@ public class RHESNMainFrame extends JFrame {
 			this.dispose();
         }
 	}
+
+
+	private void actionTache()
+    {
+        GestionTache tache = new GestionTache(this, employeUtilisateur);
+        tache.setVisible(true);
+        tache.dispose();
+    }
 }
 
