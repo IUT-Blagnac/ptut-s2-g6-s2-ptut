@@ -148,8 +148,50 @@ public class AccessEmploye {
         	throw new DataAccessException(Table.Employe, Order.SELECT, "Erreur accés", e);
         }
     }
+	
+    public ArrayList<Employe> getEmployesByCompetence(int idC, int idN) throws DataAccessException, DatabaseConnexionException, RowNotFoundOrTooManyRowsException {
+        // Initialisation
+        ArrayList<Employe> alEmploye = new ArrayList<>();
+
+        try {
+            // Connexion a la base de données
+            Connection con = LogToDatabase.getConnexion();
 
 
+            // Requete
+            String query = "Select e.* "
+            		+ " FROM Employe e "
+            		+ " WHERE e.idCompetence = ? AND e.idNiveau = ? "
+            		+ " ORDER BY e.nom";
+
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setInt(1, idC);
+            pst.setInt(2, idN);
+
+            System.err.println(query);
+            
+            // Exécution de la requete
+            ResultSet rs = pst.executeQuery();
+
+            while (rs.next()) {
+                // On crée l'employe
+
+            	Employe emp = new Employe(rs.getInt("idemploye"), rs.getString("nom"), rs.getString("prenom"), rs.getString("login"), rs.getString("motdepasse"), rs.getInt("estACtif"), rs.getInt("idRole"), rs.getInt("idCompetence"), rs.getInt("idNiveau"));
+                // puis on recupere aussi ses competences et on les ajoute
+                // On ajoute l'employe a l'arrayList
+                alEmploye.add(emp) ;
+            }
+
+            // on ferme la requete
+            rs.close();
+            pst.close();
+            return alEmploye;
+
+        } catch (SQLException e) {
+        	throw new DataAccessException(Table.Employe, Order.SELECT, "Erreur accés", e);
+        }
+    }
+    
     /**
      * Permet d'inserer un employé dans la base de donnée
      * @param pfEmploye Un employé a insérer
@@ -250,8 +292,6 @@ public class AccessEmploye {
         } catch (SQLException e) {
         	throw new DataAccessException(Table.Employe, Order.UPDATE, "Erreur accés", e);
         }
-
-
     }
     
 	private boolean loginAlreadyTaken (String pLogin) throws DatabaseConnexionException, DataAccessException {

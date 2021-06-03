@@ -42,6 +42,31 @@ public class AccessTache {
 		return alTache;
 	}
 	
+	public ArrayList<Tache> getTacheByEmp(int pIdE) throws DatabaseConnexionException, DataAccessException{
+		ArrayList<Tache> alTache = new ArrayList<>();
+		
+		try {
+			Connection con = LogToDatabase.getConnexion();
+			
+			String query = "Select t.* "
+					+ "From Tache t "
+					+ "Where idEmploye = ?";
+			
+			PreparedStatement pst = con.prepareStatement(query);	
+			pst.setInt(1, pIdE);
+			System.err.println(query);
+			ResultSet rs = pst.executeQuery();
+			
+			 while (rs.next()) {
+				 Tache tache = new Tache(rs.getInt("idTache"), rs.getString("nom"), rs.getString("descriptions"), rs.getDate("dateDebutReal"),rs.getDate("dateFinReal"),rs.getInt("dureeEstimeeReal"),rs.getInt("dureeReelleReal"),rs.getInt("idProjet"),rs.getInt("idCompetence"),rs.getInt("idNiveau"),rs.getInt("idEmploye"));
+				 alTache.add(tache);
+			 }
+		}catch (SQLException e) {
+			throw new DataAccessException(Table.Tache, Order.SELECT, "Erreur accés", e);
+        }
+		return alTache;
+	}
+	
 	public void insertTache (Tache pTache) throws RowNotFoundOrTooManyRowsException, DataAccessException, DatabaseConnexionException {
 		try {
             Connection con = LogToDatabase.getConnexion();
@@ -58,7 +83,7 @@ public class AccessTache {
             		+ ", " + "?"
             		+ ", " + "?"
             		+ ", " + "?"
-            		+")";
+            		+ ")";
 
             PreparedStatement pst = con.prepareStatement(query);
             pst.setString(1, pTache.getNom());
