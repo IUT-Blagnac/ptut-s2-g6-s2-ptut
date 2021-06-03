@@ -42,7 +42,7 @@ public class GestionTache extends JDialog
     private JButton rendreInactifButton;
     private JButton rechercherButton;
     private JButton retourButton;
-    private JList<Projet> selectionTache;
+    private JList<Tache> selectionTache;
     private JScrollPane scroll;
     private JTextField researchBar;
 
