@@ -15,7 +15,7 @@ import java.text.ParseException;
 import java.util.ArrayList;
 
 /**
- * Fenetre d'édition d'un employe : Create Update Delete
+ * Fenetre d'édition d'une tache : Create Update Delete
  */
 
 @SuppressWarnings("serial")
@@ -58,10 +58,11 @@ public class TacheEditor extends JDialog {
     private JLabel dateDebutLabel;
     private JLabel dureeEstimeeLabel ;
     private JLabel dureeReelLabel ;
-    private JLabel clientLabel;
     private JLabel competenceLabel ;
     private JLabel niveauLabel ;
+    private JLabel employeLabel ;
 
+    private int idProjet;
     // Zones de saisie
     private JTextField idText ;
     private JTextField nomText ;
@@ -72,24 +73,21 @@ public class TacheEditor extends JDialog {
     private JTextField dureeReelText ;
 
 
-    private JComboBox<String> comboBoxClient ;
     private JComboBox<String> comboBoxCompetence ;
     private JComboBox<String> comboBoxNiveau ;
+    private JComboBox<String> comboBoxEmploye ;
 
     // Liste de valeurs des ComboBox
     private String[] allStringComp ;
     private String[] allStringNiveau ;
-
-    // Liste de valeurs des ComboBox
-    private String[] allStringClient ;
+    private String[] allStringEmploye ;
 
     // Acces en BD
-    private AccessClient ac = new AccessClient();
     private AccessEmploye ae = new AccessEmploye();
-    private AccessTache at = new AccessTache();
+    private AccessCompetence ac = new AccessCompetence();
+    private AccessNiveau an = new AccessNiveau();
 
     // données en BD
-    private ArrayList<Client> alClientBD;
     private ArrayList<Employe> alEmployeBD;
     private ArrayList<Competence> alCompetenceBD;
     private ArrayList<Niveau> alNiveauBD;
@@ -97,14 +95,14 @@ public class TacheEditor extends JDialog {
     // Employe qui utilise l'application
     private Employe employueUtilisateur;
 
-    // Employé modifié ou visualisé
+    // Tache modifié ou visualisé
     private Tache tacheEdite;
 
-    // Employé résultat (saisi ou modifié), null si annulation
+    // Tache résultat (saisi ou modifié), null si annulation
     private Tache tacheResult;
 
     /**
-     * Ouverture de la boite de dialogue d'édition d'un employé
+     * Ouverture de la boite de dialogue d'édition d'une tache
      *
      * @param owner   fenêtre  mère de la boite de dialogue
      * @param employeUtilisateur Employ" connecté à l'application
@@ -135,7 +133,7 @@ public class TacheEditor extends JDialog {
     // Pour créer un éditeur, Il faut utiliser la méthode statique
     // == > showEmployeEditor()
     // =======================================================================
-    private TacheEditor(Tache pfTacheEdite, Employe pfEmployeUtilisateur, Window owner, TacheEditor.ModeEdition pfMode) {
+    private TacheEditor(Tache pfTacheEdite, Employe pfEmployeUtilisateur, Window owner, TacheEditor.ModeEdition pfMode, int idProjet) {
 
         super(owner);
         this.employueUtilisateur = pfEmployeUtilisateur ;
@@ -144,13 +142,15 @@ public class TacheEditor extends JDialog {
         this.modeActuel = pfMode;
 
         try {
-            alClientBD = ac.getClient("") ;
+			alCompetenceBD = ac.getAllCompetence() ;
+	        alNiveauBD = an.getAllNiveaux() ;
+            alEmployeBD = ae.getEmployes("");
         } catch (DatabaseConnexionException | DataAccessException e1) {
-            new ExceptionDialog(this, e1);
-            JOptionPane.showMessageDialog(this,
-                    "Impossible de continuer !\nMise à jour annulée.", "ERREUR", JOptionPane.ERROR_MESSAGE);
-            actionAnnuler();
-        }
+			new ExceptionDialog(this, e1);
+			JOptionPane.showMessageDialog(this, 
+				"Impossible de continuer !\nMise à jour annulée.", "ERREUR", JOptionPane.ERROR_MESSAGE);
+			actionAnnuler();
+		}
 
 
         setTitle("Gestion d'une tâche");
@@ -200,7 +200,6 @@ public class TacheEditor extends JDialog {
             try {
                 actionOK();
             } catch (ParseException e1) {
-                // TODO Auto-generated catch block
                 e1.printStackTrace();
             }
         });
@@ -296,22 +295,22 @@ public class TacheEditor extends JDialog {
 
 
 
-        // Clients
-        clientLabel = new JLabel("Client") ;
-        clientLabel.setHorizontalAlignment(0);
-        clientLabel.setPreferredSize(dimensionLabel);
-        clientLabel.setFont(normalFont);
-        champsPanel.add(clientLabel);
+        // Employe
+        employeLabel = new JLabel("Client") ;
+        employeLabel.setHorizontalAlignment(0);
+        employeLabel.setPreferredSize(dimensionLabel);
+        employeLabel.setFont(normalFont);
+        champsPanel.add(employeLabel);
 
-        allStringClient = new String[alClientBD.size()] ;
+        allStringComp = new String[alEmployeBD.size()] ;
 
-        for (int i = 0; i < alClientBD.size(); i++) {
-            allStringClient[i] = alClientBD.get(i).getNom();
+        for (int i = 0; i < alEmployeBD.size(); i++) {
+            allStringEmploye[i] = alEmployeBD.get(i).getNom();
         }
 
-        comboBoxClient = new JComboBox<String>(allStringClient) ;
-        comboBoxClient.setPreferredSize(new Dimension(280,30) );
-        champsPanel.add(comboBoxClient);
+        comboBoxEmploye = new JComboBox<String>(allStringEmploye) ;
+        comboBoxEmploye.setPreferredSize(new Dimension(280,30) );
+        champsPanel.add(comboBoxEmploye);
 
 
         // Competences
@@ -362,9 +361,11 @@ public class TacheEditor extends JDialog {
                 dateFinText.setEnabled(true);
                 dureeEstimeeText.setEnabled(true);
                 dureeReelText.setEnabled(true);
-                comboBoxClient.setEnabled(true);
+                comboBoxCompetence.setEnabled(true);
+                comboBoxNiveau.setEnabled(false);
+                comboBoxEmploye.setEnabled(false);
 
-                titreLabel.setText("Creer Projet");
+                titreLabel.setText("Creer Tache");
 
                 enregistrerBouton.setText("Enregister");
                 annulerBouton.setText("Annuler");
@@ -376,9 +377,11 @@ public class TacheEditor extends JDialog {
                 dateFinText.setEnabled(true);
                 dureeEstimeeText.setEnabled(true);
                 dureeReelText.setEnabled(true);
-                comboBoxClient.setEnabled(true);
+                comboBoxCompetence.setEnabled(false);
+                comboBoxNiveau.setEnabled(false);
+                comboBoxEmploye.setEnabled(false);
 
-                titreLabel.setText("Modifier Projet");
+                titreLabel.setText("Modifier Tache");
 
                 enregistrerBouton.setText("Modifier");
                 annulerBouton.setText("Annuler");
@@ -390,10 +393,12 @@ public class TacheEditor extends JDialog {
                 dateFinText.setEnabled(false);
                 dureeEstimeeText.setEnabled(false);
                 dureeReelText.setEnabled(false);
-                comboBoxClient.setEnabled(false);
+                comboBoxCompetence.setEnabled(false);
+                comboBoxNiveau.setEnabled(false);
+                comboBoxEmploye.setEnabled(false);
 
 
-                titreLabel.setText("Voir Employé");
+                titreLabel.setText("Voir Tache");
 
                 enregistrerBouton.setText("");
                 enregistrerBouton.setEnabled(false);
@@ -409,39 +414,49 @@ public class TacheEditor extends JDialog {
             descriptionText.setText(tacheEdite.getDescription());
             dateFinText.setText(tacheEdite.getDateFin().toString());
             dateDebutText.setText(tacheEdite.getDateDebut().toString());
-            //dureeEstimeeText.setText(tacheEdite.getDureeEstimee().toString());
-            //dureeEstimeeText.setText(tacheEdite.getDureeReelle().toString());
-
+            dureeEstimeeText.setText("" +tacheEdite.getDureeEstimee());
+            dureeEstimeeText.setText("" +tacheEdite.getDureeReelle());
         }
     }
 
 
     /**
-     * Genere l'employe avec la valeurs des champs remplis
-     * @return un employe
+     * Genere la tache avec la valeurs des champs remplis
+     * @return une tache
      * @throws ParseException
      * @throws NumberFormatException
      */
-
-
-
     private Tache generateTache() throws ParseException{
         // On génére le role de l'employe
         int estActifP;
-        int indexCli = comboBoxClient.getSelectedIndex() ;
-        int compId = alClientBD.get(indexCli).getId();
+        int indexEmp = comboBoxEmploye.getSelectedIndex() ;
+        int empId = alEmployeBD.get(indexEmp).getId();
+        int indexComp = comboBoxCompetence.getSelectedIndex() ;
+        int compId = alCompetenceBD.get(indexComp).getIdCompetence(); 
+        int indexNiv = comboBoxNiveau.getSelectedIndex() ;
+        int nivId = alNiveauBD.get(indexNiv).getIdNiveau();
         // On récupere tous les elements pour créer l'employé
 
 
         Tache tache ;
         if (modeActuel == TacheEditor.ModeEdition.CREATION)
         {
-            tache = new Tache(Tache.ID_TACHE_INEXISTANTE, null, null, null,null, 0, 0, Tache.ID_TACHE_INEXISTANTE, Tache.ID_TACHE_INEXISTANTE, Tache.ID_TACHE_INEXISTANTE,Tache.ID_TACHE_INEXISTANTE) ;
+            tache = new Tache(Integer.parseInt(idText.getText()), nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), stringToDate(dateFinText.getText()), dureeEstimeeText.getText().trim(), dureeReelText.getText().trim(), projetID, compId,nivId,empId) ;
         }
-        else
-        {
-            tache = new Tache(Integer.parseInt(idText.getText()), null, null, null,null, 0, 0, Tache.ID_TACHE_INEXISTANTE, Tache.ID_TACHE_INEXISTANTE, Tache.ID_TACHE_INEXISTANTE,Tache.ID_TACHE_INEXISTANTE);
+        else{
+        if(dateFinText.getText().equals("") && dureeReelText.getText().equals("")){
+            tache = new Tache(Integer.parseInt(idText.getText()), nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), null, dureeEstimeeText, null, idProjet, compId,nivId,empId) ;
         }
+        if(dateFinText.getText().equals("")){
+            tache = new Tache(Integer.parseInt(idText.getText()), nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), null, dureeEstimeeText.getText().trim(), dureeReelText.getText().trim(), projetID, compId,nivId,empId) ;
+        }
+        if(dureeReelText.getText().equals("")){
+            tache = new Tache(Integer.parseInt(idText.getText()), nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), stringToDate(dateFinText.getText()), dureeEstimeeText.getText().trim(), null, idProjet, compId,nivId,empId) ;
+        }
+        else {
+            tache = new Tache(Integer.parseInt(idText.getText()), nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), stringToDate(dateFinText.getText()), dureeEstimeeText, dureeReelText, projetID, compId,nivId,empId) ;
+        }
+    }
         return tache ;
     }
 
@@ -454,9 +469,11 @@ public class TacheEditor extends JDialog {
         }
     }
 
-
-
-
+}
+public static Date stringToDate(String pfString){
+	Date SQLdate = Date.valueOf(pfString) ;
+	return SQLdate ;
+}
 
     /**
      * Vérifier si tous les champs ont été saisis
@@ -477,20 +494,28 @@ public class TacheEditor extends JDialog {
     }
 
 
-    private int clientValueToIndex (int idClient)
-    {
-        for (int i=0; i<alClientBD.size(); i++) {
-            if (alClientBD.get(i).getId() == idClient) {
-                return i;
-            }
-        }
-        return -1; // Fin anormale
+    private int comptenceValueToIndex (int idCompetence) {
+    	for (int i=0; i<alCompetenceBD.size(); i++) {
+    		if (alCompetenceBD.get(i).getIdCompetence() == idCompetence) {
+    			return i;
+    		}
+    	}
+    	return -1; // Fin anormale
+    }
+    
+    private int niveauValueToIndex (int idNiveau) {
+    	for (int i=0; i<alNiveauBD.size(); i++) {
+    		if (alNiveauBD.get(i).getIdNiveau() == idNiveau) {
+    			return i;
+    		}
+    	}
+    	return -1; // Fin anormale
     }
 
     private int employeValueToIndex (int idEmploye)
     {
         for (int i=0; i<alEmployeBD.size(); i++) {
-            if (alClientBD.get(i).getId() == idEmploye) {
+            if (alEmployeBD.get(i).getId() == idEmploye) {
                 return i;
             }
         }
