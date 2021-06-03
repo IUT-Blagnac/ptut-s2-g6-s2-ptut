@@ -41,6 +41,7 @@ public class GestionTache extends JDialog
     private JButton modifierButton;
     private JButton rechercherButton;
     private JButton retourButton;
+    private JButton affecterButton;
     private JList<Tache> selectionTache;
     private JScrollPane scroll;
     private JTextField researchBar;
@@ -112,15 +113,28 @@ public class GestionTache extends JDialog
         retourButton.setBackground(new Color(104, 177, 255)) ;
 
 
+        affecterButton = new JButton("Affecter un employÈ");
+        affecterButton.addActionListener(e -> {
+			try {
+				actionAffecterEmp();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
+        affecterButton.setBackground(new Color(104, 177, 255)) ;
+        
         createButton.setPreferredSize(new Dimension(200,40));
         voirButton.setPreferredSize(new Dimension(200,40));
         modifierButton.setPreferredSize(new Dimension(200,40));
         retourButton.setPreferredSize(new Dimension(200,40));
+        affecterButton.setPreferredSize(new Dimension(200,40));
 
 
 
 
         contentButtons.add(createButton);
+        contentButtons.add(affecterButton);
         contentButtons.add(voirButton);
         contentButtons.add(modifierButton);
 
@@ -301,8 +315,28 @@ public class GestionTache extends JDialog
 
             actionRechercherProjets ();
         }
+    }
+    private void actionAffecterEmp() throws Exception {
+        Tache tacheEdite = model.get(selectionTache.getSelectedIndex());
+        Tache result ;
+        result = TacheEditor.showTacheEditor(this,
+                employeUtilisateur, tacheEdite,
+                TacheEditor.ModeEdition.AJOUTEMP);
 
+        if (result != null) { // modif valid√©e
+            try {
+                at.updateTache(result);
+            } catch (RowNotFoundOrTooManyRowsException e) {
+                new ExceptionDialog(this, e);
+            } catch (DataAccessException e) {
+                new ExceptionDialog(this, e);
+            } catch (DatabaseConnexionException e) {
+                new ExceptionDialog(this, e);
+                this.dispose();;
+            }
 
+            actionRechercherProjets ();
+        }
     }
 
 }

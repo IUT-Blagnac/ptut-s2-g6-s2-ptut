@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class TacheEditor extends JDialog {
 
     public enum ModeEdition {
-        CREATION, MODIFICATION, VISUALISATION,
+        CREATION, MODIFICATION, VISUALISATION,AJOUTEMP
         // pas de suppression car fonctionnellement impossible
     };
 
@@ -367,7 +367,7 @@ public class TacheEditor extends JDialog {
                 dureeEstimeeText.setEnabled(true);
                 dureeReelText.setEnabled(true);
                 comboBoxCompetence.setEnabled(true);
-                comboBoxNiveau.setEnabled(false);
+                comboBoxNiveau.setEnabled(true);
                 comboBoxEmploye.setEnabled(false);
 
                 titreLabel.setText("Creer Tache");
@@ -407,6 +407,25 @@ public class TacheEditor extends JDialog {
 
                 enregistrerBouton.setText("");
                 enregistrerBouton.setEnabled(false);
+                annulerBouton.setText("Retour");
+                break;
+                
+            case AJOUTEMP:
+                idText.setEnabled(false);
+                nomText.setEnabled(false);
+                descriptionText.setEnabled(false);
+                dateFinText.setEnabled(false);
+                dureeEstimeeText.setEnabled(false);
+                dureeReelText.setEnabled(false);
+                comboBoxCompetence.setEnabled(false);
+                comboBoxNiveau.setEnabled(false);
+                comboBoxEmploye.setEnabled(true);
+
+
+                titreLabel.setText("Affecter un employe à la tache");
+
+                enregistrerBouton.setText("Affecter");
+                enregistrerBouton.setEnabled(true);
                 annulerBouton.setText("Retour");
                 break;
 

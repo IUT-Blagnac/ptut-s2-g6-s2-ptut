@@ -4,7 +4,6 @@ package view.app;
 import model.data.Employe;
 
 import model.data.Projet;
-import model.data.Tache;
 import model.orm.AccessProjet;
 import model.orm.exception.DataAccessException;
 import model.orm.exception.DatabaseConnexionException;
@@ -80,7 +79,17 @@ public class GestionProjet extends JDialog
         modifierButton.setBackground(new Color(104, 177, 255)) ;
 
         tacheButton = new JButton("Gérer tâches");
-        tacheButton.addActionListener(e -> actionRetour());
+        tacheButton.addActionListener(e -> {
+			try {
+				actionTache();
+			} catch (DatabaseConnexionException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (DataAccessException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+		});
         tacheButton.setBackground(new Color(104, 177, 255)) ;
 
         retourButton = new JButton("Retour");
@@ -305,12 +314,10 @@ public class GestionProjet extends JDialog
     
 
 
-    private void actionTache()
+    @SuppressWarnings("unused")
+	private void actionTache() throws DatabaseConnexionException, DataAccessException
     {
 
-        ////////////////////
-        //NE FONCTIONNE PAS
-        ////////////////////
     	Projet projetTache = model.get(selectionProjet.getSelectedIndex());
     	int idP = projetTache.getId();
         GestionTache gestionTache = new GestionTache(this, employeUtilisateur, model.get(selectionProjet.getSelectedIndex()),idP);
