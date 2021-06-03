@@ -18,12 +18,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Fenetre avec tous les employes et les actions possibles sur eux
+ * Fenetre avec tous les projets et les actions possibles sur eux
  */
 
 @SuppressWarnings("serial")
-public class GestionProjet extends JDialog
-{
+public class GestionProjet extends JDialog {
+
+    //-------------------Attributs------------------
 
     // L'employé qui utilise l'application
     private Employe employeUtilisateur;
@@ -32,6 +33,7 @@ public class GestionProjet extends JDialog
 
     private DefaultListModel<Projet> model = new DefaultListModel<Projet>();
 
+     //-------------------JButton------------------
     private JButton createButton;
     private JButton voirButton;
     private JButton modifierButton;
@@ -39,13 +41,14 @@ public class GestionProjet extends JDialog
     private JButton rechercherButton;
     private JButton retourButton;
     
+    //-------------------JList------------------
     private JList<Projet> selectionProjet;
     private JScrollPane scroll;
     private JTextField researchBar;
 
-    /**
-     * Constructeur
-     */
+    
+     //-------------------Constructeur------------------
+
     public GestionProjet(Window owner, Employe employeU ){
         super(owner);
         this.employeUtilisateur = employeU;
@@ -166,7 +169,8 @@ public class GestionProjet extends JDialog
         if (selectionProjet.getSelectedIndex()<0) {
             voirButton.setEnabled(false);
             modifierButton.setEnabled(false);
-        } else {
+        } 
+        else {
             voirButton.setEnabled(true);
             modifierButton.setEnabled(true);
         }
@@ -180,12 +184,15 @@ public class GestionProjet extends JDialog
 
         try {
             listeProjets = ap.getProjet(debutNom);
-        } catch (DatabaseConnexionException e) {
+        } 
+        catch (DatabaseConnexionException e) {
             new ExceptionDialog(this, e);
             dispose();
-        } catch (DataAccessException e) {
+        } 
+        catch (DataAccessException e) {
             new ExceptionDialog(this, e);
-        } catch (RowNotFoundOrTooManyRowsException e) {
+        } 
+        catch (RowNotFoundOrTooManyRowsException e) {
             new ExceptionDialog(this, e);
         }
 
@@ -211,28 +218,27 @@ public class GestionProjet extends JDialog
 
     private void actionVoir() {
         Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
-        ProjetEditor.showProjetEditor(this,
-                employeUtilisateur, projetEdite,
-                ProjetEditor.ModeEdition.VISUALISATION);
+        ProjetEditor.showProjetEditor(this,employeUtilisateur, projetEdite,ProjetEditor.ModeEdition.VISUALISATION);
     }
 
 
-// mettre en commentaire à partir d'ici si problème
+    // mettre en commentaire à partir d'ici si problème
     private void actionModifier() {
         Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
         Projet result ;
-        result = ProjetEditor.showProjetEditor(this,
-                employeUtilisateur, projetEdite,
-                ProjetEditor.ModeEdition.MODIFICATION);
+        result = ProjetEditor.showProjetEditor(this,employeUtilisateur, projetEdite,ProjetEditor.ModeEdition.MODIFICATION);
 
         if (result != null) { // modif validée
             try {
                 ap.updateProjet(result);
-            } catch (RowNotFoundOrTooManyRowsException e) {
+            } 
+            catch (RowNotFoundOrTooManyRowsException e) {
                 new ExceptionDialog(this, e);
-            } catch (DataAccessException e) {
+            } 
+            catch (DataAccessException e) {
                 new ExceptionDialog(this, e);
-            } catch (DatabaseConnexionException e) {
+            } 
+            catch (DatabaseConnexionException e) {
                 new ExceptionDialog(this, e);
                 this.dispose();;
             }
@@ -241,66 +247,50 @@ public class GestionProjet extends JDialog
         }
     }
 
-
-
-
-
-
-        private void actionCreer()
-        {
-            Projet result ;
-            result = ProjetEditor.showProjetEditor(this,
-                    employeUtilisateur, null,
-                    ProjetEditor.ModeEdition.CREATION);
-
-
-
-
+    private void actionCreer() {
+        Projet result ;
+        result = ProjetEditor.showProjetEditor(this,employeUtilisateur, null,ProjetEditor.ModeEdition.CREATION);
 
         if (result != null) { // saisie validée
             try {
                 ap.insertProjet(result);
-            } catch (RowNotFoundOrTooManyRowsException e) {
+                }   
+            catch (RowNotFoundOrTooManyRowsException e) {
                 new ExceptionDialog(this, e);
-            } catch (DataAccessException e) {
+                } 
+            catch (DataAccessException e) {
                 new ExceptionDialog(this, e);
-            } catch (DatabaseConnexionException e) {
+                } 
+            catch (DatabaseConnexionException e) {
+                new ExceptionDialog(this, e);
+                this.dispose();;
+                }
+
+            actionRechercherProjets ();
+        }
+     }
+
+    private void actionRendreInactif() {
+        Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
+        Projet result ;
+        result = ProjetEditor.showProjetEditor(this,employeUtilisateur, projetEdite,ProjetEditor.ModeEdition.ACTIF);
+
+        if (result != null) { // modif validée
+            try {
+                ap.updateProjet(result);
+            } 
+            catch (RowNotFoundOrTooManyRowsException e) {
+                new ExceptionDialog(this, e);
+            } 
+            catch (DataAccessException e) {
+                new ExceptionDialog(this, e);
+            } 
+            catch (DatabaseConnexionException e) {
                 new ExceptionDialog(this, e);
                 this.dispose();;
             }
 
             actionRechercherProjets ();
         }
-
-
     }
-
-
-
-        private void actionRendreInactif() {
-            Projet projetEdite = model.get(selectionProjet.getSelectedIndex());
-            Projet result ;
-            result = ProjetEditor.showProjetEditor(this,
-                    employeUtilisateur, projetEdite,
-                    ProjetEditor.ModeEdition.ACTIF);
-
-            if (result != null) { // modif validée
-                try {
-                    ap.updateProjet(result);
-                } catch (RowNotFoundOrTooManyRowsException e) {
-                    new ExceptionDialog(this, e);
-                } catch (DataAccessException e) {
-                    new ExceptionDialog(this, e);
-                } catch (DatabaseConnexionException e) {
-                    new ExceptionDialog(this, e);
-                    this.dispose();;
-                }
-
-                actionRechercherProjets ();
-            }
-        }
-    
-
-
- 
 }

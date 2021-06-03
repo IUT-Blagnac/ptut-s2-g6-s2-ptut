@@ -70,14 +70,14 @@ public class ClientEditor extends JDialog {
 	@SuppressWarnings("unused")
 	private Employe employueUtilisateur;
 	
-	// Employé modifié ou visualisé
+	// Client modifié ou visualisé
 	private Client clientEdite;
 	
-	// Employé résultat (saisi ou modifié), null si annulation
+	// Client résultat (saisi ou modifié), null si annulation
 	private Client clientResult;
 	
 	/**
-	 * Ouverture de la boite de dialogue d'�dition d'un client
+	 * Ouverture de la boite de dialogue d'edition d'un client
 	 *
 	 * @param owner   fenêtre  mère de la boite de dialogue
 	 * @param employeUtilisateur Employ" connecté à l'application
@@ -115,17 +115,6 @@ public class ClientEditor extends JDialog {
         this.clientEdite = pfClientEdite;
         this.clientResult = null;
         this.modeActuel = pfMode;
-        
-       /* try {
-	        alProjetBD = ap.getAllNiveaux() ;
-        } catch (DatabaseConnexionException | DataAccessException e1) {
-			new ExceptionDialog(this, e1);
-			JOptionPane.showMessageDialog(this, 
-				"Impossible de continuer !\nMise à jour annulée.", "ERREUR", JOptionPane.ERROR_MESSAGE);
-			actionAnnuler();
-		} 
-        */
-
         
         setTitle("Gestion d'un client");
         setSize(400, 620) ;
@@ -240,7 +229,7 @@ public class ClientEditor extends JDialog {
         champsPanel.add(email);
         
      // Tel
-        telLabel = new JLabel("T�l�phone") ;
+        telLabel = new JLabel("T�l�phone") ;
         telLabel.setHorizontalAlignment(0);
         telLabel.setPreferredSize(dimensionLabel);
         telLabel.setFont(normalFont);
@@ -261,24 +250,6 @@ public class ClientEditor extends JDialog {
         estActifTB.setSelected(true);
         champsPanel.add(estActifTB);
 
-
-        /* Niveau
-        niveauLabel = new JLabel("Niveau") ;
-        niveauLabel.setHorizontalAlignment(0);
-        niveauLabel.setPreferredSize(dimensionLabel);
-        niveauLabel.setFont(normalFont);
-        champsPanel.add(niveauLabel);
-        
-        allStringNiveau = new String[alNiveauBD.size()] ;
-
-        for (int i = 0; i < alNiveauBD.size(); i++) {
-            allStringNiveau[i] = alNiveauBD.get(i).getIntitule();
-        }
-
-        comboBoxNiveau = new JComboBox<String>(allStringNiveau) ;
-        comboBoxNiveau.setPreferredSize(new Dimension(280,30) );
-        champsPanel.add(comboBoxNiveau);
-*/
         this.setLocationRelativeTo(this.getParent());
 		
         changeEtatSaisie ();
@@ -294,10 +265,10 @@ public class ClientEditor extends JDialog {
 			    email.setEnabled(true); 
 			    tel.setEnabled(true); 
 			    estActifTB.setEnabled(true);
-			   // comboBoxNiveau.setEnabled(true); 
+
 
 			    
-			    titreLabel.setText("Cr�er Client�");
+			    titreLabel.setText("Creer Client");
 
 			    enregistrerBouton.setText("Enregister");
 		        annulerBouton.setText("Annuler");
@@ -310,7 +281,6 @@ public class ClientEditor extends JDialog {
 			    email.setEnabled(true); 
 			    tel.setEnabled(true); 
 			    estActifTB.setEnabled(true);
-			   // comboBoxNiveau.setEnabled(true); 
 			    
 			    titreLabel.setText("Modifier Client");
 
@@ -324,9 +294,7 @@ public class ClientEditor extends JDialog {
 			    entreprise.setEnabled(false); 
 			    email.setEnabled(false); 
 			    tel.setEnabled(false); 
-			    estActifTB.setEnabled(false); 
-			   // comboBoxNiveau.setEnabled(false); 
-			  
+			    estActifTB.setEnabled(false); 			  
 			    
 			    titreLabel.setText("Voir Client");
 
@@ -347,23 +315,7 @@ public class ClientEditor extends JDialog {
 		    estActifTB.setSelected ( (clientEdite.getEstActif() == Client.EST_ACTIF) );
         }
     }
-	        //comboBoxNiveau.setSelectedIndex(niveauValueToIndex(employeEdite.getIdNiveau()));
-
-
-    
-    /*private int niveauValueToIndex (int idNiveau) {
-    	for (int i=0; i<alNiveauBD.size(); i++) {
-    		if (alNiveauBD.get(i).getIdNiveau() == idNiveau) {
-    			return i;
-    		}
-    	}
-    	return -1; // Fin anormale
-    }
-    */
-    /**
-     * Genere l'employe avec la valeurs des champs remplis
-     * @return un employe
-     */
+	        
     private Client generateClient(){
         
         int estActifE;

@@ -17,12 +17,13 @@ import java.awt.*;
 import java.util.ArrayList;
 
 /**
- * Fenetre avec tous les employes et les actions possibles sur eux
+ * Fenetre avec tous les clients et les actions possibles sur eux
  */
 
 @SuppressWarnings("serial")
 public class GestionClient extends JDialog
 {
+//-------------------Attributs------------------
 
     // L'employé qui utilise l'application
     private Employe employeUtilisateur;
@@ -144,7 +145,7 @@ public class GestionClient extends JDialog
 
 
     /**
-     * Permet de vrifier si l'utilisateur a saisi un employe avant de cliquer sur les boutons
+     * Permet de verifier si l'utilisateur a saisi un client avant de cliquer sur les boutons
      */
 
     private void verifierEtatComposants(){
