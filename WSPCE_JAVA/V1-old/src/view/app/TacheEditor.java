@@ -409,8 +409,8 @@ public class TacheEditor extends JDialog {
             descriptionText.setText(tacheEdite.getDescription());
             dateFinText.setText(tacheEdite.getDateFin().toString());
             dateDebutText.setText(tacheEdite.getDateDebut().toString());
-            dureeEstimeeText.setText(tacheEdite.getDureeEstimee().toString());
-            dureeEstimeeText.setText(tacheEdite.getDureeReelle().toString());
+            //dureeEstimeeText.setText(tacheEdite.getDureeEstimee().toString());
+            //dureeEstimeeText.setText(tacheEdite.getDureeReelle().toString());
 
         }
     }
