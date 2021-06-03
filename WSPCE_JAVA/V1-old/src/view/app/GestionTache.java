@@ -50,7 +50,7 @@ public class GestionTache extends JDialog
      * Constructeur
      */
 
-    public GestionTache(Window owner, Employe employeU, Projet projetC )
+    public GestionTache(Window owner, Employe employeU, Projet projetC, int idProjet )
     {
        this(owner, employeU);
         this.projetConcerne = projetC;

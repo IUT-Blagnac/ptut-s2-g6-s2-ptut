@@ -313,7 +313,7 @@ public class GestionProjet extends JDialog
         ////////////////////
     	Projet projetTache = model.get(selectionProjet.getSelectedIndex());
     	int idP = projetTache.getId();
-        GestionTache gestionTache = new GestionTache(this, employeUtilisateur, model.get(selectionProjet.getSelectedIndex()));
+        GestionTache gestionTache = new GestionTache(this, employeUtilisateur, model.get(selectionProjet.getSelectedIndex()),idP);
         gestionTache.setVisible(true);
         gestionTache.dispose();
     }
