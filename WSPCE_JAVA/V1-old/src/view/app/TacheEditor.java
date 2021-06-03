@@ -136,7 +136,7 @@ public class TacheEditor extends JDialog {
     // Pour créer un éditeur, Il faut utiliser la méthode statique
     // == > showEmployeEditor()
     // =======================================================================
-    private TacheEditor(Tache pfTacheEdite, Employe pfEmployeUtilisateur, Window owner, TacheEditor.ModeEdition pfMode, int idProjet) {
+    private TacheEditor(Tache pfTacheEdite, Employe pfEmployeUtilisateur, Window owner, TacheEditor.ModeEdition pfMode, int idProjet) throws Exception {
 
         super(owner);
         this.employueUtilisateur = pfEmployeUtilisateur ;
@@ -419,6 +419,11 @@ public class TacheEditor extends JDialog {
             dateDebutText.setText(tacheEdite.getDateDebut().toString());
             dureeEstimeeText.setText("" +tacheEdite.getDureeEstimee());
             dureeEstimeeText.setText("" +tacheEdite.getDureeReelle());
+            
+
+			comboBoxCompetence.setSelectedIndex(employeValueToIndex(tacheEdite.getIdEmploye()));
+            comboBoxCompetence.setSelectedIndex(comptenceValueToIndex(tacheEdite.getIdCompetence()));
+	        comboBoxNiveau.setSelectedIndex(niveauValueToIndex(tacheEdite.getIdNiveau()));
         }
     }
 
@@ -431,7 +436,6 @@ public class TacheEditor extends JDialog {
      */
     private Tache generateTache() throws ParseException{
         // On génére le role de l'employe
-        int estActifP;
         int indexEmp = comboBoxEmploye.getSelectedIndex() ;
         int empId = alEmployeBD.get(indexEmp).getId();
         int indexComp = comboBoxCompetence.getSelectedIndex() ;
@@ -460,8 +464,6 @@ public class TacheEditor extends JDialog {
             JOptionPane.showMessageDialog(this, "Veuillez saisir tous les champs", "Erreur", JOptionPane.ERROR_MESSAGE);
         }
     }
-
-}
 public static Date stringToDate(String pfString){
 	Date SQLdate = Date.valueOf(pfString) ;
 	return SQLdate ;
