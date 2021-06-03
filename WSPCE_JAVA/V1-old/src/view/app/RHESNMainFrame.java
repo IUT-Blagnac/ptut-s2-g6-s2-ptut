@@ -3,6 +3,7 @@ package view.app;
 import model.data.Employe;
 import model.data.Role;
 import model.orm.LogToDatabase;
+import model.orm.exception.DataAccessException;
 import model.orm.exception.DatabaseConnexionException;
 
 import javax.swing.*;
@@ -168,8 +169,7 @@ public class RHESNMainFrame extends JFrame {
 	}
 
 
-	private void actionTache()
-    {
+	private void actionTache() throws DatabaseConnexionException, DataAccessException {
         GestionTache tache = new GestionTache(this, employeUtilisateur);
         tache.setVisible(true);
         tache.dispose();
