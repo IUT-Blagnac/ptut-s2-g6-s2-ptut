@@ -403,29 +403,21 @@ public class ProjetEditor extends JDialog {
 
 		int estActifP;
 		int indexCli = comboBoxClient.getSelectedIndex() ;
-		int compId = alClientBD.get(indexCli).getId(); 
+		int clientId = alClientBD.get(indexCli).getId(); 
 		estActifP = (estActifTB.isSelected() ? Projet.EST_ACTIF : Projet.EST_INACTIF);
 		// On récupere tous les elements pour créer l'employé
 		Projet pjt ;
 		if (modeActuel == ProjetEditor.ModeEdition.CREATION){
-			pjt = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() ,stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, compId) ;
+			pjt = new Projet( -1 , nomText.getText().trim() , descriptionText.getText().trim() ,stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, clientId) ;
 		}
 		else {
 			if(dateFinReelText.getText().equals("")) {
-				pjt = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), null, estActifP, compId ) ; 
+				pjt = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), null, estActifP, clientId ) ; 
 			}else {
-				pjt = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, compId ) ;       
+				pjt = new Projet( Integer.parseInt(idText.getText()) , nomText.getText() , descriptionText.getText() , stringToDate(dateDebutText.getText()), stringToDate(dateFinEstimeeText.getText()), stringToDate(dateFinReelText.getText()), estActifP, clientId ) ;       
 			}
 		}
 		
-			
-			/* if(projetEdite.getDateFinReel() != null) {	
-	        dateFinReelText.setText(projetEdite.getDateFinReel().toString());
-	        }
-	        else {
-	        	dateFinReelText.setText("");
-	        }
-	 */
 	return pjt ;
 }
 

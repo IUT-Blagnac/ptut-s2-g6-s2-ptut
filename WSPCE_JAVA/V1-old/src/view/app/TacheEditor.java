@@ -112,14 +112,17 @@ public class TacheEditor extends JDialog {
      * @return un objet Employe si l'action est validée / null sinon
      */
     public static Tache showTacheEditor(Window owner, Employe employeUtilisateur, Tache tacheEdite, TacheEditor.ModeEdition mode) {
+        int idProjet = 0;
 
         if (mode == TacheEditor.ModeEdition.CREATION) {
             tacheEdite = new Tache();
+            idProjet = tacheEdite.getIdProjet();
         } else {
             tacheEdite = new Tache(tacheEdite);
+            idProjet = tacheEdite.getIdProjet();
         }
 
-        TacheEditor dial = new TacheEditor(tacheEdite, employeUtilisateur, owner, mode);
+        TacheEditor dial = new TacheEditor(tacheEdite, employeUtilisateur, owner, mode, idProjet);
         dial.tacheResult = null;
         dial.setModal(true);
         dial.setVisible(true);
@@ -441,22 +444,11 @@ public class TacheEditor extends JDialog {
         Tache tache ;
         if (modeActuel == TacheEditor.ModeEdition.CREATION)
         {
-            tache = new Tache(Integer.parseInt(idText.getText()), nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), stringToDate(dateFinText.getText()), dureeEstimeeText.getText().trim(), dureeReelText.getText().trim(), projetID, compId,nivId,empId) ;
-        }
-        else{
-        if(dateFinText.getText().equals("") && dureeReelText.getText().equals("")){
-            tache = new Tache(Integer.parseInt(idText.getText()), nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), null, dureeEstimeeText, null, idProjet, compId,nivId,empId) ;
-        }
-        if(dateFinText.getText().equals("")){
-            tache = new Tache(Integer.parseInt(idText.getText()), nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), null, dureeEstimeeText.getText().trim(), dureeReelText.getText().trim(), projetID, compId,nivId,empId) ;
-        }
-        if(dureeReelText.getText().equals("")){
-            tache = new Tache(Integer.parseInt(idText.getText()), nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), stringToDate(dateFinText.getText()), dureeEstimeeText.getText().trim(), null, idProjet, compId,nivId,empId) ;
+            tache = new Tache(-1, nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), stringToDate(dateFinText.getText()), Integer.parseInt(dureeEstimeeText.getText()), Integer.parseInt(dureeReelText.getText()), idProjet, compId,nivId,empId) ;
         }
         else {
-            tache = new Tache(Integer.parseInt(idText.getText()), nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), stringToDate(dateFinText.getText()), dureeEstimeeText, dureeReelText, projetID, compId,nivId,empId) ;
+            tache = new Tache(Integer.parseInt(idText.getText()), nomText.getText().trim(), descriptionText.getText().trim(), stringToDate(dateDebutText.getText()), stringToDate(dateFinText.getText()),Integer.parseInt(dureeEstimeeText.getText()), Integer.parseInt(dureeReelText.getText()), idProjet, compId,nivId,empId) ;
         }
-    }
         return tache ;
     }
 
