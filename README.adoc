@@ -75,8 +75,8 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |         | Code V2     |                       |
 |         | Recette V2  |link:Documentations/cahier_de_recettes/V2/cahier_de_recettes_v2.pdf[PDF]                       | Même remarque : ils passent ces tests ou pas?
 |         | Gantt V2-3    |link:gantt/V2/ptut_v2-2.pdf[PDF]                       | Vu.
-|         | `jar` projet |    |
-| 02/06   | Gantt V3-1    |link:gantt/V3/ptut_v3.pdf[PDF]       |
+|         | `jar` projet |    | Où est le jar ?!
+| 02/06   | Gantt V3-1    |link:gantt/V3/ptut_v3.pdf[PDF]       | RAS.
 | 03/06   | Doc. Util. V3 |            |           
 |         | Doc. Tec. V3 |                  |     
 |         | Code V3     |                       |
