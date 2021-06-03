@@ -4,7 +4,6 @@ import model.data.*;
 import model.orm.*;
 import model.orm.exception.DataAccessException;
 import model.orm.exception.DatabaseConnexionException;
-import model.orm.exception.RowNotFoundOrTooManyRowsException;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -149,7 +148,7 @@ public class TacheEditor extends JDialog {
 			alCompetenceBD = ac.getAllCompetence() ;
 	        alNiveauBD = an.getAllNiveaux() ;
             alEmployeBD = ae.getEmployes("");
-        } catch (DatabaseConnexionException | DataAccessException | RowNotFoundOrTooManyRowsException e1) {
+        } catch (DatabaseConnexionException | DataAccessException e1) {
 			new ExceptionDialog(this, e1);
 			JOptionPane.showMessageDialog(this, 
 				"Impossible de continuer !\nMise à jour annulée.", "ERREUR", JOptionPane.ERROR_MESSAGE);
@@ -462,7 +461,7 @@ public class TacheEditor extends JDialog {
         }
     }
 
-
+}
 public static Date stringToDate(String pfString){
 	Date SQLdate = Date.valueOf(pfString) ;
 	return SQLdate ;

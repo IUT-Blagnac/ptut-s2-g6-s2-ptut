@@ -305,7 +305,8 @@ public class GestionProjet extends JDialog
     
 
 
-    private void actionTache() throws DatabaseConnexionException, DataAccessException {
+    private void actionTache()
+    {
 
         ////////////////////
         //NE FONCTIONNE PAS
