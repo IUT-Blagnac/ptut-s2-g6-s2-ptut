@@ -48,9 +48,11 @@ public class GestionTache extends JDialog
 
     /**
      * Constructeur
+     * @throws DataAccessException 
+     * @throws DatabaseConnexionException 
      */
 
-    public GestionTache(Window owner, Employe employeU, Projet projetC, int idProjet )
+    public GestionTache(Window owner, Employe employeU, Projet projetC, int idProjet ) throws DatabaseConnexionException, DataAccessException
     {
        this(owner, employeU);
         this.projetConcerne = projetC;
@@ -59,7 +61,7 @@ public class GestionTache extends JDialog
     }
 
 
-    public GestionTache(Window owner, Employe employeU)
+    public GestionTache(Window owner, Employe employeU) throws DatabaseConnexionException, DataAccessException
     {
 
         super(owner);
@@ -123,9 +125,15 @@ public class GestionTache extends JDialog
         contentButtons.setPreferredSize(new Dimension(250,300));
         contentButtons.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
 
-        model = new DefaultListModel<>();
-
-        selectionTache = new JList<>(model);
+        ArrayList<Tache> alT = at.getTacheByEmp(employeU.getId());
+        
+        model = new DefaultListModel<Tache>();
+        
+        for(Tache t : alT ) {
+        	model.addElement(t);
+        }
+        
+        selectionTache = new JList<Tache>(model);
         selectionTache.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent arg0) {
                 verifierEtatComposants();
