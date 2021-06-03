@@ -68,7 +68,7 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |         | Doc. Tec. V1 |link:doc/docTechnique.adoc[ADOC]                   |    Pas à jour sur les derniers diagrammes.
 |         | Code V1     |                       |
 |         | Recette V1  | link:Documentations/cahier_de_recettes/V1/cahier_de_recettes_v1.pdf[PDF]                      | Indiquez si ces tests passent ou pas.
-|         | `jar` projet |    | Au pire, mettez le .jar de la V0.
+|         | `jar` projet |link:jar/v1.jar[JAR]    | Au pire, mettez le .jar de la V0.
 | 31/05   | Gantt V2-1    | link:gantt/V2/ptut_v2-1.pdf[PDF]      | Pas vu le diff avec V2
 | 01/06   | Doc. Util. V2 | link:Documentations/doc_utilisateur/doc_utilisateur_V2.pdf[PDF]           |    Doc très exhaustive, c'est bien.   Essayez d'intégrer une vue d'ensemble.    
 |         | Doc. Tec. V2 | link:doc/docTechnique_V2.adoc[ADOC]                 |     Où est la javadoc ?
