@@ -42,7 +42,7 @@ public class GestionTache extends JDialog
     private JButton rendreInactifButton;
     private JButton rechercherButton;
     private JButton retourButton;
-    private JList<Projet> selectionProjet;
+    private JList<Projet> selectionTache;
     private JScrollPane scroll;
     private JTextField researchBar;
 
@@ -125,13 +125,13 @@ public class GestionTache extends JDialog
 
         model = new DefaultListModel<>();
 
-        selectionProjet = new JList<>(model);
-        selectionProjet.addListSelectionListener(new ListSelectionListener() {
+        selectionTache = new JList<>(model);
+        selectionTache.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent arg0) {
                 verifierEtatComposants();
             }
         });
-        scroll = new JScrollPane(selectionProjet);
+        scroll = new JScrollPane(selectionTache);
         scroll.setPreferredSize(new Dimension(270, 270));
         scroll.setBorder(BorderFactory.createEmptyBorder(30,0,0,0));
         contentList.add(scroll);
@@ -177,7 +177,7 @@ public class GestionTache extends JDialog
      */
 
     private void verifierEtatComposants(){
-        if (selectionProjet.getSelectedIndex()<0) {
+        if (selectionTache.getSelectedIndex()<0) {
             voirButton.setEnabled(false);
             modifierButton.setEnabled(false);
         } else {
@@ -207,9 +207,9 @@ public class GestionTache extends JDialog
         }
 
         if (model.size() > 0) {
-            selectionProjet.ensureIndexIsVisible(0);
+            selectionTache.ensureIndexIsVisible(0);
         }
-        selectionProjet.setSelectedIndex(-1);
+        selectionTache.setSelectedIndex(-1);
         verifierEtatComposants();
     }
 
@@ -222,7 +222,7 @@ public class GestionTache extends JDialog
     }
 
     private void actionVoir() {
-        Tache projetEdite = model.get(selectionProjet.getSelectedIndex());
+        Tache projetEdite = model.get(selectionTache.getSelectedIndex());
         TacheEditor.showTacheEditor(this,
                 employeUtilisateur, projetEdite,
                 TacheEditor.ModeEdition.VISUALISATION);
@@ -231,7 +231,7 @@ public class GestionTache extends JDialog
 
     // mettre en commentaire à partir d'ici si problème
     private void actionModifier() {
-        Tache projetEdite = model.get(selectionProjet.getSelectedIndex());
+        Tache projetEdite = model.get(selectionTache.getSelectedIndex());
         Tache result ;
         result = TacheEditor.showTacheEditor(this,
                 employeUtilisateur, projetEdite,
@@ -291,7 +291,7 @@ public class GestionTache extends JDialog
 
     private void actionRendreInactif()
     {
-        Tache projetEdite = model.get(selectionProjet.getSelectedIndex());
+        Tache projetEdite = model.get(selectionTache.getSelectedIndex());
         TacheEditor.showTacheEditor(this,
                 employeUtilisateur, projetEdite,
                 TacheEditor.ModeEdition.MODIFICATION);
