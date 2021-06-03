@@ -35,3 +35,13 @@ WSPCE_JAVA/V1-old/bin/view/app/GestionProjet.class
 WSPCE_JAVA/V1-old/bin/view/app/GestionProjet$1.class
 WSPCE_JAVA/V1-old/bin/model/orm/AccessProjet.class
 WSPCE_JAVA/V1-old/.idea/encodings.xml
+WSPCE_JAVA/V1-old/bin/view/encryption/HachageSHA.class
+WSPCE_JAVA/V1-old/bin/view/Main.class
+WSPCE_JAVA/V1-old/bin/view/tools/OutilsDate.class
+WSPCE_JAVA/V1-old/bin/view/Main$1.class
+WSPCE_JAVA/V1-old/bin/view/app/ClientEditor.class
+WSPCE_JAVA/V1-old/bin/view/app/ClientEditor$ModeEdition.class
+WSPCE_JAVA/V1-old/bin/view/app/ClientEditor$1.class
+WSPCE_JAVA/V1-old/bin/model/orm/exception/Table.class
+WSPCE_JAVA/V1-old/bin/model/data/Projet.class
+WSPCE_JAVA/V1-old/bin/model/data/Client.class
