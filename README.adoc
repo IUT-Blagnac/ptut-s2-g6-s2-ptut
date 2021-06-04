@@ -66,7 +66,7 @@ image::doc/media/{version}/sni.png[SNI,width=80%]
 |         | Gantt V2    | link:gantt/V2/ptut_v2.pdf[PDF]         |  Bien mieux           
 |         | Doc. Util. V1 |link:Documentations/doc_utilisateur/doc_utilisateur_V1.pdf[PDF]              |          Semble complète et détaillée. Bien!
 |         | Doc. Tec. V1 |link:doc/docTechnique.adoc[ADOC]                   |    Pas à jour sur les derniers diagrammes.
-|         | Code V1     |                       |
+|         | Code V1     | link:WSPCE_JAVA/V1-fin/src[CODE]                      |
 |         | Recette V1  | link:Documentations/cahier_de_recettes/V1/cahier_de_recettes_v1.pdf[PDF]                      | Indiquez si ces tests passent ou pas.
 |         | `jar` projet |link:jar/v1.jar[JAR]    | Au pire, mettez le .jar de la V0.
 | 31/05   | Gantt V2-1    | link:gantt/V2/ptut_v2-1.pdf[PDF]      | Pas vu le diff avec V2
